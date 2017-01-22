@@ -28,6 +28,12 @@ public class Action_Monde extends Action_Perso {
 		return "Vous minez " + this.monde.sol.minerais.getNombre() + "K de " + this.monde.sol.minerais.getMatiere()
 				+ ".\n";
 	}
+	
+	public String couperBois(Personnage perso) {
+		perso.inv.putItem(this.monde.sol.Bois);
+		return "Vous coupez " + this.monde.sol.minerais.getNombre() + "K de " + this.monde.sol.minerais.getMatiere()
+				+ ".\n";
+	}
 
 	
 	
