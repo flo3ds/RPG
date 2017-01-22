@@ -2,8 +2,8 @@ package action;
 
 import base.Base;
 import base.Craft_Category;
-import item.Item;
-import item.RecipeItems;
+import items.Item;
+import items.RecipeItems;
 import perso.Personnage;
 
 public class Action_CraftingTable extends Action_Perso {

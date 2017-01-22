@@ -1,6 +1,8 @@
-package item;
+package items.genItems;
 
 import core.Rand;
+import items.Minerai;
+import items.Minerai.matiere;
 
 public class GenMinerai {	
 	
@@ -13,5 +15,4 @@ public class GenMinerai {
 		//Crée le minerai avec les infos précedentes et le retourne
 		return new Minerai(type, nb);
 	}
-
 }

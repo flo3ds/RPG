@@ -1,4 +1,4 @@
-package item;
+package items;
 
 
 public class Plaque_Acier extends Item{

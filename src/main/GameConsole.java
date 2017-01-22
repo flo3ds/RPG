@@ -10,8 +10,8 @@ import action.Action_CraftingTable;
 import action.Action_Monde;
 import action.Position;
 import base.Base;
-import item.Bois;
-import item.Minerai;
+import items.Bois;
+import items.Minerai;
 import perso.Personnage;
 
 public class GameConsole {

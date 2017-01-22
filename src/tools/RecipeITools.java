@@ -1,8 +1,14 @@
-package item;
+package tools;
 
 import base.Craft_Category;
+import items.Bois;
+import items.Minerai;
+import items.PlancheBois;
+import items.Plaque_Acier;
+import items.Vis;
+import items.Minerai.matiere;
 
-public enum RecipeItems {
+public enum RecipeITools {
 
 	//Avec des saut a la ligne pour rendre plus lisible :
 	vis("vis", // le nom
@@ -21,7 +27,7 @@ public enum RecipeItems {
 	private Object[] obj;
 	private Object item;
 	
-	RecipeItems(String name, Object item, Object[] obj){
+	RecipeITools(String name, Object item, Object[] obj){
 		this.name = name;
 		this.obj = obj;
 		this.item = item;

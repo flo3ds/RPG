@@ -1,8 +1,8 @@
 package monde.flore;
 
 import core.Rand;
-import item.Bois;
-import item.GenBois;
+import items.Bois;
+import items.genItems.GenBois;
 
 public class Arbre extends Feuille {
 
@@ -26,7 +26,7 @@ public class Arbre extends Feuille {
 	}
 
 	private enum Color {
-		marron, noir, blanc,
+		marron, noir, blanc;
 	}
 
 	private enum Texture {

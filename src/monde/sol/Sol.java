@@ -1,8 +1,8 @@
 package monde.sol;
 
 import core.Rand;
-import item.GenMinerai;
-import item.Minerai;
+import items.Minerai;
+import items.genItems.GenMinerai;
 
 public class Sol {
 

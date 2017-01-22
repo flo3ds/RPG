@@ -1,4 +1,4 @@
-package item;
+package items;
 
 
 public class Minerai extends Item{

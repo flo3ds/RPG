@@ -1,4 +1,6 @@
-package item;
+package items.genItems;
+
+import items.Bois;
 
 public class GenBois {
 	

@@ -1,6 +1,6 @@
 package base;
 
-import item.RecipeItems;
+import items.RecipeItems;
 
 public class CraftTable {
 
