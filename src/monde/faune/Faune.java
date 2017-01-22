@@ -30,7 +30,7 @@ public class Faune {
 		else if(this.nb_type_animal==1)
 			return "Il y a un seule animal :\n";
 		else
-			return "Il n'y a pas d'animaux\n";
+			return "Il n'y a pas d'animaux dans les environs\n";
 	}
 	
 	public String getDescriptionAnimal(int i){
