@@ -4,6 +4,8 @@ import base.Craft_Category;
 import core.Recipe;
 import tools.Marteau;
 
+//On ne peut pas mettre de tools dans les composant d'une recette pour l'instant.
+
 public enum RecipeItems {
 
 	//Avec des saut a la ligne pour rendre plus lisible :

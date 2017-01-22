@@ -3,6 +3,9 @@ package tools;
 import core.Recipe;
 import items.Bois;
 
+//On ne peut pas mettre de tools dans les composant d'une recette pour l'instant.
+
+
 public enum RecipeTools {
 
 	
