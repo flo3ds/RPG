@@ -6,7 +6,7 @@ public class Flore {
 
 	private short nb_type_arbre;
 	private short nb_type_plante;
-	private Arbre[] arbres;
+	public Arbre[] arbres;
 	private Plante[] plantes;
 
 	public Flore() {

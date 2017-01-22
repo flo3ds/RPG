@@ -30,9 +30,8 @@ public class Action_Monde extends Action_Perso {
 	}
 	
 	public String couperBois(Personnage perso) {
-		perso.inv.putItem(this.monde.sol.Bois);
-		return "Vous coupez " + this.monde.sol.minerais.getNombre() + "K de " + this.monde.sol.minerais.getMatiere()
-				+ ".\n";
+		perso.inv.putItem(this.monde.flore.arbres[0].bois);
+		return "Vous coupez " + this.monde.flore.arbres[0].bois.getNombre() +" bois.\n";
 	}
 
 	
@@ -53,6 +52,7 @@ public class Action_Monde extends Action_Perso {
 		out += Action.analyser_sol.getName() + "\n";
 		out += Action.analyser_faune.getName() + "\n";
 		out += Action.analyser_flore.getName() + "\n";
+		out += Action.couper_bois.getName() + "\n";
 		out += this.help_perso();
 		return out;
 	}
@@ -70,6 +70,8 @@ public class Action_Monde extends Action_Perso {
 			return this.base(perso);
 		else if (this.actionPersoTest(in))
 			return this.actionPerso(perso, in);
+		else if (Action.couper_bois.test(in))
+			return this.couperBois(perso);
 		else
 			return this.help();
 	}

@@ -17,7 +17,8 @@ public enum Action {
 	craftTable("craft"),
 	build("build"),
 	analyser_flore("analyser flore"),
-	analyser_faune("analyser faune");
+	analyser_faune("analyser faune"),
+	couper_bois("couper bois");
 
 	private final String str;
 
