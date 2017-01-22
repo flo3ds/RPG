@@ -10,6 +10,7 @@ import action.Action_CraftingTable;
 import action.Action_Monde;
 import action.Position;
 import base.Base;
+import item.Bois;
 import item.Minerai;
 import perso.Personnage;
 
@@ -46,7 +47,7 @@ public class GameConsole {
 		
 		perso.inv.putItem(new Minerai(Minerai.matiere.cuivre, 8));
 		perso.inv.putItem(new Minerai(Minerai.matiere.fer, 8));
-
+		perso.inv.putItem(new Bois(4));
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Bienvenue dans votre base !");
