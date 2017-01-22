@@ -1,6 +1,8 @@
 package items;
 
 import base.Craft_Category;
+import core.Recipe;
+import tools.Marteau;
 
 public enum RecipeItems {
 
@@ -10,38 +12,17 @@ public enum RecipeItems {
 		new Object[]{// Le tableau des items requis pour la recette
 				new Minerai(Minerai.matiere.cuivre, 2), // le 1er items de la recette minerai de cuivre x2
 				new Minerai(Minerai.matiere.fer, 3)}	// le 2eme items de la recette minerai de fer x3
+	,null // ici le ou les outils requis, null si il n'y a pas d'outil requis
 	), //fermer la parenthese et une virgule
 	
 	//et sur une seule ligne sa donne sa:
-	plaque_acier("Plaque d'acier",new Plaque_Acier(), new Object[]{new Vis(2), new Minerai(Minerai.matiere.fer, 2)}), // point virgule a la fin fin
+	plaque_acier("Plaque d'acier",new Plaque_Acier(), new Object[]{new Vis(2), new Minerai(Minerai.matiere.fer, 2)}, new Object[]{new Marteau()}), // point virgule a la fin fin
 	
-	planche_bois("Planche en bois", new PlancheBois(), new Object[]{new Bois(2)});
+	planche_bois("Planche en bois", new PlancheBois(), new Object[]{new Bois(2)}, null);
 	
-	private String name;
-	private Object[] obj;
-	private Object item;
+public Recipe recipe;
 	
-	RecipeItems(String name, Object item, Object[] obj){
-		this.name = name;
-		this.obj = obj;
-		this.item = item;
-	}
-	
-	public String recipe(Craft_Category cc){
-		String out = "";
-		out += this.name + " => ";
-		for(int i=0; i < this.obj.length; i++){
-				out += this.obj[i].toString() +" | ";
-		}
-			
-		return out + "\n";
-	}
-	
-	public Object[] getObjectForRecipe(){
-		return this.obj;
-	}
-	
-	public Object getItem(){
-		return this.item;
+	RecipeItems(String name, Object item, Object[] obj, Object[] tool){
+		this.recipe = new Recipe(name, item, obj, tool);
 	}
 }

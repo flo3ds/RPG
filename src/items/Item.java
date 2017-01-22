@@ -1,9 +1,10 @@
 package items;
 
-abstract public class Item {
+import core.Inventable;
+
+abstract public class Item extends Inventable {
 
 	private short nombre = 1;
-	private String id;
 	
 	public int getNombre(){
 		return this.nombre;
@@ -13,22 +14,14 @@ abstract public class Item {
 		this.nombre = nombre;
 	}
 	
-	public String getId()
-	{
-		return this.id;
-	}
 	
-	public String setId(String id)
-	{
-		return this.id = id;
-	}
 
 	public void subNombre(int i) {
 		this.nombre -= i;
 	}
 	
 	public String toString() {
-		return this.id + " x" +this.nombre;
+		return this.getId() + " x" +this.nombre;
 	}
 
 	public void addNombre(int i) {

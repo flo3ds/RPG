@@ -1,19 +1,9 @@
 package tools;
 
-abstract public class Tool {
-	private String id;
+import core.Inventable;
+
+//Un tool ne peut pas faire partit des composant d'une recette
+
+abstract public class Tool extends Inventable{
 	
-	public String getId()
-	{
-		return this.id;
-	}
-	
-	public String setId(String id)
-	{
-		return this.id = id;
-	}
-	
-	public String toString() {
-		return this.id;
-	}
 }

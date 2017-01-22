@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import items.Item;
+import tools.Tool;
 
 abstract public class Container {
 
@@ -25,11 +26,16 @@ abstract public class Container {
 		if (this.libre == this.cases - 1)
 			return true;
 		
+		if(object instanceof Tool){
+			this.inventaire.add(object);
+			return false;
+		}
+		
 		for (int i = 0; i < this.cases; i++) {
 			
 			if (!this.inventaire.isEmpty())
 				if (i < this.inventaire.size())
-					if(((Item)object).getId().equals(((Item)this.inventaire.get(i)).getId())){
+					if(((Inventable)object).getId().equals(((Inventable)this.inventaire.get(i)).getId())){
 						((Item)this.inventaire.get(i)).addNombre(((Item)object).getNombre());
 						return false;
 					}
@@ -76,7 +82,7 @@ abstract public class Container {
 	}
 	
 	public void subItem(int i, int j) {
-		((Item)this.inventaire.get(i)).subNombre(2);
+		((Item)this.inventaire.get(i)).subNombre(j);
 		if(((Item)this.inventaire.get(i)).getNombre() <= 0)
 			this.removeItem(i);
 	}

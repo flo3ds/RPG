@@ -15,7 +15,8 @@ public enum Action {
 	miner("miner"),
 	
 	craftTable("craft"),
-	build("build"),
+	build_item("build item"),
+	build_tool("build tool"),
 	analyser_flore("analyser flore"),
 	analyser_faune("analyser faune"),
 	couper_bois("couper bois");

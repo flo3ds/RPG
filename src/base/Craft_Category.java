@@ -2,6 +2,6 @@ package base;
 
 public enum Craft_Category {
 	
-	items;
+	items, tools;
 
 }
