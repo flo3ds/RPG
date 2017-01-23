@@ -25,24 +25,23 @@ abstract public class Container {
 	public boolean putItem(Object object) {
 		if (this.libre == this.cases - 1)
 			return true;
-		
-		if(object instanceof Tool){
+
+		if (object instanceof Tool) {
 			this.inventaire.add(object);
 			return false;
 		}
-		
+
 		for (int i = 0; i < this.cases; i++) {
-			
+
 			if (!this.inventaire.isEmpty())
 				if (i < this.inventaire.size())
-					if(((Inventable)object).getId().equals(((Inventable)this.inventaire.get(i)).getId())){
-						((Item)this.inventaire.get(i)).addNombre(((Item)object).getNombre());
+					if (((Inventable) object).getId().equals(((Inventable) this.inventaire.get(i)).getId())) {
+						((Item) this.inventaire.get(i)).addNombre(((Item) object).getNombre());
 						return false;
 					}
 		}
-		
-		
-		this.inventaire.add(((Inventable)object).clone());
+
+		this.inventaire.add(((Inventable) object).clone());
 		return false;
 	}
 
@@ -76,32 +75,32 @@ abstract public class Container {
 		}
 		this.libre--;
 	}
-	
-	public int getSize(){
+
+	public int getSize() {
 		return this.cases;
 	}
-	
+
 	public void subItem(int i, int j) {
-		((Item)this.inventaire.get(i)).subNombre(j);
-		if(((Item)this.inventaire.get(i)).getNombre() <= 0)
+		((Item) this.inventaire.get(i)).subNombre(j);
+		if (((Item) this.inventaire.get(i)).getNombre() <= 0)
 			this.removeItem(i);
 	}
-	
-	public Boolean haveItem(Object obj){
+
+	public Boolean haveItem(Object obj) {
 		ListIterator<Object> it = inventaire.listIterator();
 		while (it.hasNext()) {
-			if(((Inventable)it.next()).getId().equals(((Inventable)obj).getId()))
+			if (((Inventable) it.next()).getId().equals(((Inventable) obj).getId()))
 				return true;
 		}
 		return false;
 	}
-	
-	public Boolean haveItem(Object obj, short nb){
+
+	public Boolean haveItem(Object obj, short nb) {
 		ListIterator<Object> it = inventaire.listIterator();
 		while (it.hasNext()) {
 			Object objTest = it.next();
-			if(((Inventable)objTest).getId().equals(((Inventable)obj).getId()))
-				if(((Item)objTest).getNombre() >= (((Item)obj).getNombre()))
+			if (((Inventable) objTest).getId().equals(((Inventable) obj).getId()))
+				if (((Item) objTest).getNombre() >= (((Item) obj).getNombre()))
 					return true;
 		}
 		return false;

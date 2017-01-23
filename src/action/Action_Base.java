@@ -6,14 +6,14 @@ public class Action_Base extends Action_Perso {
 
 	public String explorer(Personnage perso) {
 		perso.position = Position.monde;
-		return ""; 
+		return "";
 	}
 
 	public String coffre(Personnage perso) {
 		perso.position = Position.coffre;
 		return "Vous etes a votre coffre.\n";
 	}
-	
+
 	public String craftTable(Personnage perso) {
 		perso.position = Position.craft;
 		return "Vous etes a votre table de craft.\n";

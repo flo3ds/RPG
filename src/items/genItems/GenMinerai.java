@@ -2,17 +2,16 @@ package items.genItems;
 
 import core.Rand;
 import items.Minerai;
-import items.Minerai.matiere;
 
-public class GenMinerai {	
-	
-	//Creer un minerai aléatoire plus le retourne
+public class GenMinerai {
+
+	// Creer un minerai aléatoire plus le retourne
 	static public Minerai genMinerai() {
-		//Créer un type de minerai aléatoire
+		// Créer un type de minerai aléatoire
 		Minerai.matiere type = Minerai.matiere.values()[Rand.entier(0, Minerai.matiere.values().length)];
-		//Créer un nombre de minerai aléatoire
+		// Créer un nombre de minerai aléatoire
 		int nb = (short) (1 + Math.random() * 10);
-		//Crée le minerai avec les infos précedentes et le retourne
+		// Crée le minerai avec les infos précedentes et le retourne
 		return new Minerai(type, nb);
 	}
 }

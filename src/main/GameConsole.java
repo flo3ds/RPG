@@ -24,7 +24,6 @@ public class GameConsole {
 
 	private Personnage perso = new Personnage();
 
-	
 	public String action(String in) {
 		if (perso.position == Position.base) {
 			if (in.equals("explorer")) {
@@ -35,20 +34,20 @@ public class GameConsole {
 			return action_base.action(perso, in);
 		} else if (perso.position == Position.coffre) {
 			return action_coffre.action(perso, base, in);
-		}else if (perso.position == Position.craft) {
+		} else if (perso.position == Position.craft) {
 			return action_craft.action(perso, base, in);
 		} else if (perso.position == Position.monde) {
 			return action_monde.action(perso, in);
 		} else
 			return "error";
 	}
-	
+
 	public void game() throws IOException {
-		
+
 		perso.inv.putItem(new Minerai(Minerai.matiere.cuivre, 8));
 		perso.inv.putItem(new Minerai(Minerai.matiere.fer, 8));
 		perso.inv.putItem(new Bois(4));
-		
+
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		System.out.println("Bienvenue dans votre base !");
 		System.out.println("taper 'help' pour voir les commandes disponibles.\n");
@@ -63,5 +62,3 @@ public class GameConsole {
 
 	}
 }
-
-

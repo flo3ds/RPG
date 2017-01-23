@@ -4,9 +4,9 @@ import perso.Personnage;
 
 // 
 /**
- * Cette classe gere les actions du personnage
- * C'est a dire les actions qui ne dependent pas d'un lieux et qu'il peut faire en permanance
- * Exemple : Regarder son inventaire...
+ * Cette classe gere les actions du personnage C'est a dire les actions qui ne
+ * dependent pas d'un lieux et qu'il peut faire en permanance Exemple : Regarder
+ * son inventaire...
  */
 public class Action_Perso {
 
@@ -22,8 +22,10 @@ public class Action_Perso {
 	/**
 	 * Liste l'inventaire du personnage
 	 *
-	 * @param perso the perso
-	 * @param in la commande clavier
+	 * @param perso
+	 *            the perso
+	 * @param in
+	 *            la commande clavier
 	 * @return the string
 	 */
 	public String listInventaire(Personnage perso, String in) {
@@ -36,8 +38,10 @@ public class Action_Perso {
 	/**
 	 * Execute l'action du personnage en fonction de la commande
 	 *
-	 * @param perso the perso
-	 * @param in la commande clavier
+	 * @param perso
+	 *            the perso
+	 * @param in
+	 *            la commande clavier
 	 * @return the string
 	 */
 	public String actionPerso(Personnage perso, String in) {
@@ -50,7 +54,8 @@ public class Action_Perso {
 	/**
 	 * Test si un action liées au personnage va etre exécuté
 	 *
-	 * @param in la commande clavier
+	 * @param in
+	 *            la commande clavier
 	 * @return the boolean
 	 */
 	public Boolean actionPersoTest(String in) {

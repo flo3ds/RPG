@@ -8,6 +8,4 @@ public class Inventaire extends Container {
 		this.setCases(10);
 	}
 
-	
-
 }

@@ -10,7 +10,7 @@ public class Arbre extends Feuille {
 	private String tronc_texture;
 	private String tronc_taille;
 	private String tronc_largeur;
-	
+
 	public Bois bois = GenBois.genBois();
 
 	public Arbre() {

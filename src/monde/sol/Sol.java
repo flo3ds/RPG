@@ -8,7 +8,6 @@ public class Sol {
 
 	private String type;
 	public Minerai minerais = GenMinerai.genMinerai();
-	
 
 	public Sol() {
 		this.type = Type.values()[Rand.entier(0, Type.values().length)].toString();

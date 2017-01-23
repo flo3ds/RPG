@@ -18,7 +18,7 @@ public class GenMonde {
 	}
 
 	public String getDescriptionGlobal() {
-		return ciel.getDescription() + "\n" + sol.getDescription() +"\n";
+		return ciel.getDescription() + "\n" + sol.getDescription() + "\n";
 	}
 
 }

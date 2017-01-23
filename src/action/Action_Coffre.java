@@ -25,7 +25,7 @@ public class Action_Coffre extends Action_Perso {
 		else if (Action.coffre_put.test(in)) {
 			if (base.coffre.putItem(perso.inv.getItem(0)))
 				return "Item non déposé.\n";
-			else{
+			else {
 				perso.inv.removeItem(0);
 				return "Item déposé.";
 			}
