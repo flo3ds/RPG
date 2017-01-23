@@ -86,5 +86,24 @@ abstract public class Container {
 		if(((Item)this.inventaire.get(i)).getNombre() <= 0)
 			this.removeItem(i);
 	}
+	
+	public Boolean haveItem(Object obj){
+		ListIterator<Object> it = inventaire.listIterator();
+		while (it.hasNext()) {
+			if(((Inventable)it.next()).getId().equals(((Inventable)obj).getId()))
+				return true;
+		}
+		return false;
+	}
+	
+	public Boolean haveItem(Object obj, short nb){
+		ListIterator<Object> it = inventaire.listIterator();
+		while (it.hasNext()) {
+			if(((Inventable)it.next()).getId().equals(((Inventable)obj).getId()))
+				if(((Item)it.next()).getNombre() >= (((Item)obj).getNombre()))
+					return true;
+		}
+		return false;
+	}
 
 }
