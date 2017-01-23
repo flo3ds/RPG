@@ -96,6 +96,26 @@
 ---------------------------------------------------------------------------------------------------------------------
 
 										LA BASE :
+										
+			La base est la ou se trouve toute la partie gestion du jeu on trouve :
+			
+			-Les crafts (ainsi qu'un tableau ou livre ou sont répertorié tout les crafts ainsi que ceux dont le joueur
+			n'a pas les ressource nécessaire.
+			-Les interractions avec les pnj (dialogue en rapport avec l'univers ou autre)
+			-la gestion de la faim des survivants
+			-Un lit pour pouvoir passer des heures et regagner sa vie
+			-La gestion de son coffre pour stocker des objets
+			-Un indicateur d'état de défense de la base, qui commence par critique,faible,correct,bon,excellent
+			ou excellent reduit a 0 les chances que les inféctés tue et pillent les ressources
+			
+			Dans la base il peut y avoir certain jours des attaques d'inféctés
+			
+			
+---------------------------------------------------------------------------------------------------------------------
+
+
+			
+			
 			
 			
 			
