@@ -16,7 +16,7 @@ public class Action_Monde extends Action_Perso {
 		perso.position= Position.faune;
 		
 		return this.monde.faune.getAllDescription();
-	}
+	} 
 	
 	public String analyseFlore() {
 		return this.monde.flore.getAllDescription();
