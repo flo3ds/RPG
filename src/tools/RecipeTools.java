@@ -9,7 +9,8 @@ import items.Bois;
 public enum RecipeTools {
 
 	
-	marteau("marteau", new Marteau(), new Object[]{new Bois(2)}, null);
+	marteau("marteau", new Marteau(), new Object[]{new Bois(2)}, null),
+	hache("hache", new Hache(), new Object[]{new Bois(2)}, null);
 	
 	public Recipe recipe;
 	
