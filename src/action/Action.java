@@ -19,7 +19,9 @@ public enum Action {
 	build_tool("build tool"),
 	analyser_flore("analyser flore"),
 	analyser_faune("analyser faune"),
-	couper_bois("couper bois");
+	couper_bois("couper bois"),
+	chasser("chasser"),
+	arrêter_chasse("arrêter la chasse");
 
 	private final String str;
 

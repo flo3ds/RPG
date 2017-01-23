@@ -1,11 +1,17 @@
 package monde.faune;
 
+import items.Steak;
+import items.genItems.GenSteak;
+import action.Position;
+import monde.GenMonde;
+import perso.Personnage;
 
 public class Faune {
 	
-	private short nb_type_animal;
+	public short nb_type_animal;
 	private Animal[] animal;
 	
+	public Steak steak = GenSteak.genSteak();
 	
 	public Faune(){
 		
