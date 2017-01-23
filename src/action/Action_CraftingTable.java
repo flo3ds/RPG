@@ -1,5 +1,7 @@
 package action;
 
+import java.util.Arrays;
+
 import base.Base;
 import base.Craft_Category;
 import core.Inventable;
@@ -114,29 +116,16 @@ public class Action_CraftingTable extends Action_Perso {
 		Object obj[] = recipe.getObjectForRecipe();
 		Boolean tab[] = new Boolean[obj.length];
 		
-		for(int i=0; i <tab.length; i++){
-			tab[i] = false;
-		}
+		Arrays.fill(tab, Boolean.FALSE);
 		
 		for(int j=0; j < obj.length; j++){
-			for(int i=0; i < perso.inv.getInventaire().size(); i++){
-				Object objTest = perso.inv.getItem(i);
-				if(((Inventable)obj[j]).getId().equals(((Inventable)objTest).getId())){ 
-					if(((Item)obj[j]).getNombre() <= ((Item) objTest).getNombre() ){
-						tab[j] = true;
-						break;
-					}
-				}
-				tab[j] = false;
-			}
+			if(perso.inv.haveItem(obj[j], (short) ((Item)obj[j]).getNombre()))
+				tab[j] = true;
 		}
 		
-		for(int i=0; i <tab.length; i++){
-			if(tab[i] == false){
-				return false;
-			}
-				
-		}
+		for(int i=0; i <tab.length; i++)
+			if(tab[i] == false)
+				return false;	
 		
 		return true;
 	}
@@ -147,26 +136,16 @@ public class Action_CraftingTable extends Action_Perso {
 		Object obj[] = recipe.getToolForRecipe();
 		if(obj != null){
 		Boolean tab[] = new Boolean[obj.length];
-		
-		for(int i=0; i <tab.length; i++){
-			tab[i] = false;
-		}
+		Arrays.fill(tab, Boolean.FALSE);
 		
 		for(int j=0; j < obj.length; j++){
-			for(int i=0; i < perso.inv.getInventaire().size(); i++){
-				Object objTest = perso.inv.getItem(i);
-				if(((Inventable)obj[j]).getId().equals(((Inventable)objTest).getId())){ 
-						tab[j] = true;
-						break;
-				}
-				tab[j] = false;
-			}
+			if(perso.inv.haveItem(obj[j]))
+				tab[j] = true;
 		}
 		
 		for(int i=0; i <tab.length; i++){
-			if(tab[i] == false){
+			if(tab[i] == false)
 				return false;
-			}
 				
 		}
 		}

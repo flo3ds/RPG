@@ -99,8 +99,9 @@ abstract public class Container {
 	public Boolean haveItem(Object obj, short nb){
 		ListIterator<Object> it = inventaire.listIterator();
 		while (it.hasNext()) {
-			if(((Inventable)it.next()).getId().equals(((Inventable)obj).getId()))
-				if(((Item)it.next()).getNombre() >= (((Item)obj).getNombre()))
+			Object objTest = it.next();
+			if(((Inventable)objTest).getId().equals(((Inventable)obj).getId()))
+				if(((Item)objTest).getNombre() >= (((Item)obj).getNombre()))
 					return true;
 		}
 		return false;
