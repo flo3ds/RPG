@@ -21,7 +21,7 @@ public enum Action {
 	analyser_faune("analyser faune"),
 	couper_bois("couper bois"),
 	chasser("chasser"),
-	arrêter_chasse("arrêter la chasse");
+	arrêter_chasse("arrêter la chasse"); 
 
 	private final String str;
 

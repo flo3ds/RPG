@@ -29,7 +29,7 @@ public class Action_Faune extends Action_Perso {
 		perso.inv.putItem(monde.faune.steak);
 		return "Vous récuperez " + monde.faune.steak.getNombre() + " Steaks " + ".\n";
 		
-	}
+	} 
 	
 	
 	public String help() {

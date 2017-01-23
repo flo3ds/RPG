@@ -6,7 +6,7 @@ public class Action_Base extends Action_Perso {
 
 	public String explorer(Personnage perso) {
 		perso.position = Position.monde;
-		return "";
+		return ""; 
 	}
 
 	public String coffre(Personnage perso) {

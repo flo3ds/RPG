@@ -23,7 +23,7 @@ public Animal(){
 public String getDescriptionAnl(){
 	return "L'animal "+this.ressemble+" à un "+this.adjectif + " "+this.especeP+ " des "+this.endroit+"\n";
 	
-}
+} 
 
 
 private enum EspeceP {	// Espéce passive

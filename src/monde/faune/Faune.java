@@ -21,7 +21,7 @@ public class Faune {
 		
 		for(int i = 0; i < this.nb_type_animal; i++)
 			animal[i] = new Animal();
-	}
+	} 
 	
 	
 	public short getNbTypeAnimal(){

@@ -4,7 +4,7 @@ public class Steak extends Item{
 
 	
 	private String id = "Steak";
-
+ 
 	
 	public Steak(){
 		this.setId(this.id);
