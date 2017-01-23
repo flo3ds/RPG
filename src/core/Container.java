@@ -42,7 +42,7 @@ abstract public class Container {
 		}
 		
 		
-		this.inventaire.add(object);
+		this.inventaire.add(((Inventable)object).clone());
 		return false;
 	}
 
