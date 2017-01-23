@@ -42,14 +42,9 @@ public class Action_Monde extends Action_Perso {
 			return "Vous n'avez pas de hache";
 	}
 
-	public static String base(Personnage perso) {
+	public String base(Personnage perso) {
 		perso.position = Position.base;
 		return "Vous rentrez a votre base.\n";
-	}
-
-	public static String arretChasse(Personnage perso) {
-		perso.position = Position.monde;
-		return "Vous revenez de votre chasse.\n";
 	}
 
 	public String getDescriptionGlobal() {
@@ -79,7 +74,6 @@ public class Action_Monde extends Action_Perso {
 				return this.miner(perso);
 			else if (Action.analyser_faune.test(in)) {
 				perso.position = Position.faune;
-				System.out.println(Position.faune);
 				return this.analyseFaune(perso);
 			} else if (Action.analyser_flore.test(in))
 				return this.analyseFlore();
