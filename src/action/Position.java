@@ -1,5 +1,5 @@
 package action;
 
 public enum Position {
-	base, coffre, craft, monde;
+	base, coffre, craft, monde, faune;
 }

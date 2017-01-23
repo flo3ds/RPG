@@ -148,7 +148,7 @@ public class GameGUI {
 			return action_coffre.action(perso, base, in);
 		}else if (perso.position == Position.craft) {
 			return action_craft.action(perso, base, in);
-		} else if (perso.position == Position.monde) {
+		} else if (perso.position == Position.monde || perso.position == Position.faune) {
 			return action_monde.action(perso, in);
 		} else
 			return "error";
