@@ -25,12 +25,12 @@ public class Action_CraftingTable extends Action_Perso {
 	
 	public String buildItem(Base base, Personnage perso){
 		this.cc = Craft_Category.items;
-		return base.craftTable.craftTableListItem() + "\nEntrer le numero de l'item a crafter :";
+		return perso.inv.liste();
 	}
 	
 	public String buildTool(Base base, Personnage perso){
 		this.cc = Craft_Category.tools;
-		return base.craftTable.craftTableListTool() + "\nEntrer le numero de l'item a crafter :";
+		return perso.inv.liste();
 	}
 
 	public String base(Personnage perso) {
@@ -52,18 +52,27 @@ public class Action_CraftingTable extends Action_Perso {
 			return this.actionPerso(perso, in);
 		else
 			return this.help();
-		}else if(this.cc == Craft_Category.items)
-			return this.build(perso, RecipeItems.values()[(short) Integer.parseInt(in)].recipe);
-		else if(this.cc == Craft_Category.tools)
-			return this.build(perso, RecipeTools.values()[(short) Integer.parseInt(in)].recipe);
-		else
+		}else if(this.cc == Craft_Category.items){
+			if(in.equals(""))
+				in = "error";
+				return this.build(perso, RecipeItems.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
+		}else if(this.cc == Craft_Category.tools){
+			if(in.equals(""))
+				in = "error";
+			return this.build(perso, RecipeTools.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
+		}else
 			return "error";
 	}catch(NumberFormatException e){
-		if(in.equals("craft")){
+		if(Action.craftTable.test(in)){
 			this.cc = null;
 			return "Vous revenez a la table de craft";
 		}else
-		return "entrer un numero ou craft pour revenir a la table.\n";
+			if(this.cc == Craft_Category.items)
+				return base.craftTable.craftTableListItem() + "\ncraft";
+			else if(this.cc == Craft_Category.tools)
+				return base.craftTable.craftTableListTool() + "\ncraft";
+			else
+				return "error\n";
 	}
 	}
 	
@@ -85,7 +94,7 @@ public class Action_CraftingTable extends Action_Perso {
 		}
 		
 		perso.inv.putItem(recipe.getItem());
-		return "Vous avez creé : " + recipe.getItem().toString();
+		return perso.inv.liste();
 	}
 
 	private String build(Personnage perso, Recipe recipe) {
