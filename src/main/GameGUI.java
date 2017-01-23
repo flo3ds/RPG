@@ -128,8 +128,8 @@ public class GameGUI {
 		
 		frame.setVisible(true);
 		
-		perso.inv.putItem(new Minerai(Minerai.matiere.cuivre, 8));
-		perso.inv.putItem(new Minerai(Minerai.matiere.fer, 8));
+		perso.inv.putItem(new Minerai(Minerai.matiere.cuivre, 16));
+		perso.inv.putItem(new Minerai(Minerai.matiere.fer, 16));
 		perso.inv.putItem(new Bois(4));
 		
 		this.print("Bienvenue dans votre base !\n");
