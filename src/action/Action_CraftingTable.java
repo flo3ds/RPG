@@ -54,6 +54,7 @@ public class Action_CraftingTable extends Action_Perso {
 		this.cc = null;
 		this.perso.position = Position.base;
 		String out = "Vous etes de retour a la base.\n";
+		if(this.base.event.getEvent() != null)
 		out += ((Event_extends) this.base.event.getEvent()).getIntro();
 		return out;
 	}
