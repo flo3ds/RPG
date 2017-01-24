@@ -2,6 +2,7 @@ package base;
 
 import items.RecipeItems;
 import tools.RecipeTools;
+import weapons.RecipeWeapons;
 
 public class CraftTable {
 
@@ -21,8 +22,8 @@ public class CraftTable {
 	
 	public String craftTableListWeapon() {
 		String out = "";
-		for (int i = 0; i < RecipeTools.values().length; i++)
-			out += i + ":" + RecipeTools.values()[i].recipe.recipe();
+		for (int i = 0; i < RecipeWeapons.values().length; i++)
+			out += i + ":" + RecipeWeapons.values()[i].recipe.recipe();
 		return out;
 	}
 

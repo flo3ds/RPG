@@ -27,6 +27,7 @@ public class Action_CraftingTable extends Action_Perso {
 	public String help() {
 		String out = "";
 		out += Action.build_item.getName() + "\n";
+		out += Action.build_weapon.getName() + "\n";
 		out += Action.build_tool.getName() + "\n";
 		out += Action.base.getName() + "\n";
 		out += this.help_perso();
@@ -94,7 +95,7 @@ public class Action_CraftingTable extends Action_Perso {
 			else if (this.cc == Craft_Category.weapons)
 				return this.base.craftTable.craftTableListWeapon() + "\ncraft";
 			else
-				return "error\n";
+				return "error action_craftTable\n";
 		}
 	}
 
