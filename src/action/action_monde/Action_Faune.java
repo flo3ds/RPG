@@ -19,10 +19,7 @@ public class Action_Faune extends Action_Perso {
 	}
 	public String action(String in, GenMonde monde) {
 		if (Action.chasser.test(in)) {
-			if (monde.faune.nb_type_animal > 0)
-				return this.Chasser(monde);
-			else
-				return ("Vous perdez une heure a chasser le vent qui vous siffle aux oreilles");
+			return this.Chasser(monde);
 		} else if (Action.base.test(in))
 			return this.base();
 		else if (Action.arrêter_chasse.test(in))
@@ -45,8 +42,12 @@ public class Action_Faune extends Action_Perso {
 	}
 
 	public String Chasser(GenMonde monde) {
-		this.perso.inv.putItem(monde.faune.steak);
-		return "Vous récuperez " + monde.faune.steak.getNombre() + " Steaks " + ".\n";
+		if (monde.faune.nb_type_animal > 0){
+			this.perso.inv.putItem(monde.faune.steak);
+			return "Vous récuperez " + monde.faune.steak.getNombre() + " Steaks " + ".\n";
+		}
+		else
+			return ("Vous perdez une heure a chasser le vent qui vous siffle aux oreilles");
 
 	}
 
