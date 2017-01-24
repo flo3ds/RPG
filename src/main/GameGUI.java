@@ -33,13 +33,14 @@ public class GameGUI {
 	private String bufferOut = "";
 	private JLabel label = new JLabel("New label");
 
-	private Base base = new Base();
-	private Action_Monde action_monde = new Action_Monde();
-	private Action_Base action_base = new Action_Base();
-	private Action_Coffre action_coffre = new Action_Coffre();
-	private Action_CraftingTable action_craft = new Action_CraftingTable();
-
 	private Personnage perso = new Personnage();
+	private Base base = new Base();
+	
+	private Action_Monde action_monde = new Action_Monde(perso);
+	private Action_Base action_base = new Action_Base(perso);
+	private Action_Coffre action_coffre = new Action_Coffre(perso, base);
+	private Action_CraftingTable action_craft = new Action_CraftingTable(perso, base);
+
 
 	/**
 	 * Create the application.
@@ -124,16 +125,16 @@ public class GameGUI {
 		if (perso.position == Position.base) {
 			if (in.equals("explorer")) {
 				this.action_monde.newMonde();
-				action_base.action(perso, in);
+				action_base.action(in);
 				return this.action_monde.getDescriptionGlobal();
 			}
-			return action_base.action(perso, in);
+			return action_base.action(in);
 		} else if (perso.position == Position.coffre) {
-			return action_coffre.action(perso, base, in);
+			return action_coffre.action(in);
 		} else if (perso.position == Position.craft) {
-			return action_craft.action(perso, base, in);
+			return action_craft.action(in);
 		} else if (perso.position == Position.monde || perso.position == Position.faune) {
-			return action_monde.action(perso, in);
+			return action_monde.action(in);
 		} else
 			return "error";
 	}

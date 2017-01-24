@@ -4,18 +4,24 @@ import perso.Personnage;
 
 public class Action_Base extends Action_Perso {
 
-	public String explorer(Personnage perso) {
-		perso.position = Position.monde;
+	private Personnage perso;
+	
+	public Action_Base(Personnage perso){
+		this.perso = perso;
+	}
+	
+	public String explorer() {
+		this.perso.position = Position.monde;
 		return "";
 	}
 
-	public String coffre(Personnage perso) {
-		perso.position = Position.coffre;
+	public String coffre() {
+		this.perso.position = Position.coffre;
 		return "Vous etes a votre coffre.\n";
 	}
 
-	public String craftTable(Personnage perso) {
-		perso.position = Position.craft;
+	public String craftTable() {
+		this.perso.position = Position.craft;
 		return "Vous etes a votre table de craft.\n";
 	}
 
@@ -30,15 +36,15 @@ public class Action_Base extends Action_Perso {
 		return out;
 	}
 
-	public String action(Personnage perso, String in) {
+	public String action(String in) {
 		if (Action.explorer.test(in))
-			return this.explorer(perso);
+			return this.explorer();
 		else if (Action.coffre.test(in))
-			return this.coffre(perso);
+			return this.coffre();
 		else if (Action.craftTable.test(in))
-			return this.craftTable(perso);
+			return this.craftTable();
 		else if (this.actionPersoTest(in))
-			return this.actionPerso(perso, in);
+			return this.actionPerso(this.perso, in);
 		else
 			return this.help();
 	}

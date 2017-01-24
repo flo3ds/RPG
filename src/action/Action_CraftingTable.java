@@ -14,6 +14,14 @@ import tools.RecipeTools;
 public class Action_CraftingTable extends Action_Perso {
 
 	private Craft_Category cc;
+	
+	private Personnage perso;
+	private Base base;
+	
+	public Action_CraftingTable(Personnage perso, Base base){
+		this.perso = perso;
+		this.base = base;
+	}
 
 	public String help() {
 		String out = "";
@@ -24,31 +32,31 @@ public class Action_CraftingTable extends Action_Perso {
 		return out;
 	}
 
-	public String buildItem(Base base, Personnage perso) {
+	public String buildItem() {
 		this.cc = Craft_Category.items;
 		return perso.inv.liste();
 	}
 
-	public String buildTool(Base base, Personnage perso) {
+	public String buildTool() {
 		this.cc = Craft_Category.tools;
 		return perso.inv.liste();
 	}
 
-	public String base(Personnage perso) {
+	public String base() {
 		perso.position = Position.base;
 		this.cc = null;
-		return "Vous etes de retour a la base.\n";
+		return "Vous etes de retour a la this.base.\n";
 	}
 
-	public String action(Personnage perso, Base base, String in) {
+	public String action(String in) {
 		try {
 			if (this.cc == null) {
 				if (Action.build_item.test(in))
-					return this.buildItem(base, perso);
+					return this.buildItem();
 				if (Action.build_tool.test(in))
-					return this.buildTool(base, perso);
+					return this.buildTool();
 				else if (Action.base.test(in))
-					return this.base(perso);
+					return this.base();
 				else if (this.actionPersoTest(in))
 					return this.actionPerso(perso, in);
 				else
@@ -56,11 +64,11 @@ public class Action_CraftingTable extends Action_Perso {
 			} else if (this.cc == Craft_Category.items) {
 				if (in.equals(""))
 					in = "error";
-				return this.build(perso, RecipeItems.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
+				return this.build(RecipeItems.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
 			} else if (this.cc == Craft_Category.tools) {
 				if (in.equals(""))
 					in = "error";
-				return this.build(perso, RecipeTools.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
+				return this.build(RecipeTools.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
 			} else
 				return "error";
 		} catch (NumberFormatException e) {
@@ -68,15 +76,15 @@ public class Action_CraftingTable extends Action_Perso {
 				this.cc = null;
 				return "Vous revenez a la table de craft";
 			} else if (this.cc == Craft_Category.items)
-				return base.craftTable.craftTableListItem() + "\ncraft";
+				return this.base.craftTable.craftTableListItem() + "\ncraft";
 			else if (this.cc == Craft_Category.tools)
-				return base.craftTable.craftTableListTool() + "\ncraft";
+				return this.base.craftTable.craftTableListTool() + "\ncraft";
 			else
 				return "error\n";
 		}
 	}
 
-	public String applyRecipe(Personnage perso, Recipe recipe) {
+	public String applyRecipe(Recipe recipe) {
 		Object obj[] = recipe.getObjectForRecipe();
 
 		for (int j = 0; j < obj.length; j++) {
@@ -95,18 +103,18 @@ public class Action_CraftingTable extends Action_Perso {
 		return perso.inv.liste();
 	}
 
-	private String build(Personnage perso, Recipe recipe) {
+	private String build(Recipe recipe) {
 
-		if (!this.testTools(perso, recipe))
+		if (!this.testTools(recipe))
 			return "Vous n'avez pas les outils requis";
-		if (this.testRecipe(perso, recipe)) {
-			return this.applyRecipe(perso, recipe);
+		if (this.testRecipe(recipe)) {
+			return this.applyRecipe(recipe);
 		} else
 			return "Vous n'avez pas les ressources sur vous!\n";
 
 	}
 
-	private Boolean testRecipe(Personnage perso, Recipe recipe) {
+	private Boolean testRecipe(Recipe recipe) {
 		Object obj[] = recipe.getObjectForRecipe();
 		Boolean tab[] = new Boolean[obj.length];
 
@@ -125,7 +133,7 @@ public class Action_CraftingTable extends Action_Perso {
 	}
 
 	// A améliorer plus tard
-	private Boolean testTools(Personnage perso, Recipe recipe) {
+	private Boolean testTools( Recipe recipe) {
 		Object obj[] = recipe.getToolForRecipe();
 		if (obj != null) {
 			Boolean tab[] = new Boolean[obj.length];
