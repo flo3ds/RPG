@@ -1,6 +1,7 @@
 package action;
 
 import action.action_monde.Action_Faune;
+import action.action_monde.Action_Flore;
 import monde.GenMonde;
 import perso.Personnage;
 import tools.Hache;
@@ -9,12 +10,14 @@ public class Action_Monde extends Action_Perso {
 
 	public GenMonde monde;
 	public Action_Faune faune;
+	public Action_Flore flore;
 
 	private Personnage perso;
 
 	public Action_Monde(Personnage perso) {
 		this.perso = perso;
 		faune = new Action_Faune(this.perso);
+		flore = new Action_Flore(this.perso);
 	}
 
 	public String analyseSol() {
@@ -28,6 +31,8 @@ public class Action_Monde extends Action_Perso {
 	}
 
 	public String analyseFlore() {
+		this.perso.position = Position.flore;
+		
 		return this.monde.flore.getAllDescription();
 	}
 
@@ -75,7 +80,9 @@ public class Action_Monde extends Action_Perso {
 	}
 
 	public String action(String in) {
-		if (this.perso.position == Position.faune) {
+		if (this.perso.position == Position.flore) {
+			return this.flore.action(in, this.monde);
+		}else if (this.perso.position == Position.faune) {
 
 			return this.faune.action(in, this.monde);
 		} else {
@@ -97,5 +104,5 @@ public class Action_Monde extends Action_Perso {
 			else
 				return this.help();
 		}
+		}
 	}
-}

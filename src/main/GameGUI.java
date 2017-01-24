@@ -145,10 +145,11 @@ public class GameGUI {
 			return action_coffre.action(in);
 		} else if (perso.position == Position.craft) {
 			return action_craft.action(in);
-		} else if (perso.position == Position.monde || perso.position == Position.faune) {
+		} else if (perso.position == Position.monde || perso.position == Position.faune || perso.position == Position.flore) {
 			return action_monde.action(in);
+			
 		} else
-			return "error";
+			return "error GAME GUI";
 	}
 
 	public void listeAction() {

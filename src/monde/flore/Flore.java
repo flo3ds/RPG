@@ -2,12 +2,17 @@ package monde.flore;
 
 import core.Rand;
 
+import items.genItems.GenPlante;
+
+
 public class Flore {
 
 	private short nb_type_arbre;
 	private short nb_type_plante;
 	public Arbre[] arbres;
 	private Plante[] plantes;
+	
+	public items.Plante plante = GenPlante.GenPlante();
 
 	public Flore() {
 		this.nb_type_arbre = (short) Rand.entier(1, 3);
