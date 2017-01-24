@@ -91,6 +91,8 @@ public class Action_CraftingTable extends Action_Perso {
 				return this.base.craftTable.craftTableListItem() + "\ncraft";
 			else if (this.cc == Craft_Category.tools)
 				return this.base.craftTable.craftTableListTool() + "\ncraft";
+			else if (this.cc == Craft_Category.weapons)
+				return this.base.craftTable.craftTableListWeapon() + "\ncraft";
 			else
 				return "error\n";
 		}
