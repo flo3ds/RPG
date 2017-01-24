@@ -10,6 +10,7 @@ import items.Item;
 import items.RecipeItems;
 import perso.Personnage;
 import tools.RecipeTools;
+import weapons.RecipeWeapons;
 
 public class Action_CraftingTable extends Action_Perso {
 
@@ -41,6 +42,11 @@ public class Action_CraftingTable extends Action_Perso {
 		this.cc = Craft_Category.tools;
 		return perso.inv.liste();
 	}
+	
+	public String buildWeapon() {
+		this.cc = Craft_Category.weapons;
+		return perso.inv.liste();
+	}
 
 	public String base() {
 		perso.position = Position.base;
@@ -53,8 +59,10 @@ public class Action_CraftingTable extends Action_Perso {
 			if (this.cc == null) {
 				if (Action.build_item.test(in))
 					return this.buildItem();
-				if (Action.build_tool.test(in))
+				else if (Action.build_tool.test(in))
 					return this.buildTool();
+				else if (Action.build_weapon.test(in))
+					return this.buildWeapon();
 				else if (Action.base.test(in))
 					return this.base();
 				else if (this.actionPersoTest(in))
@@ -65,6 +73,10 @@ public class Action_CraftingTable extends Action_Perso {
 				if (in.equals(""))
 					in = "error";
 				return this.build(RecipeItems.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
+			} else if (this.cc == Craft_Category.weapons) {
+				if (in.equals(""))
+					in = "error";
+				return this.build(RecipeWeapons.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
 			} else if (this.cc == Craft_Category.tools) {
 				if (in.equals(""))
 					in = "error";

@@ -12,7 +12,8 @@ public enum Action {
 
 	craftTable("craft"), build_item("build item"), build_tool("build tool"), analyser_flore(
 			"analyser flore"), analyser_faune("analyser faune"), couper_bois("couper bois"), chasser(
-					"chasser"), arrêter_chasse("arrêter la chasse"), portail("portail"), sonder("sonder");
+					"chasser"), arrêter_chasse("arrêter la chasse"), portail("portail"), sonder("sonder"),
+	build_weapon("build weapon");
 
 	private final String str;
 
