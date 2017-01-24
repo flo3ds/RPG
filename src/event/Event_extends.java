@@ -5,6 +5,8 @@ abstract public class Event_extends {
 	private String help;
 	private String intro;
 	
+	protected abstract String defHelp();
+	
 	public void setHelp(String help){
 		this.help = help;
 	}

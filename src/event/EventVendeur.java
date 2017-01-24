@@ -7,16 +7,15 @@ public class EventVendeur extends Event_extends{
 		this.setHelp(this.defHelp());
 	}
 	
-	private String defHelp(){
+	protected String defHelp(){
 		String out = "";
 		for(int i=0; i < Action_vendeur.values().length; i++)
-			out += Action_vendeur.values()[i].getName();
+			out += Action_vendeur.values()[i].getName() + "\n";
 		return out;
 	}
 	
 	private enum Action_vendeur{
 		
-		base("base"),
 		parler("parler");
 		
 		private final String str;

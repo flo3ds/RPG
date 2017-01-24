@@ -17,5 +17,9 @@ public class Personnage {
 	public void addTime(long jours){
 		this.time.addTime(jours);
 	}
+	
+	public Time getTime(){
+		return this.time;
+	}
 
 }

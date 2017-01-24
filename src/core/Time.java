@@ -8,7 +8,7 @@ public class Time {
 		this.jours += jours;
 	}
 	
-	public double getTime(){
+	public long getTime(){
 		return this.jours;
 	}
 }

@@ -15,7 +15,8 @@ public enum Action {
 					"chasser"), arrêter_chasse("arrêter la chasse"), portail("portail"), sonder("sonder"),
 	build_weapon("build weapon"),
 
-	cueillir("cueillir"), arrêter_cueillir("arrêter de cueillir");
+	cueillir("cueillir"), arrêter_cueillir("arrêter de cueillir"),
+	rapport("rapport");
 
 	private final String str;
 

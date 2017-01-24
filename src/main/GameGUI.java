@@ -25,6 +25,7 @@ import action.Action_Portail;
 import action.Position;
 import base.Base;
 import core.Time;
+import event.GenEvent;
 import items.Bois;
 import items.Minerai;
 import perso.Personnage;
@@ -40,9 +41,10 @@ public class GameGUI {
 	
 	private Personnage perso = new Personnage(time);
 	private Base base = new Base();
+	private GenEvent event = new GenEvent(perso);
 	
 	private Action_Monde action_monde = new Action_Monde(perso);
-	private Action_Base action_base = new Action_Base(perso);
+	private Action_Base action_base = new Action_Base(perso, event);
 	private Action_Portail action_portail = new Action_Portail(perso);
 	private Action_Coffre action_coffre = new Action_Coffre(perso, base);
 	private Action_CraftingTable action_craft = new Action_CraftingTable(perso, base);
@@ -182,10 +184,15 @@ public class GameGUI {
 		public Click(GameGUI gui) {
 			this.gui = gui;
 		}
+		
+		public void checkEvent(){
+			this.gui.event.genEvent();
+		}
 
 		public void mouseClicked(MouseEvent evt) {
 			JList list = (JList) evt.getSource();
 			if (evt.getClickCount() == 2) {
+				this.checkEvent();
 				int index = list.locationToIndex(evt.getPoint());
 				this.gui.print(this.gui.action(list.getModel().getElementAt(index).toString()));
 				this.gui.listeAction();
