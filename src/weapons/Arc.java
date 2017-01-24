@@ -1,4 +1,6 @@
-package items;
+package weapons;
+
+import items.Item;
 
 public class Arc extends Item {
 

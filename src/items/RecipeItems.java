@@ -22,9 +22,8 @@ public enum RecipeItems {
 					// requis
 	), // fermer la parenthese et une virgule
 
-	planche_bois("Planche en bois", new PlancheBois(), new Object[] { new Bois(2) }, null), arc("Arc", new Arc(),
-			new Object[] { new PlancheBois(2), new Fil(2) },
-			null), palissade_Bois("Palissade en Bois", new PalissadeBois(), new Object[] { new PlancheBois(6) }, null),
+	planche_bois("Planche en bois", new PlancheBois(), new Object[] { new Bois(2) }, null), 
+	palissade_Bois("Palissade en Bois", new PalissadeBois(), new Object[] { new PlancheBois(6) }, null),
 
 	// et sur une seule ligne sa donne sa:
 	plaque_acier("Plaque d'acier", new Plaque_Acier(), new Object[] { new Vis(2), new Minerai(Minerai.matiere.fer, 2) },
