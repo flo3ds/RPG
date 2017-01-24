@@ -5,13 +5,13 @@ import perso.Personnage;
 public class Action_Portail extends Action_Perso {
 
 	private Personnage perso;
-	
+
 	public Boolean sonder = false;
-	
-	public Action_Portail(Personnage perso){
+
+	public Action_Portail(Personnage perso) {
 		this.perso = perso;
 	}
-	
+
 	public String explorer() {
 		this.perso.position = Position.monde;
 		return "";
@@ -21,9 +21,9 @@ public class Action_Portail extends Action_Perso {
 		this.perso.position = Position.base;
 		return "Vous rentrez a votre base.\n";
 	}
-	
+
 	public String sonder() {
-		return "";//L'action sonder et gerer dans GUIMain
+		return "";// L'action sonder et gerer dans GUIMain
 	}
 
 	public String help() {

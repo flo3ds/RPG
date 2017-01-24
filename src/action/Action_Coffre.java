@@ -7,12 +7,12 @@ public class Action_Coffre extends Action_Perso {
 
 	private Personnage perso;
 	private Base base;
-	
-	public Action_Coffre(Personnage perso, Base base){
+
+	public Action_Coffre(Personnage perso, Base base) {
 		this.perso = perso;
 		this.base = base;
 	}
-	
+
 	public String help() {
 		String out = "";
 		out += Action.coffre_liste.getName() + "\n";

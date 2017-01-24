@@ -14,11 +14,11 @@ import tools.RecipeTools;
 public class Action_CraftingTable extends Action_Perso {
 
 	private Craft_Category cc;
-	
+
 	private Personnage perso;
 	private Base base;
-	
-	public Action_CraftingTable(Personnage perso, Base base){
+
+	public Action_CraftingTable(Personnage perso, Base base) {
 		this.perso = perso;
 		this.base = base;
 	}
@@ -133,7 +133,7 @@ public class Action_CraftingTable extends Action_Perso {
 	}
 
 	// A améliorer plus tard
-	private Boolean testTools( Recipe recipe) {
+	private Boolean testTools(Recipe recipe) {
 		Object obj[] = recipe.getToolForRecipe();
 		if (obj != null) {
 			Boolean tab[] = new Boolean[obj.length];

@@ -37,13 +37,12 @@ public class GameGUI {
 
 	private Personnage perso = new Personnage();
 	private Base base = new Base();
-	
+
 	private Action_Monde action_monde = new Action_Monde(perso);
 	private Action_Base action_base = new Action_Base(perso);
 	private Action_Portail action_portail = new Action_Portail(perso);
 	private Action_Coffre action_coffre = new Action_Coffre(perso, base);
 	private Action_CraftingTable action_craft = new Action_CraftingTable(perso, base);
-
 
 	/**
 	 * Create the application.
@@ -129,20 +128,20 @@ public class GameGUI {
 			return action_base.action(in);
 		} else if (perso.position == Position.portail) {
 			if (Action.explorer.test(in)) {
-				if(!this.action_portail.sonder)
+				if (!this.action_portail.sonder)
 					this.action_monde.newMonde();
 				else
 					this.action_portail.sonder = false;
 				action_portail.action(in);
 				return this.action_monde.getDescriptionGlobal();
-			}else if (Action.sonder.test(in)) {
+			} else if (Action.sonder.test(in)) {
 				this.action_portail.sonder = true;
 				this.action_monde.newMonde();
 				action_portail.action(in);
 				return this.action_monde.getDescriptionSonde();
 			}
 			return action_portail.action(in);
-		}else if (perso.position == Position.coffre) {
+		} else if (perso.position == Position.coffre) {
 			return action_coffre.action(in);
 		} else if (perso.position == Position.craft) {
 			return action_craft.action(in);

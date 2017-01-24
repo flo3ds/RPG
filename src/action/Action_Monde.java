@@ -9,10 +9,10 @@ public class Action_Monde extends Action_Perso {
 
 	public GenMonde monde;
 	public Action_Faune faune;
-	
-private Personnage perso;
-	
-	public Action_Monde(Personnage perso){
+
+	private Personnage perso;
+
+	public Action_Monde(Personnage perso) {
 		this.perso = perso;
 		faune = new Action_Faune(this.perso);
 	}
@@ -57,7 +57,7 @@ private Personnage perso;
 	public String getDescriptionGlobal() {
 		return this.monde.getDescriptionGlobal();
 	}
-	
+
 	public String getDescriptionSonde() {
 		return this.monde.getDescriptionSonde();
 	}

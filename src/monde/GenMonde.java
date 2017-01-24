@@ -24,7 +24,7 @@ public class GenMonde {
 	public String getDescriptionGlobal() {
 		return ciel.getDescription() + "\n" + sol.getDescription() + "\n";
 	}
-	
+
 	public String getDescriptionSonde() {
 		return "Rapport de la sonde :\n" + atmo.getDescription() + dangerRare.getDescription();
 	}

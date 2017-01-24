@@ -5,11 +5,11 @@ import perso.Personnage;
 public class Action_Base extends Action_Perso {
 
 	private Personnage perso;
-	
-	public Action_Base(Personnage perso){
+
+	public Action_Base(Personnage perso) {
 		this.perso = perso;
 	}
-	
+
 	public String portail() {
 		this.perso.position = Position.portail;
 		return "Vous ete a votre portail";

@@ -10,11 +10,9 @@ public enum Action {
 
 	analyser_sol("analyser sol"), miner("miner"),
 
-	craftTable("craft"), build_item("build item"), build_tool("build tool"),
-	analyser_flore("analyser flore"), analyser_faune("analyser faune"), couper_bois("couper bois"),
-	chasser("chasser"), arrêter_chasse("arrêter la chasse"),
-	portail("portail"),
-	sonder("sonder");
+	craftTable("craft"), build_item("build item"), build_tool("build tool"), analyser_flore(
+			"analyser flore"), analyser_faune("analyser faune"), couper_bois("couper bois"), chasser(
+					"chasser"), arrêter_chasse("arrêter la chasse"), portail("portail"), sonder("sonder");
 
 	private final String str;
 
