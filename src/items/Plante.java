@@ -17,7 +17,7 @@ public class Plante extends Item {
 		return this.plante;
 	}
 
-	
+  
 	public espece getType() {
 		return this.type;
 	}
