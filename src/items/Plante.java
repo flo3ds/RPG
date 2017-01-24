@@ -11,13 +11,13 @@ public class Plante extends Item {
 		this.setNombre((short) nb);
 		this.setId(this.id + " " + min.toString());
 	}
-
+ 
 	
 	public String getPlante() {
 		return this.plante;
 	}
 
-	
+  
 	public espece getType() {
 		return this.type;
 	}
