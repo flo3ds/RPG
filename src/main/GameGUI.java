@@ -16,10 +16,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
+import action.Action;
 import action.Action_Base;
 import action.Action_Coffre;
 import action.Action_CraftingTable;
 import action.Action_Monde;
+import action.Action_Portail;
 import action.Position;
 import base.Base;
 import items.Bois;
@@ -38,6 +40,7 @@ public class GameGUI {
 	
 	private Action_Monde action_monde = new Action_Monde(perso);
 	private Action_Base action_base = new Action_Base(perso);
+	private Action_Portail action_portail = new Action_Portail(perso);
 	private Action_Coffre action_coffre = new Action_Coffre(perso, base);
 	private Action_CraftingTable action_craft = new Action_CraftingTable(perso, base);
 
@@ -123,13 +126,23 @@ public class GameGUI {
 
 	public String action(String in) {
 		if (perso.position == Position.base) {
-			if (in.equals("explorer")) {
-				this.action_monde.newMonde();
-				action_base.action(in);
-				return this.action_monde.getDescriptionGlobal();
-			}
 			return action_base.action(in);
-		} else if (perso.position == Position.coffre) {
+		} else if (perso.position == Position.portail) {
+			if (Action.explorer.test(in)) {
+				if(!this.action_portail.sonder)
+					this.action_monde.newMonde();
+				else
+					this.action_portail.sonder = false;
+				action_portail.action(in);
+				return this.action_monde.getDescriptionGlobal();
+			}else if (Action.sonder.test(in)) {
+				this.action_portail.sonder = true;
+				this.action_monde.newMonde();
+				action_portail.action(in);
+				return this.action_monde.getDescriptionSonde();
+			}
+			return action_portail.action(in);
+		}else if (perso.position == Position.coffre) {
 			return action_coffre.action(in);
 		} else if (perso.position == Position.craft) {
 			return action_craft.action(in);

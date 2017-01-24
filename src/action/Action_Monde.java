@@ -57,6 +57,10 @@ private Personnage perso;
 	public String getDescriptionGlobal() {
 		return this.monde.getDescriptionGlobal();
 	}
+	
+	public String getDescriptionSonde() {
+		return this.monde.getDescriptionSonde();
+	}
 
 	public String help() {
 		String out = "";

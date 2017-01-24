@@ -10,9 +10,9 @@ public class Action_Base extends Action_Perso {
 		this.perso = perso;
 	}
 	
-	public String explorer() {
-		this.perso.position = Position.monde;
-		return "";
+	public String portail() {
+		this.perso.position = Position.portail;
+		return "Vous ete a votre portail";
 	}
 
 	public String coffre() {
@@ -28,7 +28,7 @@ public class Action_Base extends Action_Perso {
 	public String help() {
 		String out = "";
 
-		out += Action.explorer.getName() + "\n";
+		out += Action.portail.getName() + "\n";
 		out += Action.coffre.getName() + "\n";
 		out += Action.craftTable.getName() + "\n";
 
@@ -37,8 +37,8 @@ public class Action_Base extends Action_Perso {
 	}
 
 	public String action(String in) {
-		if (Action.explorer.test(in))
-			return this.explorer();
+		if (Action.portail.test(in))
+			return this.portail();
 		else if (Action.coffre.test(in))
 			return this.coffre();
 		else if (Action.craftTable.test(in))
