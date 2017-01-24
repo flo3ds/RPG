@@ -3,6 +3,7 @@ package event;
 abstract public class Event_extends {
 
 	private String help;
+	private String helpBase;
 	private String intro;
 	private String rapport;
 
@@ -14,6 +15,14 @@ abstract public class Event_extends {
 
 	public String getHelp() {
 		return this.help;
+	}
+	
+	public void setHelpBase(String help) {
+		this.helpBase = help;
+	}
+
+	public String getHelpBase() {
+		return this.helpBase;
 	}
 
 	public void setIntro(String intro) {

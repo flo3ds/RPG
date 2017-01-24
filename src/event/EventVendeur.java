@@ -6,6 +6,7 @@ public class EventVendeur extends Event_extends {
 		this.setIntro("Un vendeur est a la porte.\n");
 		this.setRapport("Un vendeur bizare est a la porte.\nIl souhaite commercer avec nous.\n");
 		this.setHelp(this.defHelp());
+		this.setHelpBase("Parler\n");
 	}
 
 	protected String defHelp() {
@@ -17,7 +18,7 @@ public class EventVendeur extends Event_extends {
 
 	private enum Action_vendeur {
 
-		parler("parler");
+		commerce("commerce");
 
 		private final String str;
 

@@ -20,8 +20,8 @@ public class Action_Monde extends Action_Perso {
 	public Action_Monde(Personnage perso, Base base) {
 		this.perso = perso;
 		this.base = base;
-		faune = new Action_Faune(this.perso);
-		flore = new Action_Flore(this.perso);
+		faune = new Action_Faune(this.perso, this.base);
+		flore = new Action_Flore(this.perso, this.base);
 	}
 
 	public String analyseSol() {

@@ -2,15 +2,20 @@ package action.action_monde;
 
 import action.Action_Perso;
 import action.Position;
+import base.Base;
+import event.Event_extends;
 import monde.GenMonde;
 import perso.Personnage;
 
 public class Action_Flore extends Action_Perso {
 
 	private Personnage perso;
+	private Base base;
 
-	public Action_Flore(Personnage perso) {
+
+	public Action_Flore(Personnage perso, Base base) {
 		this.perso = perso;
+		this.base = base;
 	}
 
 	public String action(String in, GenMonde monde) {
@@ -34,7 +39,9 @@ public class Action_Flore extends Action_Perso {
 
 	public String base() {
 		this.perso.position = Position.base;
-		return "Vous rentrez a votre base.\n";
+		String out = "Vous etes de retour a la base.\n";
+		out += ((Event_extends) this.base.event.getEvent()).getIntro();
+		return out;
 	}
 
 	public String cueillir(GenMonde monde) {
