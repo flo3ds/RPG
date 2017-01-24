@@ -163,6 +163,12 @@ public class GameGUI {
 		for (int i = 0; i < in.length; i++)
 			dlm.addElement(in[i]);
 	}
+	
+	public void postprint(String str) {
+		// this.bufferOut += str.replace("\n", "<br/>");
+		this.bufferOut += str.replace("\n", "<br/>");
+		this.label.setText("<html>" + this.bufferOut + "</html");
+	}
 
 	public void print(String str) {
 		// this.bufferOut += str.replace("\n", "<br/>");
