@@ -10,12 +10,14 @@ import action.Action_CraftingTable;
 import action.Action_Monde;
 import action.Position;
 import base.Base;
+import core.Time;
 import items.Bois;
 import items.Minerai;
 import perso.Personnage;
 
 public class GameConsole {
-	private Personnage perso = new Personnage();
+	private Time time;
+	private Personnage perso = new Personnage(time);
 	private Base base = new Base();
 
 	private Action_Monde action_monde = new Action_Monde(perso);

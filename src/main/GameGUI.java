@@ -24,6 +24,7 @@ import action.Action_Monde;
 import action.Action_Portail;
 import action.Position;
 import base.Base;
+import core.Time;
 import items.Bois;
 import items.Minerai;
 import perso.Personnage;
@@ -35,15 +36,18 @@ public class GameGUI {
 	private String bufferOut = "";
 	private JLabel label = new JLabel("New label");
 
-	private Personnage perso = new Personnage();
+	private Time time = new Time();;
+	
+	private Personnage perso = new Personnage(time);
 	private Base base = new Base();
-
+	
 	private Action_Monde action_monde = new Action_Monde(perso);
 	private Action_Base action_base = new Action_Base(perso);
 	private Action_Portail action_portail = new Action_Portail(perso);
 	private Action_Coffre action_coffre = new Action_Coffre(perso, base);
 	private Action_CraftingTable action_craft = new Action_CraftingTable(perso, base);
 
+	
 	/**
 	 * Create the application.
 	 */
@@ -164,7 +168,6 @@ public class GameGUI {
 		// this.bufferOut += str.replace("\n", "<br/>");
 		this.bufferOut = str.replace("\n", "<br/>");
 		this.label.setText("<html>" + this.bufferOut + "</html");
-
 	}
 
 	private class Click extends MouseAdapter {
@@ -180,6 +183,7 @@ public class GameGUI {
 				int index = list.locationToIndex(evt.getPoint());
 				this.gui.print(this.gui.action(list.getModel().getElementAt(index).toString()));
 				this.gui.listeAction();
+				System.out.println("jours : " + this.gui.time.getTime());
 			}
 		}
 	}
