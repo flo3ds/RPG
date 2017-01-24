@@ -1,12 +1,8 @@
 package action.action_monde;
 
-import action.Action;
-import action.Action_Monde;
-import action.Action_Perso;
 import action.Action_Perso;
 import action.Position;
 import monde.GenMonde;
-import perso.Personnage;
 import perso.Personnage;
 
 public class Action_Faune extends Action_Perso {
@@ -18,11 +14,11 @@ public class Action_Faune extends Action_Perso {
 	}
 
 	public String action(String in, GenMonde monde) {
-		if (Action.chasser.test(in)) {
+		if (Action_faune.chasser.action.test(in)) {
 			return this.Chasser(monde);
-		} else if (Action.base.test(in))
+		} else if (Action_faune.base.action.test(in))
 			return this.base();
-		else if (Action.arrêter_chasse.test(in))
+		else if (Action_faune.arrêter_chasse.action.test(in))
 			return this.arretChasse();
 		else if (this.actionPersoTest(in))
 			return this.actionPerso(this.perso, in);
@@ -52,10 +48,21 @@ public class Action_Faune extends Action_Perso {
 
 	public String help() {
 		String out = "";
-		out += Action.chasser.getName() + "\n";
-		out += Action.arrêter_chasse.getName() + "\n";
-		out += Action.base.getName() + "\n";
+		out += Action_faune.chasser.action.getName() + "\n";
+		out += Action_faune.arrêter_chasse.action.getName() + "\n";
+		out += Action_faune.base.action.getName() + "\n";
 		out += this.help_perso();
 		return out;
+	}
+
+	public enum Action_faune {
+
+		chasser("chasser"), arrêter_chasse("arrêter chasse"), base("base");
+
+		public core.Action action;
+
+		Action_faune(String str) {
+			this.action = new core.Action(str);
+		}
 	}
 }

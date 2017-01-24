@@ -6,6 +6,7 @@ import base.Base;
 import base.Craft_Category;
 import core.Inventable;
 import core.Recipe;
+import event.Event_extends;
 import items.Item;
 import items.RecipeItems;
 import perso.Personnage;
@@ -26,10 +27,10 @@ public class Action_CraftingTable extends Action_Perso {
 
 	public String help() {
 		String out = "";
-		out += Action.build_item.getName() + "\n";
-		out += Action.build_weapon.getName() + "\n";
-		out += Action.build_tool.getName() + "\n";
-		out += Action.base.getName() + "\n";
+		out += Action_Craft.build_item.action.getName() + "\n";
+		out += Action_Craft.build_weapon.action.getName() + "\n";
+		out += Action_Craft.build_tool.action.getName() + "\n";
+		out += Action_Craft.base.action.getName() + "\n";
 		out += this.help_perso();
 		return out;
 	}
@@ -43,28 +44,30 @@ public class Action_CraftingTable extends Action_Perso {
 		this.cc = Craft_Category.tools;
 		return perso.inv.liste();
 	}
-	
+
 	public String buildWeapon() {
 		this.cc = Craft_Category.weapons;
 		return perso.inv.liste();
 	}
 
 	public String base() {
-		perso.position = Position.base;
 		this.cc = null;
-		return "Vous etes de retour a la this.base.\n";
+		this.perso.position = Position.base;
+		String out = "Vous etes de retour a la base.\n";
+		out += ((Event_extends) this.base.event.getEvent()).getIntro();
+		return out;
 	}
 
 	public String action(String in) {
 		try {
 			if (this.cc == null) {
-				if (Action.build_item.test(in))
+				if (Action_Craft.build_item.action.test(in))
 					return this.buildItem();
-				else if (Action.build_tool.test(in))
+				else if (Action_Craft.build_tool.action.test(in))
 					return this.buildTool();
-				else if (Action.build_weapon.test(in))
+				else if (Action_Craft.build_weapon.action.test(in))
 					return this.buildWeapon();
-				else if (Action.base.test(in))
+				else if (Action_Craft.base.action.test(in))
 					return this.base();
 				else if (this.actionPersoTest(in))
 					return this.actionPerso(perso, in);
@@ -85,7 +88,7 @@ public class Action_CraftingTable extends Action_Perso {
 			} else
 				return "error";
 		} catch (NumberFormatException e) {
-			if (Action.craftTable.test(in)) {
+			if (Action_Craft.craftTable.action.test(in)) {
 				this.cc = null;
 				return "Vous revenez a la table de craft";
 			} else if (this.cc == Craft_Category.items)
@@ -167,6 +170,18 @@ public class Action_CraftingTable extends Action_Perso {
 		}
 
 		return true;
+	}
+
+	public enum Action_Craft {
+
+		base("base"), craftTable("table de craft"), build_item("build item"), build_tool("build tool"), build_weapon(
+				"build weapon");
+
+		public core.Action action;
+
+		Action_Craft(String str) {
+			this.action = new core.Action(str);
+		}
 	}
 
 }

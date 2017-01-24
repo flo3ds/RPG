@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-import action.Action;
 import action.Action_Base;
 import action.Action_Coffre;
 import action.Action_CraftingTable;
@@ -38,18 +37,17 @@ public class GameGUI {
 	private JLabel label = new JLabel("New label");
 
 	private Time time = new Time();;
-	
+
 	private Personnage perso = new Personnage(time);
-	private Base base = new Base();
 	private GenEvent event = new GenEvent(perso);
-	
-	private Action_Monde action_monde = new Action_Monde(perso);
-	private Action_Base action_base = new Action_Base(perso, event);
-	private Action_Portail action_portail = new Action_Portail(perso);
+	private Base base = new Base(event);
+
+	private Action_Monde action_monde = new Action_Monde(perso, base);
+	private Action_Base action_base = new Action_Base(perso, base);
+	private Action_Portail action_portail = new Action_Portail(perso, base);
 	private Action_Coffre action_coffre = new Action_Coffre(perso, base);
 	private Action_CraftingTable action_craft = new Action_CraftingTable(perso, base);
 
-	
 	/**
 	 * Create the application.
 	 */
@@ -133,14 +131,14 @@ public class GameGUI {
 		if (perso.position == Position.base) {
 			return action_base.action(in);
 		} else if (perso.position == Position.portail) {
-			if (Action.explorer.test(in)) {
+			if (Action_Portail.Action_portail.explorer.action.test(in)) {
 				if (!this.action_portail.sonder)
 					this.action_monde.newMonde();
 				else
 					this.action_portail.sonder = false;
 				action_portail.action(in);
 				return this.action_monde.getDescriptionGlobal();
-			} else if (Action.sonder.test(in)) {
+			} else if (Action_Portail.Action_portail.sonder.action.test(in)) {
 				this.action_portail.sonder = true;
 				this.action_monde.newMonde();
 				action_portail.action(in);
@@ -151,9 +149,10 @@ public class GameGUI {
 			return action_coffre.action(in);
 		} else if (perso.position == Position.craft) {
 			return action_craft.action(in);
-		} else if (perso.position == Position.monde || perso.position == Position.faune || perso.position == Position.flore) {
+		} else if (perso.position == Position.monde || perso.position == Position.faune
+				|| perso.position == Position.flore) {
 			return action_monde.action(in);
-			
+
 		} else
 			return "error GAME GUI";
 	}
@@ -165,7 +164,7 @@ public class GameGUI {
 		for (int i = 0; i < in.length; i++)
 			dlm.addElement(in[i]);
 	}
-	
+
 	public void postprint(String str) {
 		// this.bufferOut += str.replace("\n", "<br/>");
 		this.bufferOut += str.replace("\n", "<br/>");
@@ -184,8 +183,8 @@ public class GameGUI {
 		public Click(GameGUI gui) {
 			this.gui = gui;
 		}
-		
-		public void checkEvent(){
+
+		public void checkEvent() {
 			this.gui.event.genEvent();
 		}
 
@@ -196,7 +195,7 @@ public class GameGUI {
 				int index = list.locationToIndex(evt.getPoint());
 				this.gui.print(this.gui.action(list.getModel().getElementAt(index).toString()));
 				this.gui.listeAction();
-				System.out.println(this.gui.time.getTime()+"H");
+				System.out.println(this.gui.time.getTime() + "H");
 			}
 		}
 	}

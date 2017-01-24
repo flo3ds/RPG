@@ -2,6 +2,8 @@ package action;
 
 import action.action_monde.Action_Faune;
 import action.action_monde.Action_Flore;
+import base.Base;
+import event.Event_extends;
 import monde.GenMonde;
 import perso.Personnage;
 import tools.Hache;
@@ -13,9 +15,11 @@ public class Action_Monde extends Action_Perso {
 	public Action_Flore flore;
 
 	private Personnage perso;
+	private Base base;
 
-	public Action_Monde(Personnage perso) {
+	public Action_Monde(Personnage perso, Base base) {
 		this.perso = perso;
+		this.base = base;
 		faune = new Action_Faune(this.perso);
 		flore = new Action_Flore(this.perso);
 	}
@@ -32,7 +36,7 @@ public class Action_Monde extends Action_Perso {
 
 	public String analyseFlore() {
 		this.perso.position = Position.flore;
-		
+
 		return this.monde.flore.getAllDescription();
 	}
 
@@ -56,7 +60,9 @@ public class Action_Monde extends Action_Perso {
 
 	public String base() {
 		this.perso.position = Position.base;
-		return "Vous rentrez a votre base.\n";
+		String out = "Vous etes de retour a la base.\n";
+		out += ((Event_extends) this.base.event.getEvent()).getIntro();
+		return out;
 	}
 
 	public String getDescriptionGlobal() {
@@ -69,12 +75,12 @@ public class Action_Monde extends Action_Perso {
 
 	public String help() {
 		String out = "";
-		out += Action.miner.getName() + "\n";
-		out += Action.base.getName() + "\n";
-		out += Action.analyser_sol.getName() + "\n";
-		out += Action.analyser_faune.getName() + "\n";
-		out += Action.analyser_flore.getName() + "\n";
-		out += Action.couper_bois.getName() + "\n";
+		out += Action_monde.miner.action.getName() + "\n";
+		out += Action_monde.base.action.getName() + "\n";
+		out += Action_monde.analyser_sol.action.getName() + "\n";
+		out += Action_monde.analyser_faune.action.getName() + "\n";
+		out += Action_monde.analyser_flore.action.getName() + "\n";
+		out += Action_monde.couper_bois.action.getName() + "\n";
 		out += this.help_perso();
 		return out;
 	}
@@ -82,27 +88,39 @@ public class Action_Monde extends Action_Perso {
 	public String action(String in) {
 		if (this.perso.position == Position.flore) {
 			return this.flore.action(in, this.monde);
-		}else if (this.perso.position == Position.faune) {
-
+		} else if (this.perso.position == Position.faune) {
 			return this.faune.action(in, this.monde);
 		} else {
-			if (Action.analyser_sol.test(in))
+			if (Action_monde.analyser_sol.action.test(in))
 				return this.analyseSol();
-			else if (Action.miner.test(in))
+			else if (Action_monde.miner.action.test(in))
 				return this.miner();
-			else if (Action.analyser_faune.test(in)) {
+			else if (Action_monde.analyser_faune.action.test(in)) {
 				this.perso.position = Position.faune;
 				return this.analyseFaune();
-			} else if (Action.analyser_flore.test(in))
+			} else if (Action_monde.analyser_flore.action.test(in))
 				return this.analyseFlore();
-			else if (Action.base.test(in))
+			else if (Action_monde.base.action.test(in))
 				return this.base();
 			else if (this.actionPersoTest(in))
 				return this.actionPerso(this.perso, in);
-			else if (Action.couper_bois.test(in))
+			else if (Action_monde.couper_bois.action.test(in))
 				return this.couperBois();
 			else
 				return this.help();
 		}
+	}
+
+	public enum Action_monde {
+
+		analyser_sol("analyser_sol"), miner("miner"), analyser_faune("analyser_faune"), analyser_flore(
+				"analyser_flore"), base("base"), couper_bois("couper_bois");
+
+		public core.Action action;
+
+		Action_monde(String str) {
+			this.action = new core.Action(str);
 		}
 	}
+
+}

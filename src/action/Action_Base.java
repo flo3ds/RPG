@@ -1,18 +1,17 @@
 package action;
 
-import event.Event;
+import base.Base;
 import event.Event_extends;
-import event.GenEvent;
 import perso.Personnage;
 
 public class Action_Base extends Action_Perso {
 
 	private Personnage perso;
-	private GenEvent event;
+	private Base base;
 
-	public Action_Base(Personnage perso, GenEvent event) {
+	public Action_Base(Personnage perso, Base base) {
 		this.perso = perso;
-		this.event = event;
+		this.base = base;
 	}
 
 	public String portail() {
@@ -24,13 +23,13 @@ public class Action_Base extends Action_Perso {
 		this.perso.position = Position.coffre;
 		return "Vous etes a votre coffre.\n";
 	}
-	
-	public String rapport(){
+
+	public String rapport() {
 		String out = "";
 		out += "rapport :\n";
-		if(event.getEvent() != null)
-			out += ((Event_extends)this.event.getEvent()).getIntro();
-		else
+		if (this.base.event.getEvent() != null) {
+			out += ((Event_extends) this.base.event.getEvent()).getRapport();
+		} else
 			out += "Rien a signaler.\n";
 		return out;
 	}
@@ -42,30 +41,42 @@ public class Action_Base extends Action_Perso {
 
 	public String help() {
 		String out = "";
-		
-		if(event.getEvent() != null)
-			out += ((Event_extends)this.event.getEvent()).getHelp();
-		out += Action.portail.getName() + "\n";
-		out += Action.coffre.getName() + "\n";
-		out += Action.rapport.getName() + "\n";
-		out += Action.craftTable.getName() + "\n";
+
+		if (this.base.event.getEvent() != null)
+			out += ((Event_extends) this.base.event.getEvent()).getHelp();
+		out += Action_base.portail.action.getName() + "\n";
+		out += Action_base.coffre.action.getName() + "\n";
+		out += Action_base.rapport.action.getName() + "\n";
+		out += Action_base.craftTable.action.getName() + "\n";
 
 		out += this.help_perso();
 		return out;
 	}
 
 	public String action(String in) {
-		if (Action.portail.test(in))
+		if (Action_base.portail.action.test(in))
 			return this.portail();
-		else if (Action.coffre.test(in))
+		else if (Action_base.coffre.action.test(in))
 			return this.coffre();
-		else if (Action.craftTable.test(in))
+		else if (Action_base.craftTable.action.test(in))
 			return this.craftTable();
-		else if (Action.rapport.test(in))
-				return this.rapport();
+		else if (Action_base.rapport.action.test(in))
+			return this.rapport();
 		else if (this.actionPersoTest(in))
 			return this.actionPerso(this.perso, in);
 		else
 			return this.help();
 	}
+
+	public enum Action_base {
+
+		portail("portail"), coffre("coffre"), craftTable("table de craft"), rapport("rapport");
+
+		public core.Action action;
+
+		Action_base(String str) {
+			this.action = new core.Action(str);
+		}
+	}
+
 }

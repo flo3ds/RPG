@@ -1,9 +1,7 @@
 package monde.flore;
 
 import core.Rand;
-
 import items.genItems.GenPlante;
-
 
 public class Flore {
 
@@ -11,7 +9,7 @@ public class Flore {
 	private short nb_type_plante;
 	public Arbre[] arbres;
 	private Plante[] plantes;
-	
+
 	public items.Plante plante = GenPlante.GenPlante();
 
 	public Flore() {

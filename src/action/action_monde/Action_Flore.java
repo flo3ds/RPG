@@ -1,12 +1,8 @@
 package action.action_monde;
 
-import action.Action;
-import action.Action_Monde;
-import action.Action_Perso;
 import action.Action_Perso;
 import action.Position;
 import monde.GenMonde;
-import perso.Personnage;
 import perso.Personnage;
 
 public class Action_Flore extends Action_Perso {
@@ -18,11 +14,11 @@ public class Action_Flore extends Action_Perso {
 	}
 
 	public String action(String in, GenMonde monde) {
-		if (Action.cueillir.test(in)) {
+		if (Action_flore.cueillir.action.test(in)) {
 			return this.cueillir(monde);
-		} else if (Action.base.test(in))
+		} else if (Action_flore.base.action.test(in))
 			return this.base();
-		else if (Action.arrêter_cueillir.test(in))
+		else if (Action_flore.arrêter_cueillir.action.test(in))
 			return this.arretcueillir();
 		else if (this.actionPersoTest(in))
 			return this.actionPerso(this.perso, in);
@@ -42,17 +38,29 @@ public class Action_Flore extends Action_Perso {
 	}
 
 	public String cueillir(GenMonde monde) {
-			this.perso.inv.putItem(monde.flore.plante);
-			return "Vous récuperez " + monde.flore.plante.getNombre() + " Plantes " + monde.flore.plante.getPlante()+ ".\n";
+		this.perso.inv.putItem(monde.flore.plante);
+		return "Vous récuperez " + monde.flore.plante.getNombre() + " Plantes " + monde.flore.plante.getPlante()
+				+ ".\n";
 
 	}
 
 	public String help() {
 		String out = "";
-		out += Action.cueillir.getName() + "\n";
-		out += Action.arrêter_cueillir.getName() + "\n";
-		out += Action.base.getName() + "\n";
+		out += Action_flore.cueillir.action.getName() + "\n";
+		out += Action_flore.arrêter_cueillir.action.getName() + "\n";
+		out += Action_flore.base.action.getName() + "\n";
 		out += this.help_perso();
 		return out;
+	}
+
+	public enum Action_flore {
+
+		cueillir("cueillir"), arrêter_cueillir("arrêter cueillir"), base("base");
+
+		public core.Action action;
+
+		Action_flore(String str) {
+			this.action = new core.Action(str);
+		}
 	}
 }

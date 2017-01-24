@@ -19,7 +19,7 @@ public class CraftTable {
 			out += i + ":" + RecipeTools.values()[i].recipe.recipe();
 		return out;
 	}
-	
+
 	public String craftTableListWeapon() {
 		String out = "";
 		for (int i = 0; i < RecipeWeapons.values().length; i++)

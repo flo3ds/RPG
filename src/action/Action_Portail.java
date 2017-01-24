@@ -1,15 +1,18 @@
 package action;
 
+import base.Base;
+import event.Event_extends;
 import perso.Personnage;
 
 public class Action_Portail extends Action_Perso {
 
 	private Personnage perso;
-
+	private Base base;
 	public Boolean sonder = false;
 
-	public Action_Portail(Personnage perso) {
+	public Action_Portail(Personnage perso, Base base) {
 		this.perso = perso;
+		this.base = base;
 	}
 
 	public String explorer() {
@@ -20,7 +23,9 @@ public class Action_Portail extends Action_Perso {
 
 	public String base() {
 		this.perso.position = Position.base;
-		return "Vous rentrez a votre base.\n";
+		String out = "Vous etes de retour a la base.\n";
+		out += ((Event_extends) this.base.event.getEvent()).getIntro();
+		return out;
 	}
 
 	public String sonder() {
@@ -31,24 +36,35 @@ public class Action_Portail extends Action_Perso {
 	public String help() {
 		String out = "";
 
-		out += Action.explorer.getName() + "\n";
-		out += Action.base.getName() + "\n";
-		out += Action.sonder.getName() + "\n";
+		out += Action_portail.explorer.action.getName() + "\n";
+		out += Action_portail.base.action.getName() + "\n";
+		out += Action_portail.sonder.action.getName() + "\n";
 
 		out += this.help_perso();
 		return out;
 	}
 
 	public String action(String in) {
-		if (Action.explorer.test(in))
+		if (Action_portail.explorer.action.test(in))
 			return this.explorer();
-		else if (Action.sonder.test(in))
+		else if (Action_portail.sonder.action.test(in))
 			return this.sonder();
-		else if (Action.base.test(in))
+		else if (Action_portail.base.action.test(in))
 			return this.base();
 		else if (this.actionPersoTest(in))
 			return this.actionPerso(this.perso, in);
 		else
 			return this.help();
+	}
+
+	public enum Action_portail {
+
+		base("base"), explorer("explorer"), sonder("sonder");
+
+		public core.Action action;
+
+		Action_portail(String str) {
+			this.action = new core.Action(str);
+		}
 	}
 }
