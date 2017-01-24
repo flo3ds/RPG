@@ -14,7 +14,7 @@ public class Personnage {
 	public Inventaire inv = new Inventaire();
 	public Position position = Position.base;
 	
-	public void addTime(double jours){
+	public void addTime(long jours){
 		this.time.addTime(jours);
 	}
 

@@ -183,7 +183,7 @@ public class GameGUI {
 				int index = list.locationToIndex(evt.getPoint());
 				this.gui.print(this.gui.action(list.getModel().getElementAt(index).toString()));
 				this.gui.listeAction();
-				System.out.println("jours : " + this.gui.time.getTime());
+				System.out.println(this.gui.time.getTime()+"H");
 			}
 		}
 	}

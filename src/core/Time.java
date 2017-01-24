@@ -2,9 +2,9 @@ package core;
 
 public class Time {
 
-	private double jours = 1.0;
+	private long jours = 1;
 	
-	public void addTime(double jours){
+	public void addTime(long jours){
 		this.jours += jours;
 	}
 	

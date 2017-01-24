@@ -14,18 +14,17 @@ public class Action_Portail extends Action_Perso {
 
 	public String explorer() {
 		this.perso.position = Position.monde;
-		this.perso.addTime(1.0);
+		this.perso.addTime(1);
 		return "";
 	}
 
 	public String base() {
 		this.perso.position = Position.base;
-		this.perso.addTime(1.0);
 		return "Vous rentrez a votre base.\n";
 	}
 
 	public String sonder() {
-		this.perso.addTime(1.0);
+		this.perso.addTime(1);
 		return "";// L'action sonder et gerer dans GUIMain
 	}
 
