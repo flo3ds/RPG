@@ -6,7 +6,7 @@ import base.Base;
 import base.Craft_Category;
 import core.Inventable;
 import core.Recipe;
-import event.Event_extends;
+import core.event.Event_extends;
 import items.Item;
 import items.RecipeItems;
 import perso.Personnage;

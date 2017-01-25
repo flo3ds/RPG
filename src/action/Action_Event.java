@@ -2,7 +2,8 @@ package action;
 
 import action.Action_Base.Action_base;
 import base.Base;
-import event.Event_extends;
+import core.event.Event_extends;
+import core.event.I_Event;
 import perso.Personnage;
 
 // 
@@ -31,7 +32,7 @@ public class Action_Event extends Action_Perso {
 
 	public String action(String in) {
 		if (((Event_extends) this.base.event.getEvent()).test(in))
-			return ((Event_extends)this.base.event.getEvent()).action(in);
+			return ((I_Event)this.base.event.getEvent()).execute(in, this.perso, this.base);
 		else if (this.actionPersoTest(in))
 			return this.actionPerso(this.perso, in);
 		else

@@ -3,7 +3,7 @@ package action.action_monde;
 import action.Action_Perso;
 import action.Position;
 import base.Base;
-import event.Event_extends;
+import core.event.Event_extends;
 import monde.GenMonde;
 import perso.Personnage;
 

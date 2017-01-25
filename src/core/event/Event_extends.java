@@ -1,4 +1,4 @@
-package event;
+package core.event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,6 @@ import perso.Personnage;
 
 abstract public class Event_extends {
 
-	private String help;
 	private String helpBase;
 	private String intro;
 	private String rapport;
@@ -18,20 +17,28 @@ abstract public class Event_extends {
 	private List<Action_event> list_action = new ArrayList<Action_event>();
 	
 	private Personnage perso;
-
-
-	protected abstract String defHelp();
 	
-	public void setPersonnage(Personnage perso){
-		this.perso = perso;
+	private short duree = 1;
+
+	public short getDuree(){
+		return this.duree;
+	}
+	
+	public void setDuree(short duree){
+		this.duree = duree;
 	}
 
-	public void setHelp(String help) {
-		this.help = help;
+	private String defHelp(){
+		String out = "";
+		ListIterator<Action_event> it = this.list_action.listIterator();
+		while (it.hasNext()) {
+			out += it.next().getName() + "\n";
+		}
+		return out;
 	}
 
 	public String getHelp() {
-		return this.help;
+		return this.defHelp();
 	}
 	
 	public void setHelpBase(String help) {
@@ -78,21 +85,5 @@ abstract public class Event_extends {
 		}
 		return false;
 	}
-	
-		public String action(String in) {
-			ListIterator<Action_event> it = this.list_action.listIterator();
-			while (it.hasNext()) {
-				Action_event action_event_test = it.next();
-				if ( action_event_test.getName().equals(in))
-					try {
-						return action_event_test.getFunc().call(this.perso, in);
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-			}
-			return "non ok";
-		}
-	
 	
 }

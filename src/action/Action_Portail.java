@@ -1,7 +1,7 @@
 package action;
 
 import base.Base;
-import event.Event_extends;
+import core.event.Event_extends;
 import perso.Personnage;
 
 public class Action_Portail extends Action_Perso {

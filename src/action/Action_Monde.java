@@ -3,7 +3,7 @@ package action;
 import action.action_monde.Action_Faune;
 import action.action_monde.Action_Flore;
 import base.Base;
-import event.Event_extends;
+import core.event.Event_extends;
 import monde.GenMonde;
 import perso.Personnage;
 import tools.Hache;
