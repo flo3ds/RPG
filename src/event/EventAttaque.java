@@ -8,4 +8,6 @@ public class EventAttaque extends Event_extends {
 		return null;
 	}
 
+	
+
 }

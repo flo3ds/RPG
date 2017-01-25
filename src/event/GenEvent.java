@@ -13,9 +13,10 @@ public class GenEvent {
 	}
 
 	public void genEvent() {
-		if (perso.getTime().getTime() > 3)
+		if (perso.getTime().getTime() > 3){
 			this.obj = Event.values()[Rand.entier(0, Event.values().length)].getEvent();
-		else
+			((Event_extends)this.obj).setPersonnage(this.perso);
+		}else
 			this.obj = null;
 	}
 

@@ -19,6 +19,7 @@ import javax.swing.JSplitPane;
 import action.Action_Base;
 import action.Action_Coffre;
 import action.Action_CraftingTable;
+import action.Action_Event;
 import action.Action_Monde;
 import action.Action_Portail;
 import action.Position;
@@ -47,7 +48,8 @@ public class GameGUI {
 	private Action_Portail action_portail = new Action_Portail(perso, base);
 	private Action_Coffre action_coffre = new Action_Coffre(perso, base);
 	private Action_CraftingTable action_craft = new Action_CraftingTable(perso, base);
-
+	private Action_Event action_event = new Action_Event(perso, base);
+	
 	/**
 	 * Create the application.
 	 */
@@ -149,6 +151,8 @@ public class GameGUI {
 			return action_coffre.action(in);
 		} else if (perso.position == Position.craft) {
 			return action_craft.action(in);
+		} else if (perso.position == Position.event) {
+			return action_event.action(in);
 		} else if (perso.position == Position.monde || perso.position == Position.faune
 				|| perso.position == Position.flore) {
 			return action_monde.action(in);
