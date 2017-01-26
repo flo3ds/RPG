@@ -125,7 +125,7 @@ public class GameGUI {
 
 		perso.inv.putItem(new Minerai(Minerai.matiere.cuivre, 16));
 		perso.inv.putItem(new Minerai(Minerai.matiere.fer, 16));
-		perso.inv.putItem(new Bois(4));
+		perso.inv.putItem(new Bois(8));
 
 		this.print("Bienvenue dans votre base !\n");
 		this.listeAction();

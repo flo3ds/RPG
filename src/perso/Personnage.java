@@ -10,6 +10,7 @@ public class Personnage {
 	private Time time;
 	private int gold = 20;
 	private int vie = 100;
+	private short degat_base = 5;
 
 	private Armor armor = null;
 	private Weapon weapon = null;
@@ -20,11 +21,20 @@ public class Personnage {
 
 	public String listeStuff() {
 		String out = "";
+		out += "Armure : ";
 		if (this.armor != null)
 			out += this.armor.getId();
+		out += "\nArme : ";
 		if (this.weapon != null)
 			out += this.weapon.getId();
-		return out;
+		return out + "\n";
+	}
+	
+	public short getDegat(){
+		short degat = this.degat_base;
+		if(this.weapon != null)
+			degat += this.weapon.getDegat();
+		return degat;
 	}
 
 	public int getVie() {
@@ -84,11 +94,12 @@ public class Personnage {
 			if (this.armor != null)
 				this.inv.putItem(this.armor);
 			this.armor = (Armor) obj;
-		}
-		if (obj instanceof Weapon)
+		
+		}else if (obj instanceof Weapon){
 			if (this.weapon != null)
 				this.inv.putItem(this.weapon);
 		this.weapon = (Weapon) obj;
+		}
 	}
 
 }
