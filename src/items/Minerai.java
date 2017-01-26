@@ -1,5 +1,7 @@
 package items;
 
+import core.Item;
+
 public class Minerai extends Item {
 
 	private String minerai;

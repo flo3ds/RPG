@@ -1,5 +1,7 @@
 package items;
 
+import core.Item;
+
 public class Steak extends Item {
 
 	private String id = "Steak";

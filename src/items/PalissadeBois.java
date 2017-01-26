@@ -1,5 +1,7 @@
 package items;
 
+import core.Item;
+
 public class PalissadeBois extends Item {
 
 	private String id = "PalissadeBois";

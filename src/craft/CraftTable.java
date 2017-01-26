@@ -1,8 +1,4 @@
-package base;
-
-import items.RecipeItems;
-import tools.RecipeTools;
-import weapons.RecipeWeapons;
+package craft;
 
 public class CraftTable {
 

@@ -49,7 +49,7 @@ public class GameGUI {
 	private Action_Coffre action_coffre = new Action_Coffre(perso, base);
 	private Action_CraftingTable action_craft = new Action_CraftingTable(perso, base);
 	private Action_Event action_event = new Action_Event(perso, base);
-	
+
 	/**
 	 * Create the application.
 	 */

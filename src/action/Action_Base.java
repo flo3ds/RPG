@@ -38,8 +38,8 @@ public class Action_Base extends Action_Perso {
 		this.perso.position = Position.craft;
 		return "Vous etes a votre table de craft.\n";
 	}
-	
-	public String actionEvent(){
+
+	public String actionEvent() {
 		this.perso.position = Position.event;
 		return ((Event_extends) this.base.event.getEvent()).contact();
 	}
@@ -69,14 +69,14 @@ public class Action_Base extends Action_Perso {
 			return this.rapport();
 		else if (this.actionPersoTest(in))
 			return this.actionPerso(this.perso, in);
-		else if(this.base.event.getEvent() != null){
-			if (((Event_extends) this.base.event.getEvent()).getHelpBase().equals(in)){
+		else if (this.base.event.getEvent() != null) {
+			if (((Event_extends) this.base.event.getEvent()).getHelpBase().equals(in)) {
 				return this.actionEvent();
-			}else{
+			} else {
 				return this.help();
 			}
-			
-		}else
+
+		} else
 			return this.help();
 	}
 

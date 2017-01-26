@@ -1,6 +1,6 @@
 package weapons;
 
-import items.Item;
+import core.Item;
 
 public class Arc extends Item {
 

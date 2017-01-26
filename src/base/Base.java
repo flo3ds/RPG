@@ -1,5 +1,6 @@
 package base;
 
+import craft.CraftTable;
 import event.GenEvent;
 
 public class Base {

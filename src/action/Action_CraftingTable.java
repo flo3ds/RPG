@@ -3,15 +3,15 @@ package action;
 import java.util.Arrays;
 
 import base.Base;
-import base.Craft_Category;
 import core.Inventable;
+import core.Item;
 import core.Recipe;
 import core.event.Event_extends;
-import items.Item;
-import items.RecipeItems;
+import craft.Craft_Category;
+import craft.RecipeItems;
+import craft.RecipeTools;
+import craft.RecipeWeapons;
 import perso.Personnage;
-import tools.RecipeTools;
-import weapons.RecipeWeapons;
 
 public class Action_CraftingTable extends Action_Perso {
 
@@ -54,8 +54,8 @@ public class Action_CraftingTable extends Action_Perso {
 		this.cc = null;
 		this.perso.position = Position.base;
 		String out = "Vous etes de retour a la base.\n";
-		if(this.base.event.getEvent() != null)
-		out += ((Event_extends) this.base.event.getEvent()).getIntro();
+		if (this.base.event.getEvent() != null)
+			out += ((Event_extends) this.base.event.getEvent()).getIntro();
 		return out;
 	}
 

@@ -1,6 +1,4 @@
-package weapons;
-
-import core.Inventable;
+package core;
 
 //Un tool ne peut pas faire partit des composant d'une recette
 

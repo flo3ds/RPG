@@ -1,10 +1,9 @@
 /action/
-/base/
 /core/
-/event/
 /items/
-/main/
-/monde/
-/perso/
-/tools/
 /weapons/
+/tools/
+/craft/
+/base/
+/event/
+/main/

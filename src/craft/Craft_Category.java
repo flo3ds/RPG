@@ -1,4 +1,4 @@
-package base;
+package craft;
 
 public enum Craft_Category {
 

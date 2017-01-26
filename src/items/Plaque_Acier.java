@@ -1,5 +1,7 @@
 package items;
 
+import core.Item;
+
 public class Plaque_Acier extends Item {
 
 	// Ici on met le nom de l'item.

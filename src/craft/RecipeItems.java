@@ -1,6 +1,12 @@
-package items;
+package craft;
 
 import core.Recipe;
+import items.Bois;
+import items.Minerai;
+import items.PalissadeBois;
+import items.PlancheBois;
+import items.Plaque_Acier;
+import items.Vis;
 import tools.Marteau;
 
 //On ne peut pas mettre de tools dans les composant d'une recette pour l'instant.

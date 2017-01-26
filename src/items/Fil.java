@@ -1,5 +1,7 @@
 package items;
 
+import core.Item;
+
 public class Fil extends Item {
 
 	private String id = "Fil";

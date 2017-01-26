@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import items.Item;
-import tools.Tool;
-
 abstract public class Container {
 
 	private short cases = 10;

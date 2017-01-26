@@ -1,6 +1,4 @@
-package items;
-
-import core.Inventable;
+package core;
 
 abstract public class Item extends Inventable {
 

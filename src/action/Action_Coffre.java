@@ -26,7 +26,7 @@ public class Action_Coffre extends Action_Perso {
 	public String base() {
 		this.perso.position = Position.base;
 		String out = "Vous etes de retour a la base.\n";
-		if(this.base.event.getEvent() != null)
+		if (this.base.event.getEvent() != null)
 			out += ((Event_extends) this.base.event.getEvent()).getIntro();
 		return out;
 	}

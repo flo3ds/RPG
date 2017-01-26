@@ -1,7 +1,8 @@
-package weapons;
+package craft;
 
 import core.Recipe;
 import items.Bois;
+import weapons.Arc;
 
 //On ne peut pas mettre de tools dans les composant d'une recette pour l'instant.
 

@@ -1,5 +1,7 @@
 package items;
 
+import core.Item;
+
 public class Vis extends Item {
 
 	// Ici on met le nom de l'item.

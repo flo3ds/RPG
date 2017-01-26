@@ -1,5 +1,7 @@
 package items;
 
+import core.Item;
+
 public class Plante extends Item {
 
 	private String plante;

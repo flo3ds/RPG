@@ -17,13 +17,13 @@ public class GenEvent {
 	}
 
 	public void genEvent() {
-		if(this.obj == null){
-		if (perso.getTime().getTime() > end + interval){
-			this.obj = Event.values()[Rand.entier(0, Event.values().length)].getEvent();
-			this.begin = perso.getTime().getTime();
-		}
-		}else{
-			if (perso.getTime().getTime() > this.begin + ((Event_extends)this.obj).getDuree()){
+		if (this.obj == null) {
+			if (perso.getTime().getTime() > end + interval) {
+				this.obj = Event.values()[Rand.entier(0, Event.values().length)].getEvent();
+				this.begin = perso.getTime().getTime();
+			}
+		} else {
+			if (perso.getTime().getTime() > this.begin + ((Event_extends) this.obj).getDuree()) {
 				this.obj = null;
 				this.end = perso.getTime().getTime();
 			}
