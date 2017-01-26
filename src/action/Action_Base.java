@@ -47,8 +47,8 @@ public class Action_Base extends Action_Perso {
 	public String help() {
 		String out = "";
 
-		if (this.base.event.getEvent() != null)
-			out += ((Event_extends) this.base.event.getEvent()).getHelpBase() + "\n";
+		if (this.base.event.getEvent() != null && ((Event_extends) this.base.event.getEvent()).getEventReady())
+				out += ((Event_extends) this.base.event.getEvent()).getHelpBase() + "\n";
 		out += Action_base.portail.action.getName() + "\n";
 		out += Action_base.coffre.action.getName() + "\n";
 		out += Action_base.rapport.action.getName() + "\n";
@@ -69,7 +69,7 @@ public class Action_Base extends Action_Perso {
 			return this.rapport();
 		else if (this.actionPersoTest(in))
 			return this.actionPerso(this.perso, in);
-		else if (this.base.event.getEvent() != null) {
+		else if (this.base.event.getEvent() != null && ((Event_extends) this.base.event.getEvent()).getEventReady()){ //pour l'event rien
 			if (((Event_extends) this.base.event.getEvent()).getHelpBase().equals(in)) {
 				return this.actionEvent();
 			} else {

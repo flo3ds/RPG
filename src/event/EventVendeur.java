@@ -18,10 +18,11 @@ public class EventVendeur extends Event_extends implements I_Event {
 		this.setHelpBase("Parler"); // Ici c'est une action, ne pas mettre de \n
 		this.setContact("Hé ta des sous? j'ai de la bonne cam!");// Contact avec
 																	// l'event
-		this.setDuree((short) 1);
+		this.setDuree((short) 1); //durée de l'event avant disparition
+		this.setRandPourCent((short)20); //rand en pourcentage
 		this.errorId = "EventVendeur";// le nom de la classe
 
-		// On laisse la boucle, on remplace juste l'enum... ici Action_vendeur
+		// On laisse la boucle, on remplace juste l'enum... ici Action_vendeur déclaré en bas de la page
 		for (int i = 0; i < Action_vendeur.values().length; i++)
 			this.addAction(Action_vendeur.values()[i].getAction());
 	}

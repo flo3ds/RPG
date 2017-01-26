@@ -22,8 +22,9 @@ public class EventAttaque extends Event_extends implements I_Event {
 																							// avec
 																							// l'event
 		this.errorId = "EventAttaque";// le nom de la classe
-		this.setDuree((short) 3);
-		// On laisse la boucle, on remplace juste l'enum... ici Action_vendeur
+		this.setDuree((short) 3); //durée de l'event avant disparition
+		this.setRandPourCent((short)10); //rand en pourcentage
+		// On laisse la boucle, on remplace juste l'enum... ici Action_attaque déclaré en bas de la page
 		for (int i = 0; i < Action_attaque.values().length; i++)
 			this.addAction(Action_attaque.values()[i].getAction());
 	}
