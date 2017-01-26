@@ -6,8 +6,8 @@ import java.util.ListIterator;
 
 abstract public class Container {
 
-	private short cases = 10;
-	List<Object> inventaire = new ArrayList<Object>();
+	protected short cases = 10;
+	protected List<Object> inventaire = new ArrayList<Object>();
 	private short libre = 0;
 
 	public Container() {

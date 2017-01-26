@@ -23,4 +23,11 @@ public class CraftTable {
 		return out;
 	}
 
+	public String craftTableListArmor() {
+		String out = "";
+		for (int i = 0; i < RecipeArmors.values().length; i++)
+			out += i + ":" + RecipeArmors.values()[i].recipe.recipe();
+		return out;
+	}
+
 }

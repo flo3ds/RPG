@@ -13,25 +13,26 @@ public class EventRien extends Event_extends implements I_Event {
 
 	public EventRien() {
 
-		this.setEventReady(false);//Event jamais appelé si false
+		this.setEventReady(false);// Event jamais appelé si false
 		this.setIntro("");// description rapide
 		this.setRapport("");// description
-																									// detaillé
+							// detaillé
 		this.setHelpBase(""); // Ici c'est une action, ne pas mettre de \n
 		this.setContact("");// Contact avec
-		this.setDuree((short) 2); //durée de l'event avant disparition
-		this.setRandPourCent((short)100); //rand en pourcentage
-		this.errorId = "EventRien";// le nom de la classe	
-		
-		// On laisse la boucle, on remplace juste l'enum... ici Action_vendeur déclaré en bas de la page
-				for (int i = 0; i < Action_rien.values().length; i++)
-					this.addAction(Action_rien.values()[i].getAction());
+		this.setDuree((short) 2); // durée de l'event avant disparition
+		this.setRandPourCent((short) 100); // rand en pourcentage
+		this.errorId = "EventRien";// le nom de la classe
+
+		// On laisse la boucle, on remplace juste l'enum... ici Action_vendeur
+		// déclaré en bas de la page
+		for (int i = 0; i < Action_rien.values().length; i++)
+			this.addAction(Action_rien.values()[i].getAction());
 	}
 
 	public String execute(String in, Personnage perso, Base base) {
 		return "";
 	}
-	
+
 	private enum Action_rien {
 
 		rien("");

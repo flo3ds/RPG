@@ -8,6 +8,7 @@ import core.Item;
 import core.Recipe;
 import core.event.Event_extends;
 import craft.Craft_Category;
+import craft.RecipeArmors;
 import craft.RecipeItems;
 import craft.RecipeTools;
 import craft.RecipeWeapons;
@@ -29,6 +30,7 @@ public class Action_CraftingTable extends Action_Perso {
 		String out = "";
 		out += Action_Craft.build_item.action.getName() + "\n";
 		out += Action_Craft.build_weapon.action.getName() + "\n";
+		out += Action_Craft.build_armor.action.getName() + "\n";
 		out += Action_Craft.build_tool.action.getName() + "\n";
 		out += Action_Craft.base.action.getName() + "\n";
 		out += this.help_perso();
@@ -50,6 +52,11 @@ public class Action_CraftingTable extends Action_Perso {
 		return perso.inv.liste();
 	}
 
+	public String buildArmor() {
+		this.cc = Craft_Category.armors;
+		return perso.inv.liste();
+	}
+
 	public String base() {
 		this.cc = null;
 		this.perso.position = Position.base;
@@ -68,6 +75,8 @@ public class Action_CraftingTable extends Action_Perso {
 					return this.buildTool();
 				else if (Action_Craft.build_weapon.action.test(in))
 					return this.buildWeapon();
+				else if (Action_Craft.build_armor.action.test(in))
+					return this.buildArmor();
 				else if (Action_Craft.base.action.test(in))
 					return this.base();
 				else if (this.actionPersoTest(in))
@@ -82,24 +91,33 @@ public class Action_CraftingTable extends Action_Perso {
 				if (in.equals(""))
 					in = "error";
 				return this.build(RecipeWeapons.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
+			} else if (this.cc == Craft_Category.armors) {
+				if (in.equals(""))
+					in = "error";
+				return this.build(RecipeArmors.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
 			} else if (this.cc == Craft_Category.tools) {
 				if (in.equals(""))
 					in = "error";
 				return this.build(RecipeTools.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
 			} else
 				return "error";
+
 		} catch (NumberFormatException e) {
+
 			if (Action_Craft.craftTable.action.test(in)) {
 				this.cc = null;
 				return "Vous revenez a la table de craft";
 			} else if (this.cc == Craft_Category.items)
-				return this.base.craftTable.craftTableListItem() + "\ncraft";
+				return this.base.craftTable.craftTableListItem() + "\n" + Action_Craft.craftTable.action.getName();
 			else if (this.cc == Craft_Category.tools)
-				return this.base.craftTable.craftTableListTool() + "\ncraft";
+				return this.base.craftTable.craftTableListTool() + "\n" + Action_Craft.craftTable.action.getName();
 			else if (this.cc == Craft_Category.weapons)
-				return this.base.craftTable.craftTableListWeapon() + "\ncraft";
+				return this.base.craftTable.craftTableListWeapon() + "\n" + Action_Craft.craftTable.action.getName();
+			else if (this.cc == Craft_Category.armors)
+				return this.base.craftTable.craftTableListArmor() + "\n" + Action_Craft.craftTable.action.getName();
 			else
 				return "error action_craftTable\n";
+
 		}
 	}
 
@@ -176,7 +194,7 @@ public class Action_CraftingTable extends Action_Perso {
 	public enum Action_Craft {
 
 		base("base"), craftTable("table de craft"), build_item("build item"), build_tool("build tool"), build_weapon(
-				"build weapon");
+				"build weapon"), build_armor("build armor");
 
 		public core.Action action;
 

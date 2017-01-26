@@ -16,7 +16,16 @@ public class Action_Perso {
 	 * @return the string
 	 */
 	public String help_perso() {
-		return Action_perso.inventaire.action.getName() + "\n";
+		String out = "";
+		out += Action_perso.inventaire.action.getName() + "\n";
+		out += Action_perso.equiper.action.getName() + "\n";
+		return out;
+	}
+
+	public String equiper(Personnage perso) {
+		perso.lastPosition = perso.position;
+		perso.position = Position.equiper;
+		return "Que voulez vous equiper?";
 	}
 
 	/**
@@ -30,7 +39,9 @@ public class Action_Perso {
 	 */
 	public String listInventaire(Personnage perso, String in) {
 		if (Action_perso.inventaire.action.test(in))
-			return perso.inv.liste();
+			return perso.getGold() + "PO\n" + perso.inv.liste();
+		else if (Action_perso.equiper.action.test(in))
+			return this.equiper(perso);
 		else
 			return "";
 	}
@@ -47,6 +58,8 @@ public class Action_Perso {
 	public String actionPerso(Personnage perso, String in) {
 		if (Action_perso.inventaire.action.test(in))
 			return this.listInventaire(perso, in);
+		else if (Action_perso.equiper.action.test(in))
+			return this.listInventaire(perso, in);
 		else
 			return "";
 	}
@@ -61,13 +74,15 @@ public class Action_Perso {
 	public Boolean actionPersoTest(String in) {
 		if (Action_perso.inventaire.action.test(in))
 			return true;
+		else if (Action_perso.equiper.action.test(in))
+			return true;
 		else
 			return false;
 	}
 
 	public enum Action_perso {
 
-		inventaire("inventaire");
+		inventaire("inventaire"), equiper("equiper");
 
 		public core.Action action;
 

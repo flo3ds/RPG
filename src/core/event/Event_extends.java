@@ -16,7 +16,7 @@ abstract public class Event_extends {
 	private List<Action_event> list_action = new ArrayList<Action_event>();
 
 	private Personnage perso;
-	
+
 	private short randPourCent = 0;
 
 	private short duree = 1;
@@ -28,7 +28,7 @@ abstract public class Event_extends {
 	public void setRandPourCent(short randPourCent) {
 		this.randPourCent = randPourCent;
 	}
-	
+
 	public short getDuree() {
 		return this.duree;
 	}
@@ -99,7 +99,7 @@ abstract public class Event_extends {
 	public boolean getEventReady() {
 		return this.ready;
 	}
-	
+
 	public boolean setEventReady(Boolean ready) {
 		return this.ready = ready;
 	}

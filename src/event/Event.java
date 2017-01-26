@@ -2,9 +2,7 @@ package event;
 
 public enum Event {
 
-	attaque(new EventAttaque()),
-	vendeur(new EventVendeur()),
-	rien(new EventRien());
+	attaque(new EventAttaque()), vendeur(new EventVendeur()), rien(new EventRien());
 
 	private Object obj;
 

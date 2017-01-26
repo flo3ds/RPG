@@ -28,27 +28,27 @@ public class GenEvent {
 				this.end = perso.getTime().getTime();
 			}
 		}
-		if(this.obj != null)
-		System.out.println("Event : " + this.obj.getClass());
+		if (this.obj != null)
+			System.out.println("Event : " + this.obj.getClass());
 	}
-	
-	public short randEventPourCent(){
+
+	public short randEventPourCent() {
 		int[] begin = new int[Event.values().length];
 		int[] end = new int[Event.values().length];
 		int total = 0;
-		for(short i=0; i < Event.values().length; i++){
+		for (short i = 0; i < Event.values().length; i++) {
 			begin[i] = total;
-			end[i] = total + ((Event_extends)Event.values()[i].getEvent()).getRandPourCent();
-			total =+ ((Event_extends)Event.values()[i].getEvent()).getRandPourCent();
+			end[i] = total + ((Event_extends) Event.values()[i].getEvent()).getRandPourCent();
+			total = +((Event_extends) Event.values()[i].getEvent()).getRandPourCent();
 		}
-		
+
 		int rand = Rand.entier(0, total);
-		
-		for(short i=0; i < Event.values().length; i++){
-			if(rand > begin[i] && rand < end[i])
+
+		for (short i = 0; i < Event.values().length; i++) {
+			if (rand > begin[i] && rand < end[i])
 				return i;
 		}
-		
+
 		return 0;
 	}
 
