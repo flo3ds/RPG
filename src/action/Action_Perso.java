@@ -25,7 +25,7 @@ public class Action_Perso {
 	public String equiper(Personnage perso) {
 		perso.lastPosition = perso.position;
 		perso.position = Position.equiper;
-		return "Que voulez vous equiper?";
+		return perso.listeStuff();
 	}
 
 	/**

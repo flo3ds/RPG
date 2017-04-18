@@ -6,6 +6,7 @@ import monde.dangerRare.Danger_Rare;
 import monde.faune.Faune;
 import monde.flore.Flore;
 import monde.sol.Sol;
+import perso.Personnage;
 
 public class GenMonde {
 
@@ -17,8 +18,8 @@ public class GenMonde {
 	public Atmosphere atmo = new Atmosphere();
 	public Danger_Rare dangerRare = new Danger_Rare();
 
-	public GenMonde() {
-
+	public GenMonde(Personnage perso) {
+		perso.setOxygen(this.atmo.getOxygen());
 	}
 
 	public String getDescriptionGlobal() {
@@ -28,5 +29,4 @@ public class GenMonde {
 	public String getDescriptionSonde() {
 		return "Rapport de la sonde :\n" + atmo.getDescription() + dangerRare.getDescription();
 	}
-
 }

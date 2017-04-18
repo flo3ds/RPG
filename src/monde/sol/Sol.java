@@ -14,15 +14,15 @@ public class Sol {
 	}
 
 	public String getDescription() {
-		return "Le sol est composé de " + this.type + ".\n";
+		return "Composition principale du sol: " + this.type + ".\n";
 	}
 
 	public String analyseSol() {
-		return "L'analyse du sol révelle des traces de " + this.minerais.getMatiere() + ".\n";
+		return this.getDescription() + "L'analyse révelle des traces de " + this.minerais.getMatiere() + ".\n";
 	}
 
 	private enum Type {
-		sable, roche, poussiere, glaise, terre;
+		sable, roche, poussiere, glaise, terre, calcaire;
 	}
 
 }

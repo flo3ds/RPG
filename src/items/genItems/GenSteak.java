@@ -1,12 +1,13 @@
 package items.genItems;
 
+import core.Rand;
 import items.Steak;
 
 public class GenSteak {
 
 	static public Steak genSteak() {
 
-		int nb = (short) (1 + Math.random() * 5);
+		int nb = Rand.entier(2, 8);
 
 		return new Steak(nb);
 	}

@@ -31,6 +31,13 @@ public class Action_Base extends Action_Perso {
 			out += ((Event_extends) this.base.event.getEvent()).getRapport();
 		} else
 			out += "Rien a signaler.\n";
+		if(this.base.getAmelio() != null){
+			Object[] obj = this.base.getAmelio();
+			for(int i=0; i <obj.length; i++)
+				out += ((core.Amelio)obj[i]).getName() + ".\n";
+				
+		}else
+			out += "La base n'a pas encore été améliorée.\n";
 		return out;
 	}
 

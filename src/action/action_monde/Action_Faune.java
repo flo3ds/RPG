@@ -3,6 +3,7 @@ package action.action_monde;
 import action.Action_Perso;
 import action.Position;
 import base.Base;
+import core.Item;
 import core.event.Event_extends;
 import monde.GenMonde;
 import perso.Personnage;
@@ -46,8 +47,13 @@ public class Action_Faune extends Action_Perso {
 
 	public String Chasser(GenMonde monde) {
 		if (monde.faune.nb_type_animal > 0) {
+			Object obj = monde.faune.steak;
+			if(this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)
+				((Item) obj).setNombre((short) (((Item) obj).getNombre()/2));
+			else if(this.perso.getOxygen() < 33)
+				return this.perso.malusOxygen();
 			this.perso.inv.putItem(monde.faune.steak);
-			return "Vous récuperez " + monde.faune.steak.getNombre() + " Steaks " + ".\n";
+			return "Vous récuperez " + monde.faune.steak.getNombre() + " Steaks " + ".\n" + this.perso.malusOxygen();
 		} else
 			return ("Vous perdez une heure a chasser le vent qui vous siffle aux oreilles");
 

@@ -9,7 +9,7 @@ public class GenPlante {
 
 		Plante.espece type = Plante.espece.values()[Rand.entier(0, Plante.espece.values().length)];
 
-		int nb = (short) (1 + Math.random() * 5);
+		int nb = Rand.entier(2, 8);
 
 		return new Plante(type, nb);
 	}

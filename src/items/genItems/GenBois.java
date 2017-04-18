@@ -1,12 +1,13 @@
 package items.genItems;
 
+import core.Rand;
 import items.Bois;
 
 public class GenBois {
 
 	static public Bois genBois() {
 
-		int nb = (short) (1 + Math.random() * 10);
+		int nb = Rand.entier(2, 8);
 
 		return new Bois(nb);
 	}

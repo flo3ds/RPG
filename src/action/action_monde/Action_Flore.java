@@ -3,6 +3,7 @@ package action.action_monde;
 import action.Action_Perso;
 import action.Position;
 import base.Base;
+import core.Item;
 import core.event.Event_extends;
 import monde.GenMonde;
 import perso.Personnage;
@@ -45,9 +46,14 @@ public class Action_Flore extends Action_Perso {
 	}
 
 	public String cueillir(GenMonde monde) {
+		Object obj = monde.flore.plante;
+		if(this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)
+			((Item) obj).setNombre((short) (((Item) obj).getNombre()/2));
+		else if(this.perso.getOxygen() < 33)
+			return this.perso.malusOxygen();
 		this.perso.inv.putItem(monde.flore.plante);
 		return "Vous récuperez " + monde.flore.plante.getNombre() + " Plantes " + monde.flore.plante.getPlante()
-				+ ".\n";
+				+ ".\n" + this.perso.malusOxygen();
 
 	}
 

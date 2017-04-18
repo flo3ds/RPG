@@ -3,6 +3,7 @@ package action;
 import action.action_monde.Action_Faune;
 import action.action_monde.Action_Flore;
 import base.Base;
+import core.Item;
 import core.event.Event_extends;
 import monde.GenMonde;
 import perso.Personnage;
@@ -41,19 +42,30 @@ public class Action_Monde extends Action_Perso {
 	}
 
 	public void newMonde() {
-		monde = new GenMonde();
+		monde = new GenMonde(this.perso);
 	}
 
 	public String miner() {
+		Object obj = this.monde.sol.minerais;
+		if(this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)
+			((Item) obj).setNombre((short) (((Item) obj).getNombre()/2));
+		else if(this.perso.getOxygen() < 33)
+			return this.perso.malusOxygen();
 		this.perso.inv.putItem(this.monde.sol.minerais);
-		return "Vous minez " + this.monde.sol.minerais.getNombre() + "K de " + this.monde.sol.minerais.getMatiere()
-				+ ".\n";
+		return "Vous minez " + this.monde.sol.minerais.getNombre() + " de " + this.monde.sol.minerais.getMatiere()
+				+ ".\n" + this.perso.malusOxygen();
+		
 	}
 
 	public String couperBois() {
 		if (this.perso.inv.haveItem(new Hache())) {
-			this.perso.inv.putItem(this.monde.flore.arbres[0].bois);
-			return "Vous coupez " + this.monde.flore.arbres[0].bois.getNombre() + " bois.\n";
+			Object obj = this.monde.flore.arbres.bois;
+			if(this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)
+				((Item) obj).setNombre((short) (((Item) obj).getNombre()/2));
+			else if(this.perso.getOxygen() < 33)
+				return this.perso.malusOxygen();
+			this.perso.inv.putItem(this.monde.flore.arbres.bois);
+			return "Vous coupez " + this.monde.flore.arbres.bois.getNombre() + " bois.\n" + this.perso.malusOxygen();
 		} else
 			return "Vous n'avez pas de hache";
 	}
