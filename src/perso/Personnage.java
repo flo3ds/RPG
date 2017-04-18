@@ -18,8 +18,18 @@ public class Personnage {
 	public Inventaire inv = new Inventaire();
 	public Position position = Position.base;
 	public Position lastPosition = Position.base;
-	
+
 	public short oxygen;
+
+	public Position getPosition(){
+		return this.position;
+	}
+	
+	public void setPosition(Position pos){
+		this.lastPosition = this.position;
+		this.position = pos;
+	}
+	
 	
 	public short getOxygen() {
 		return oxygen;
@@ -39,10 +49,10 @@ public class Personnage {
 			out += this.weapon.getId();
 		return out + "\n";
 	}
-	
-	public short getDegat(){
+
+	public short getDegat() {
 		short degat = this.degat_base;
-		if(this.weapon != null)
+		if (this.weapon != null)
 			degat += this.weapon.getDegat();
 		return degat;
 	}
@@ -104,18 +114,18 @@ public class Personnage {
 			if (this.armor != null)
 				this.inv.putItem(this.armor);
 			this.armor = (Armor) obj;
-		
-		}else if (obj instanceof Weapon){
+
+		} else if (obj instanceof Weapon) {
 			if (this.weapon != null)
 				this.inv.putItem(this.weapon);
-		this.weapon = (Weapon) obj;
+			this.weapon = (Weapon) obj;
 		}
 	}
 
 	public String malusOxygen() {
-		if(this.oxygen < 66 && this.oxygen > 33)
+		if (this.oxygen < 66 && this.oxygen > 33)
 			return "La composition atmospherique faible en oxygen vous ralenti pénalise votre tache.\n";
-		else if(this.oxygen < 33)
+		else if (this.oxygen < 33)
 			return "Il y a trop peu d'oxygen pour entreprendre une tache aussi physique.\n";
 		return "";
 	}

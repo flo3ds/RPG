@@ -12,7 +12,7 @@ public class Main {
 		 * if (GraphicsEnvironment.isHeadless()) { new GameConsole().game(); }
 		 * else { new GameGUI(); }
 		 */
-		//GameGUI window = new GameGUI();
+		// GameGUI window = new GameGUI();
 		try {
 			new AppGameContainer(new GameSlick(), 600, 600, false).start();
 		} catch (SlickException e) {

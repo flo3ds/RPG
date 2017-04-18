@@ -38,7 +38,7 @@ public class GameGUI {
 	private String bufferOut = "";
 	private JLabel label = new JLabel("New label");
 
-	private Time time = new Time();;
+	private Time time = new Time();
 
 	private Personnage perso = new Personnage(time);
 	private GenEvent event = new GenEvent(perso);

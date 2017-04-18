@@ -8,7 +8,7 @@ public class Epee_Fer extends Weapon {
 	private String id = "Epee en fer";
 
 	public Epee_Fer() {
-		this.setDegat((short)10);
+		this.setDegat((short) 10);
 		this.setId(this.id);
 	}
 

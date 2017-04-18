@@ -20,27 +20,24 @@ public class Ciel {
 	public String getDescription() {
 		String out = "";
 		out += this.color;
-		if(this.ciel_enum != ciel.nuage)
-			out += " Il y a " + this.nb_soleil + " soleil et " + this.nb_lune	+ " lune dans le ciel.\n";
-		return out; //"Le ciel est " + this.color + ;
+		if (this.ciel_enum != ciel.nuage)
+			out += " Il y a " + this.nb_soleil + " soleil et " + this.nb_lune + " lune dans le ciel.\n";
+		return out; // "Le ciel est " + this.color + ;
 	}
 
 	private enum ciel {
-		bleu("Le ciel est bleu."),
-		orangé("Le ciel est orangé."),
-		verdatre("Le ciel est vert."),
-		noir("Le ciel est noir, on apercoi les étoiles."),
-		nuage("Le ciel est nuageux.");
-		
+		bleu("Le ciel est bleu."), orangé("Le ciel est orangé."), verdatre("Le ciel est vert."), noir(
+				"Le ciel est noir, on apercoi les étoiles."), nuage("Le ciel est nuageux.");
+
 		private String str;
-		
-		ciel(String str){
+
+		ciel(String str) {
 			this.str = str;
 		}
-		
-		public String getName(){
+
+		public String getName() {
 			return this.str;
 		}
-		
+
 	}
 }

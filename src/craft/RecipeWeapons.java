@@ -9,8 +9,8 @@ import weapons.Epee_Fer;
 
 public enum RecipeWeapons {
 
-	arc("arc", new Arc(), new Object[] { new Bois(2) }, null),
-	epee_fer("epée en fer", new Epee_Fer(), new Object[] { new Bois(2) }, null);
+	arc("arc", new Arc(), new Object[] { new Bois(2) }, null), epee_fer("epée en fer", new Epee_Fer(),
+			new Object[] { new Bois(2) }, null);
 
 	public Recipe recipe;
 

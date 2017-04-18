@@ -12,18 +12,17 @@ public class Base {
 	public CraftTable craftTable = new CraftTable();
 	public GenEvent event;
 	protected List<Object> amelio = new ArrayList<Object>();
-	
+
 	public Base(GenEvent event) {
 		this.event = event;
 	}
-	
-	public void addAmelio(Object obj){
+
+	public void addAmelio(Object obj) {
 		this.amelio.add(obj);
 	}
 
 	public Object[] getAmelio() {
 		return this.amelio.toArray();
 	}
-	
-	
+
 }

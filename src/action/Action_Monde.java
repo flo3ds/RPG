@@ -47,22 +47,22 @@ public class Action_Monde extends Action_Perso {
 
 	public String miner() {
 		Object obj = this.monde.sol.minerais;
-		if(this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)
-			((Item) obj).setNombre((short) (((Item) obj).getNombre()/2));
-		else if(this.perso.getOxygen() < 33)
+		if (this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)
+			((Item) obj).setNombre((short) (((Item) obj).getNombre() / 2));
+		else if (this.perso.getOxygen() < 33)
 			return this.perso.malusOxygen();
 		this.perso.inv.putItem(this.monde.sol.minerais);
 		return "Vous minez " + this.monde.sol.minerais.getNombre() + " de " + this.monde.sol.minerais.getMatiere()
 				+ ".\n" + this.perso.malusOxygen();
-		
+
 	}
 
 	public String couperBois() {
 		if (this.perso.inv.haveItem(new Hache())) {
 			Object obj = this.monde.flore.arbres.bois;
-			if(this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)
-				((Item) obj).setNombre((short) (((Item) obj).getNombre()/2));
-			else if(this.perso.getOxygen() < 33)
+			if (this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)
+				((Item) obj).setNombre((short) (((Item) obj).getNombre() / 2));
+			else if (this.perso.getOxygen() < 33)
 				return this.perso.malusOxygen();
 			this.perso.inv.putItem(this.monde.flore.arbres.bois);
 			return "Vous coupez " + this.monde.flore.arbres.bois.getNombre() + " bois.\n" + this.perso.malusOxygen();

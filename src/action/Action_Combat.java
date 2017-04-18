@@ -15,16 +15,15 @@ public class Action_Combat extends Action_Perso {
 		this.perso = perso;
 		this.base = base;
 	}
-	
-	public String coup(){
-		
+
+	public String coup() {
+
 		return "";
 	}
-	
-	public String fuir(){
+
+	public String fuir() {
 		return "";
 	}
-	
 
 	public String help() {
 		String out = "";
@@ -49,8 +48,7 @@ public class Action_Combat extends Action_Perso {
 
 	public enum Action_combat {
 
-		coup("coup"),
-		fuir("fuir");
+		coup("coup"), fuir("fuir");
 
 		public core.Action action;
 

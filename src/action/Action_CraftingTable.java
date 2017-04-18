@@ -32,8 +32,6 @@ public class Action_CraftingTable extends Action_Perso {
 		out += Action_Craft.build_weapon.action.getName() + "\n";
 		out += Action_Craft.build_armor.action.getName() + "\n";
 		out += Action_Craft.build_tool.action.getName() + "\n";
-		out += Action_Craft.base.action.getName() + "\n";
-		out += this.help_perso();
 		return out;
 	}
 

@@ -12,8 +12,8 @@ public class Enemy {
 	public void setVie(short vie) {
 		this.vie = vie;
 	}
-	
-	public void takeDamage(short degat){
+
+	public void takeDamage(short degat) {
 		this.vie -= degat;
 	}
 

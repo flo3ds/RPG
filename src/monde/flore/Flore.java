@@ -12,8 +12,8 @@ public class Flore {
 
 	public Flore() {
 
-			arbres = new Arbre();
-			plantes = new Plante();
+		arbres = new Arbre();
+		plantes = new Plante();
 	}
 
 	public String getDescriptionArbre() {
@@ -27,8 +27,8 @@ public class Flore {
 	public String getAllDescription() {
 		String out = "";
 
-			out += this.getDescriptionArbre() + "\n";
-			out += this.getDescriptionPlante() + "\n";
+		out += this.getDescriptionArbre() + "\n";
+		out += this.getDescriptionPlante() + "\n";
 
 		return out;
 	}
