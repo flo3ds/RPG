@@ -9,7 +9,7 @@ import monde.GenMonde;
 import perso.Personnage;
 import tools.Hache;
 
-public class Action_Monde extends Action_Perso {
+public class Action_Monde {
 
 	public GenMonde monde;
 	public Action_Faune faune;

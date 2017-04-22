@@ -1,10 +1,9 @@
 package action;
 
 import base.Base;
-import core.event.Event_extends;
 import perso.Personnage;
 
-public class Action_Combat extends Action_Perso {
+public class Action_Combat {
 
 	private Personnage perso;
 	private Base base;

@@ -23,7 +23,6 @@ import action.Action_Equiper;
 import action.Action_Event;
 import action.Action_Monde;
 import action.Action_Portail;
-import action.Position;
 import base.Base;
 import core.Time;
 import event.GenEvent;
@@ -130,7 +129,7 @@ public class GameGUI {
 		this.print("Bienvenue dans votre base !\n");
 		this.listeAction();
 	}
-
+/*
 	public String action(String in) {
 		if (perso.position == Position.base) {
 			return action_base.action(in);
@@ -164,7 +163,8 @@ public class GameGUI {
 		} else
 			return "error GAME GUI";
 	}
-
+*/
+	
 	public void listeAction() {
 		String in[] = this.action("").split("\n");
 		dlm.clear();

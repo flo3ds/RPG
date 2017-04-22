@@ -3,6 +3,7 @@ package action;
 import base.Base;
 import core.event.Event_extends;
 import core.event.I_Event;
+import gui.layout.StructRet;
 import perso.Personnage;
 
 // 
@@ -11,7 +12,7 @@ import perso.Personnage;
  * dependent pas d'un lieux et qu'il peut faire en permanance Exemple : Regarder
  * son inventaire...
  */
-public class Action_Event extends Action_Perso {
+public class Action_Event implements Actionable{
 
 	private Personnage perso;
 	private Base base;
@@ -21,19 +22,26 @@ public class Action_Event extends Action_Perso {
 		this.base = base;
 	}
 
-	public String help() {
-		String out = "";
-		out += ((Event_extends) this.base.event.getEvent()).getHelp();
-		out += this.help_perso();
-		return out;
+	public StructRet init() {
+		if(this.base.event.getEvent() != null)
+			return ((Event_extends) this.base.event.getEvent()).getHelp();
+		else{
+			StructRet out = new StructRet();
+			out.setHeader("RAS");
+			return out;
+		}
 	}
 
-	public String action(String in) {
-		if (((Event_extends) this.base.event.getEvent()).test(in))
-			return ((I_Event) this.base.event.getEvent()).execute(in, this.perso, this.base);
-		else if (this.actionPersoTest(in))
-			return this.actionPerso(this.perso, in);
+	public StructRet action(int id) {
+		if (((Event_extends) this.base.event.getEvent()).test(id))
+			return ((I_Event) this.base.event.getEvent()).execute(id, this.perso, this.base);
 		else
-			return this.help();
+			return this.error();
+	}
+	
+	private StructRet error() {
+		StructRet out = new StructRet();
+		out.add("error", 0);
+		return out;
 	}
 }

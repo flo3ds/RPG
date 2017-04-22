@@ -1,10 +1,10 @@
 package event;
 
-import action.Position;
 import base.Base;
 import core.event.Action_event;
 import core.event.Event_extends;
 import core.event.I_Event;
+import gui.layout.StructRet;
 import perso.Personnage;
 
 public class EventAttaque extends Event_extends implements I_Event {
@@ -18,7 +18,7 @@ public class EventAttaque extends Event_extends implements I_Event {
 																														// detaillé
 		this.setHelpBase("Attaque"); // Ici c'est une action, ne pas mettre de
 										// \n
-		this.setContact("Vous avez attiré l'attention des infectées, il fonce dur vous!");// Contact
+		this.setContact("Vous avez attiré l'attention des infectées, il fonce sur vous!");// Contact
 																							// avec
 																							// l'event
 		this.errorId = "EventAttaque";// le nom de la classe
@@ -30,35 +30,29 @@ public class EventAttaque extends Event_extends implements I_Event {
 			this.addAction(Action_attaque.values()[i].getAction());
 	}
 
-	public String execute(String in, Personnage perso, Base base) {
-		if (Action_attaque.attaque.action_event.test(in))
+	public StructRet execute(int id, Personnage perso, Base base) {
+		if (Action_attaque.attaque.action_event.test(id))
 			return this.attaque();
-		else if (Action_attaque.base.action_event.test(in))
-			return this.base(perso, base);
+		else if (Action_attaque.retour.action_event.test(id))
+			return this.getHelp();
 		else
-			return this.errorId;
+			return new StructRet();
 	}
 
-	private String attaque() {
-		return "C'est partit pour l'attaque!";
-	}
-
-	public String base(Personnage perso, Base base) {
-		perso.position = Position.base;
-		String out = "Vous etes de retour a la base.\n";
-		if (base.event.getEvent() != null)
-			out += ((Event_extends) base.event.getEvent()).getIntro();
+	private StructRet attaque() {
+		StructRet out = new StructRet();
+		out.setHeader("Ataque");
 		return out;
 	}
 
 	private enum Action_attaque {
 
-		attaque("attaque"), base("base");
+		attaque("attaque", 0), retour("retour", 99);
 
 		public Action_event action_event;
 
-		Action_attaque(String str) {
-			this.action_event = new Action_event(str);
+		Action_attaque(String str, int id) {
+			this.action_event = new Action_event(str, id);
 		}
 
 		public Action_event getAction() {

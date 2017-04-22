@@ -1,32 +1,34 @@
 package craft;
 
+import gui.layout.StructRet;
+
 public class CraftTable {
 
-	public String craftTableListItem() {
-		String out = "";
+	public StructRet craftTableListItem() {
+		StructRet out = new StructRet();
 		for (int i = 0; i < RecipeItems.values().length; i++)
-			out += i + ":" + RecipeItems.values()[i].recipe.recipe();
+			out.add(RecipeItems.values()[i].recipe.recipe(), i);
 		return out;
 	}
 
-	public String craftTableListTool() {
-		String out = "";
+	public StructRet craftTableListTool() {
+		StructRet out = new StructRet();
 		for (int i = 0; i < RecipeTools.values().length; i++)
-			out += i + ":" + RecipeTools.values()[i].recipe.recipe();
+			out.add(RecipeTools.values()[i].recipe.recipe(), i);
 		return out;
 	}
 
-	public String craftTableListWeapon() {
-		String out = "";
+	public StructRet craftTableListWeapon() {
+		StructRet out = new StructRet();
 		for (int i = 0; i < RecipeWeapons.values().length; i++)
-			out += i + ":" + RecipeWeapons.values()[i].recipe.recipe();
+			out.add(RecipeWeapons.values()[i].recipe.recipe(), i);
 		return out;
 	}
 
-	public String craftTableListArmor() {
-		String out = "";
+	public StructRet craftTableListArmor() {
+		StructRet out = new StructRet();
 		for (int i = 0; i < RecipeArmors.values().length; i++)
-			out += i + ":" + RecipeArmors.values()[i].recipe.recipe();
+			out.add(RecipeArmors.values()[i].recipe.recipe(), i);
 		return out;
 	}
 

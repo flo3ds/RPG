@@ -1,10 +1,10 @@
 package event;
 
-import action.Position;
 import base.Base;
 import core.event.Action_event;
 import core.event.Event_extends;
 import core.event.I_Event;
+import gui.layout.StructRet;
 import perso.Personnage;
 
 public class EventRien extends Event_extends implements I_Event {
@@ -14,7 +14,7 @@ public class EventRien extends Event_extends implements I_Event {
 	public EventRien() {
 
 		this.setEventReady(false);// Event jamais appelé si false
-		this.setIntro("");// description rapide
+		this.setIntro("RAS");// description rapide
 		this.setRapport("");// description
 							// detaillé
 		this.setHelpBase(""); // Ici c'est une action, ne pas mettre de \n
@@ -29,18 +29,20 @@ public class EventRien extends Event_extends implements I_Event {
 			this.addAction(Action_rien.values()[i].getAction());
 	}
 
-	public String execute(String in, Personnage perso, Base base) {
-		return "";
+	public StructRet execute(int id, Personnage perso, Base base) {
+		StructRet out = new StructRet();
+		out.setHeader("RAS.");
+		return out;
 	}
 
 	private enum Action_rien {
 
-		rien("");
+		;
 
 		public Action_event action_event;
 
-		Action_rien(String str) {
-			this.action_event = new Action_event(str);
+		Action_rien(String str, int id) {
+			this.action_event = new Action_event(str, id);
 		}
 
 		public Action_event getAction() {

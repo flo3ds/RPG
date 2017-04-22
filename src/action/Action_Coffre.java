@@ -1,62 +1,104 @@
 package action;
 
 import base.Base;
-import core.event.Event_extends;
+import gui.layout.StructRet;
 import perso.Personnage;
 
-public class Action_Coffre extends Action_Perso {
+public class Action_Coffre implements Actionable {
 
 	private Personnage perso;
 	private Base base;
+	private Mode mode;
 
 	public Action_Coffre(Personnage perso, Base base) {
 		this.perso = perso;
 		this.base = base;
 	}
 
-	public String help() {
-		String out = "";
-		out += Action_coffre.coffre_liste.action.getName() + "\n";
-		out += Action_coffre.coffre_put.action.getName() + "\n";
-		out += Action_coffre.base.action.getName() + "\n";
-		out += this.help_perso();
+	private StructRet error() {
+		StructRet out = new StructRet();
+		out.add("error", 0);
 		return out;
 	}
 
-	public String base() {
-		this.perso.position = Position.base;
-		String out = "Vous etes de retour a la base.\n";
-		if (this.base.event.getEvent() != null)
-			out += ((Event_extends) this.base.event.getEvent()).getIntro();
+	public StructRet init() {
+		mode = null;
+		StructRet out = new StructRet();
+		out.setHeader("Action :");
+		out.add(Action_coffre.coffre_get.action.getName(), Action_coffre.coffre_get.action.getId());
+		out.add(Action_coffre.coffre_put.action.getName(), Action_coffre.coffre_put.action.getId());
 		return out;
 	}
 
-	public String action(String in) {
-		if (Action_coffre.coffre_liste.action.test(in))
-			return this.base.coffre.liste();
-		else if (Action_coffre.coffre_put.action.test(in)) {
-			if (this.base.coffre.putItem(this.perso.inv.getItem(0)))
-				return "Item non déposé.\n";
+	public StructRet action(int id) {
+		if (mode == null) {
+			if (Action_coffre.coffre_get.action.test(id)){
+				mode = Mode.get;
+				StructRet out = this.base.coffre.liste();
+				out.setHeader("get :");
+				out.add(Action_coffre.retour.action.getName(), Action_coffre.retour.action.getId());
+				return out;
+			}else if (Action_coffre.coffre_put.action.test(id)) {
+				mode = Mode.put;
+				StructRet out = this.perso.inv.liste();
+				out.setHeader("put :");
+				out.add(Action_coffre.retour.action.getName(), Action_coffre.retour.action.getId());
+				return out;
+			} else if (Action_coffre.retour.action.test(id))
+				return this.init();
+		} else if (mode == Mode.get) {
+			if (Action_coffre.retour.action.test(id))
+				return this.init();
+			else
+				if (this.perso.inv.putItem(this.base.coffre.getItem(id))) {
+					StructRet out = this.base.coffre.liste();
+					out.setHeader("Item non déposé !");
+					out.add(Action_coffre.retour.action.getName(), Action_coffre.retour.action.getId());
+					return out;
+				} else {
+					this.base.coffre.removeItem(id);
+					StructRet out = this.base.coffre.liste();
+					out.setHeader("Item déposé.");
+					out.add(Action_coffre.retour.action.getName(), Action_coffre.retour.action.getId());
+					return out;
+				}
+		} else if (mode == Mode.put) {
+			if (Action_coffre.retour.action.test(id))
+				return this.init();
 			else {
-				this.perso.inv.removeItem(0);
-				return "Item déposé.";
+				if (this.base.coffre.putItem(this.perso.inv.getItem(id))) {
+					StructRet out = perso.inv.liste();
+					out.setHeader("Item non déposé !");
+					out.add(Action_coffre.retour.action.getName(), Action_coffre.retour.action.getId());
+					return out;
+				} else {
+					this.perso.inv.removeItem(id);
+					StructRet out = perso.inv.liste();
+					out.setHeader("Item déposé.");
+					out.add(Action_coffre.retour.action.getName(), Action_coffre.retour.action.getId());
+					return out;
+				}
 			}
-		} else if (Action_coffre.base.action.test(in))
-			return this.base();
-		else if (this.actionPersoTest(in))
-			return this.actionPerso(this.perso, in);
-		else
-			return this.help();
+		}else
+			return this.error();
+		return this.error();
+
+	}
+
+	private enum Mode {
+		put, get;
 	}
 
 	public enum Action_coffre {
 
-		base("base"), coffre_liste("coffre liste"), coffre_put("coffre put");
+		coffre_get("coffre get", 0), coffre_put("coffre put", 1), retour("retour", 99);
 
 		public core.Action action;
 
-		Action_coffre(String str) {
-			this.action = new core.Action(str);
+		private int nb = 0;
+
+		Action_coffre(String str, int id) {
+			this.action = new core.Action(str, id);
 		}
 	}
 

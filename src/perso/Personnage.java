@@ -21,16 +21,15 @@ public class Personnage {
 
 	public short oxygen;
 
-	public Position getPosition(){
+	public Position getPosition() {
 		return this.position;
 	}
-	
-	public void setPosition(Position pos){
+
+	public void setPosition(Position pos) {
 		this.lastPosition = this.position;
 		this.position = pos;
 	}
-	
-	
+
 	public short getOxygen() {
 		return oxygen;
 	}
@@ -44,10 +43,14 @@ public class Personnage {
 		out += "Armure : ";
 		if (this.armor != null)
 			out += this.armor.getId();
-		out += "\nArme : ";
+		else
+			out += "vide";
+		out += " | Arme : ";
 		if (this.weapon != null)
 			out += this.weapon.getId();
-		return out + "\n";
+		else
+			out += "vide";
+		return out;
 	}
 
 	public short getDegat() {

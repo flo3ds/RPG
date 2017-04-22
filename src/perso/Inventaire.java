@@ -2,7 +2,7 @@ package perso;
 
 import core.Container;
 import core.Equipable;
-import core.Tool;
+import gui.layout.StructRet;
 
 public class Inventaire extends Container {
 
@@ -10,15 +10,14 @@ public class Inventaire extends Container {
 		this.setCases(10);
 	}
 
-	public String liteEquipable() {
-		String out = "";
+	public StructRet liteEquipable() {
+		StructRet out = new StructRet();
 		for (int i = 0; i < this.cases; i++) {
 
 			if (!this.inventaire.isEmpty())
 				if (i < this.inventaire.size())
 					if (this.inventaire.get(i) instanceof Equipable)
-						out += i + " | " + this.inventaire.get(i).toString();
-			out += "\n";
+						out.add(this.inventaire.get(i).toString(), i);
 		}
 		return out;
 	}

@@ -1,6 +1,5 @@
 package action.action_monde;
 
-import action.Action_Perso;
 import action.Position;
 import base.Base;
 import core.Item;
@@ -8,7 +7,7 @@ import core.event.Event_extends;
 import monde.GenMonde;
 import perso.Personnage;
 
-public class Action_Faune extends Action_Perso {
+public class Action_Faune {
 
 	private Personnage perso;
 	private Base base;

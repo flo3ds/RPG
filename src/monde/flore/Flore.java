@@ -1,6 +1,5 @@
 package monde.flore;
 
-import core.Rand;
 import items.genItems.GenPlante;
 
 public class Flore {

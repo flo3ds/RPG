@@ -6,17 +6,17 @@ import base.Base;
 import core.Inventable;
 import core.Item;
 import core.Recipe;
-import core.event.Event_extends;
 import craft.Craft_Category;
 import craft.RecipeArmors;
 import craft.RecipeItems;
 import craft.RecipeTools;
 import craft.RecipeWeapons;
+import gui.layout.StructRet;
 import perso.Personnage;
 
-public class Action_CraftingTable extends Action_Perso {
+public class Action_CraftingTable implements Actionable {
 
-	private Craft_Category cc;
+	private Craft_Category cc = null;
 
 	private Personnage perso;
 	private Base base;
@@ -26,100 +26,88 @@ public class Action_CraftingTable extends Action_Perso {
 		this.base = base;
 	}
 
-	public String help() {
-		String out = "";
-		out += Action_Craft.build_item.action.getName() + "\n";
-		out += Action_Craft.build_weapon.action.getName() + "\n";
-		out += Action_Craft.build_armor.action.getName() + "\n";
-		out += Action_Craft.build_tool.action.getName() + "\n";
+	private StructRet error() {
+		StructRet out = new StructRet();
+		out.add("error", 0);
 		return out;
 	}
 
-	public String buildItem() {
+	public StructRet buildItem(String header) {
 		this.cc = Craft_Category.items;
-		return perso.inv.liste();
-	}
-
-	public String buildTool() {
-		this.cc = Craft_Category.tools;
-		return perso.inv.liste();
-	}
-
-	public String buildWeapon() {
-		this.cc = Craft_Category.weapons;
-		return perso.inv.liste();
-	}
-
-	public String buildArmor() {
-		this.cc = Craft_Category.armors;
-		return perso.inv.liste();
-	}
-
-	public String base() {
-		this.cc = null;
-		this.perso.position = Position.base;
-		String out = "Vous etes de retour a la base.\n";
-		if (this.base.event.getEvent() != null)
-			out += ((Event_extends) this.base.event.getEvent()).getIntro();
+		StructRet out = this.base.craftTable.craftTableListItem();
+		out.setHeader(header);
+		out.add(Action_Craft.craftTable.action.getName(), Action_Craft.craftTable.action.getId());
 		return out;
 	}
 
-	public String action(String in) {
-		try {
-			if (this.cc == null) {
-				if (Action_Craft.build_item.action.test(in))
-					return this.buildItem();
-				else if (Action_Craft.build_tool.action.test(in))
-					return this.buildTool();
-				else if (Action_Craft.build_weapon.action.test(in))
-					return this.buildWeapon();
-				else if (Action_Craft.build_armor.action.test(in))
-					return this.buildArmor();
-				else if (Action_Craft.base.action.test(in))
-					return this.base();
-				else if (this.actionPersoTest(in))
-					return this.actionPerso(perso, in);
-				else
-					return this.help();
-			} else if (this.cc == Craft_Category.items) {
-				if (in.equals(""))
-					in = "error";
-				return this.build(RecipeItems.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
-			} else if (this.cc == Craft_Category.weapons) {
-				if (in.equals(""))
-					in = "error";
-				return this.build(RecipeWeapons.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
-			} else if (this.cc == Craft_Category.armors) {
-				if (in.equals(""))
-					in = "error";
-				return this.build(RecipeArmors.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
-			} else if (this.cc == Craft_Category.tools) {
-				if (in.equals(""))
-					in = "error";
-				return this.build(RecipeTools.values()[(short) Integer.parseInt(in.substring(0, 1))].recipe);
-			} else
-				return "error";
-
-		} catch (NumberFormatException e) {
-
-			if (Action_Craft.craftTable.action.test(in)) {
-				this.cc = null;
-				return "Vous revenez a la table de craft";
-			} else if (this.cc == Craft_Category.items)
-				return this.base.craftTable.craftTableListItem() + "\n" + Action_Craft.craftTable.action.getName();
-			else if (this.cc == Craft_Category.tools)
-				return this.base.craftTable.craftTableListTool() + "\n" + Action_Craft.craftTable.action.getName();
-			else if (this.cc == Craft_Category.weapons)
-				return this.base.craftTable.craftTableListWeapon() + "\n" + Action_Craft.craftTable.action.getName();
-			else if (this.cc == Craft_Category.armors)
-				return this.base.craftTable.craftTableListArmor() + "\n" + Action_Craft.craftTable.action.getName();
-			else
-				return "error action_craftTable\n";
-
-		}
+	public StructRet buildTool(String header) {
+		this.cc = Craft_Category.tools;
+		StructRet out = this.base.craftTable.craftTableListTool();
+		out.setHeader(header);
+		out.add(Action_Craft.craftTable.action.getName(), Action_Craft.craftTable.action.getId());
+		return out;
 	}
 
-	public String applyRecipe(Recipe recipe) {
+	public StructRet buildWeapon(String header) {
+		this.cc = Craft_Category.weapons;
+		StructRet out = this.base.craftTable.craftTableListWeapon();
+		out.setHeader(header);
+		out.add(Action_Craft.craftTable.action.getName(), Action_Craft.craftTable.action.getId());
+		return out;
+	}
+
+	public StructRet buildArmor(String header) {
+		this.cc = Craft_Category.armors;
+		StructRet out = this.base.craftTable.craftTableListArmor();
+		out.setHeader(header);
+		out.add(Action_Craft.craftTable.action.getName(), Action_Craft.craftTable.action.getId());
+		return out;
+	}
+
+	public StructRet init() {
+		this.cc = null;
+		StructRet out = new StructRet();
+		out.setHeader("Category :");
+		out.add(Action_Craft.build_item.action.getName(), Action_Craft.build_item.action.getId());
+		out.add(Action_Craft.build_weapon.action.getName(), Action_Craft.build_weapon.action.getId());
+		out.add(Action_Craft.build_armor.action.getName(), Action_Craft.build_armor.action.getId());
+		out.add(Action_Craft.build_tool.action.getName(), Action_Craft.build_tool.action.getId());
+		return out;
+	}
+
+	public StructRet action(int id) {
+		System.out.println("id = " + id);
+		if (this.cc == null) {
+			String head = "Items :";
+			if (Action_Craft.build_item.action.test(id))
+				return this.buildItem(head);
+			else if (Action_Craft.build_tool.action.test(id))
+				return this.buildTool(head);
+			else if (Action_Craft.build_weapon.action.test(id))
+				return this.buildWeapon(head);
+			else if (Action_Craft.build_armor.action.test(id))
+				return this.buildArmor(head);
+			else
+				return this.error();
+		} else if (Action_Craft.craftTable.action.test(id)) {
+			return this.init();
+		} else if (this.cc == Craft_Category.items) {
+			return this.build(RecipeItems.values()[(short) id].recipe);
+		} else if (this.cc == Craft_Category.weapons) {
+
+			return this.build(RecipeWeapons.values()[(short) id].recipe);
+		} else if (this.cc == Craft_Category.armors) {
+
+			return this.build(RecipeArmors.values()[(short) id].recipe);
+		} else if (this.cc == Craft_Category.tools) {
+
+			return this.build(RecipeTools.values()[(short) id].recipe);
+		}
+
+		return error();
+	}
+
+	public StructRet applyRecipe(Recipe recipe) {
 		Object obj[] = recipe.getObjectForRecipe();
 
 		for (int j = 0; j < obj.length; j++) {
@@ -135,17 +123,48 @@ public class Action_CraftingTable extends Action_Perso {
 		}
 
 		perso.inv.putItem(recipe.getItem());
-		return perso.inv.liste();
+		String head = recipe.getItem().toString() + " creer.";
+		if (cc == Craft_Category.items)
+			return this.buildItem(head);
+		else if (cc == Craft_Category.tools)
+			return this.buildTool(head);
+		else if (cc == Craft_Category.weapons)
+			return this.buildWeapon(head);
+		else if (cc == Craft_Category.armors)
+			return this.buildArmor(head);
+		else
+			return error();
 	}
 
-	private String build(Recipe recipe) {
-
-		if (!this.testTools(recipe))
-			return "Vous n'avez pas les outils requis";
+	private StructRet build(Recipe recipe) {
+		if (!this.testTools(recipe)) {
+			String head = "Vous n'avez pas les outils !";
+			if (cc == Craft_Category.items)
+				return this.buildItem(head);
+			else if (cc == Craft_Category.tools)
+				return this.buildTool(head);
+			else if (cc == Craft_Category.weapons)
+				return this.buildWeapon(head);
+			else if (cc == Craft_Category.armors)
+				return this.buildArmor(head);
+			else
+				return error();
+		}
 		if (this.testRecipe(recipe)) {
 			return this.applyRecipe(recipe);
-		} else
-			return "Vous n'avez pas les ressources sur vous!\n";
+		} else {
+			String head = "Vous n'avez pas les ressources !";
+			if (cc == Craft_Category.items)
+				return this.buildItem(head);
+			else if (cc == Craft_Category.tools)
+				return this.buildTool(head);
+			else if (cc == Craft_Category.weapons)
+				return this.buildWeapon(head);
+			else if (cc == Craft_Category.armors)
+				return this.buildArmor(head);
+			else
+				return error();
+		}
 
 	}
 
@@ -191,13 +210,13 @@ public class Action_CraftingTable extends Action_Perso {
 
 	public enum Action_Craft {
 
-		base("base"), craftTable("table de craft"), build_item("build item"), build_tool("build tool"), build_weapon(
-				"build weapon"), build_armor("build armor");
+		build_item("build_item", 0), build_tool("build_tool", 1), build_weapon("build weapon",
+				2), build_armor("build armor", 3), craftTable("retour", 99);
 
 		public core.Action action;
 
-		Action_Craft(String str) {
-			this.action = new core.Action(str);
+		Action_Craft(String str, int id) {
+			this.action = new core.Action(str, id);
 		}
 	}
 

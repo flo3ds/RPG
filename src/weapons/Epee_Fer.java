@@ -1,6 +1,5 @@
 package weapons;
 
-import core.Item;
 import core.Weapon;
 
 public class Epee_Fer extends Weapon {

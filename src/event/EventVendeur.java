@@ -1,10 +1,10 @@
 package event;
 
-import action.Position;
 import base.Base;
 import core.event.Action_event;
 import core.event.Event_extends;
 import core.event.I_Event;
+import gui.layout.StructRet;
 import perso.Personnage;
 
 public class EventVendeur extends Event_extends implements I_Event {
@@ -28,35 +28,29 @@ public class EventVendeur extends Event_extends implements I_Event {
 			this.addAction(Action_vendeur.values()[i].getAction());
 	}
 
-	public String execute(String in, Personnage perso, Base base) {
-		if (Action_vendeur.commerce.action_event.test(in))
+	public StructRet execute(int id, Personnage perso, Base base) {
+		if (Action_vendeur.commerce.action_event.test(id))
 			return this.commerce();
-		else if (Action_vendeur.base.action_event.test(in))
-			return this.base(perso, base);
+		else if (Action_vendeur.retour.action_event.test(id))
+			return this.getHelp();
 		else
-			return this.errorId;
+			return new StructRet();
 	}
 
-	private String commerce() {
-		return "C'est partit pour le commerce jai des pommes d'happy!";
-	}
-
-	public String base(Personnage perso, Base base) {
-		perso.position = Position.base;
-		String out = "Vous etes de retour a la base.\n";
-		if (base.event.getEvent() != null)
-			out += ((Event_extends) base.event.getEvent()).getIntro();
+	private StructRet commerce() {
+		StructRet out = new StructRet();
+		out.setHeader("C'est partit pour le commerce jai des pommes d'happy!");
 		return out;
 	}
 
 	private enum Action_vendeur {
 
-		commerce("commerce"), base("base");
+		commerce("commerce", 0), retour("retour", 99);
 
 		public Action_event action_event;
 
-		Action_vendeur(String str) {
-			this.action_event = new Action_event(str);
+		Action_vendeur(String str, int id) {
+			this.action_event = new Action_event(str, id);
 		}
 
 		public Action_event getAction() {

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import gui.layout.StructRet;
+
 abstract public class Container {
 
 	protected short cases = 10;
@@ -46,14 +48,14 @@ abstract public class Container {
 		return this.inventaire;
 	}
 
-	public String liste() {
-		String out = "";
+	public StructRet liste() {
+		StructRet out = new StructRet();
 		for (int i = 0; i < this.cases; i++) {
-			out += (i + 1) + " | ";
+			String buffer = " ";
 			if (!this.inventaire.isEmpty())
 				if (i < this.inventaire.size())
-					out += this.inventaire.get(i).toString();
-			out += "\n";
+					buffer += this.inventaire.get(i).toString();
+			out.add(buffer, i);
 		}
 		return out;
 	}

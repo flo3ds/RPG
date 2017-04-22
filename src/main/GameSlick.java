@@ -1,19 +1,11 @@
 package main;
 
-import org.newdawn.slick.Animation;
 import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.tiled.TiledMap;
 
-import action.Action_Base;
 import action.Action_Coffre;
 import action.Action_CraftingTable;
 import action.Action_Equiper;
@@ -21,19 +13,24 @@ import action.Action_Event;
 import action.Action_Monde;
 import action.Action_Portail;
 import action.Position;
+import armor.Armure_Cuir;
+import armor.Armure_Fer;
 import base.Base;
 import core.Time;
 import event.GenEvent;
+import gui.MapBase;
+import gui.PlayerGui;
+import gui.layout.Layout;
 import items.Bois;
 import items.Minerai;
-import main.slick2d.Map;
-import main.slick2d.PlayerGui;
 import perso.Personnage;
+import weapons.Epee_Fer;
 
 public class GameSlick extends BasicGame {
 
 	private GameContainer container;
-	private Map map = new Map();
+	private Input input;
+	private MapBase map = new MapBase();
 	private PlayerGui playerGui = new PlayerGui(map);
 	private String out = "";
 
@@ -44,18 +41,17 @@ public class GameSlick extends BasicGame {
 	private Base base = new Base(event);
 
 	private Action_Monde action_monde = new Action_Monde(perso, base);
-	private Action_Base action_base = new Action_Base(perso, base);
 	private Action_Portail action_portail = new Action_Portail(perso, base);
 	private Action_Coffre action_coffre = new Action_Coffre(perso, base);
 	private Action_CraftingTable action_craft = new Action_CraftingTable(perso, base);
 	private Action_Event action_event = new Action_Event(perso, base);
 	private Action_Equiper action_equiper = new Action_Equiper(perso, base);
+	private Layout layout;
 
 	public GameSlick() {
 		super("Lesson 1 :: WindowGame");
-
 	}
-
+/*
 	public String action(String in) {
 		if (perso.position == Position.base) {
 			return action_base.action(in);
@@ -89,16 +85,22 @@ public class GameSlick extends BasicGame {
 		} else
 			return "error GAME GUI";
 	}
-
+*/
+	
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		this.container = container;
+		input = container.getInput();
+		layout = new Layout(null, input, 50, 50, 500, 500, "lol");
 		map.init();
 		playerGui.init();
 
 		perso.inv.putItem(new Minerai(Minerai.matiere.cuivre, 16));
 		perso.inv.putItem(new Minerai(Minerai.matiere.fer, 16));
 		perso.inv.putItem(new Bois(8));
+		perso.inv.putItem(new Armure_Fer());
+		perso.inv.putItem(new Armure_Cuir());
+		perso.inv.putItem(new Epee_Fer());
 
 	}
 
@@ -107,11 +109,15 @@ public class GameSlick extends BasicGame {
 		map.render(g);
 		playerGui.render(g);
 		g.drawString(out, 200, 200);
+		layout.render(container, g);
 	}
 
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		playerGui.update(delta, perso);
+		layout.update();
+		this.event.genEvent();
+
 	}
 
 	@Override
@@ -139,18 +145,41 @@ public class GameSlick extends BasicGame {
 		case Input.KEY_E:
 			inventaire();
 			break;
+		case Input.KEY_A:
+			stuff();
+			break;
 		}
 	}
 
 	private void inventaire() {
-		if (out.equals(""))
-			out = this.action("inventaire");
-		else
-			out = "";
+		if (layout.isShow())
+			layout.close();
+		else {
+			layout.drawSquare(perso.inv.liste());
+		}
+	}
+	
+	private void stuff() {
+		if (layout.isShow())
+			layout.close();
+		else {
+			layout.open(action_equiper);
+		}
 	}
 
 	private void actionSpace() {
-		System.out.println("position : " + perso.getPosition().toString());
+		if (layout.isShow())
+			layout.close();
+		else {
+			if (perso.getPosition().toString().equals(Position.craft.name()))
+				layout.open(action_craft);
+			else if (perso.getPosition().toString().equals(Position.coffre.name()))
+				layout.open(action_coffre);
+			else if (perso.getPosition().toString().equals(Position.portail.name()))
+				layout.open(action_portail);
+			else if (perso.getPosition().toString().equals(Position.rapport.name()))
+				layout.open(action_event);
+		}
 	}
 
 	@Override

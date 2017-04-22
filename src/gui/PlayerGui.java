@@ -1,13 +1,11 @@
-package main.slick2d;
+package gui;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.tiled.TiledMap;
 
 import action.Position;
 import perso.Personnage;
@@ -18,9 +16,9 @@ public class PlayerGui {
 	private int direction = 0;
 	private boolean moving = false;
 	private Animation[] animations = new Animation[8];
-	private Map map;
+	private MapBase map;
 
-	public PlayerGui(Map map) {
+	public PlayerGui(MapBase map) {
 		this.map = map;
 	}
 
@@ -40,7 +38,7 @@ public class PlayerGui {
 		Animation animation = new Animation();
 		for (int x = startX; x < endX; x++) {
 			animation.addFrame(spriteSheet.getSprite(x, y), 100);
-		}  
+		}
 		return animation;
 	}
 
@@ -52,17 +50,23 @@ public class PlayerGui {
 
 	public void update(int delta, Personnage perso) {
 		for (int objectID = 0; objectID < map.getTiledMap().getObjectCount(0); objectID++) {
-			if (x  > map.getTiledMap().getObjectX(0, objectID)
-					&& x  < map.getTiledMap().getObjectX(0,
-							objectID) + map.getTiledMap().getObjectWidth(0, objectID)
-					&& y  > map.getTiledMap().getObjectY(0,
-							objectID)
-					&& y < map.getTiledMap().getObjectY(0,
-							objectID) + map.getTiledMap().getObjectHeight(0, objectID)) {
+			if (x > map.getTiledMap().getObjectX(0, objectID)
+					&& x < map.getTiledMap().getObjectX(0, objectID) + map.getTiledMap().getObjectWidth(0, objectID)
+					&& y > map.getTiledMap().getObjectY(0, objectID)
+					&& y < map.getTiledMap().getObjectY(0, objectID) + map.getTiledMap().getObjectHeight(0, objectID)) {
 				if ("craft".equals(map.getTiledMap().getObjectType(0, objectID))) {
 					perso.setPosition(Position.craft);
 					break;
-				}else
+				} else if ("coffre".equals(map.getTiledMap().getObjectType(0, objectID))) {
+					perso.setPosition(Position.coffre);
+					break;
+				} else if ("portail".equals(map.getTiledMap().getObjectType(0, objectID))) {
+					perso.setPosition(Position.portail);
+					break;
+				}else if ("rapport".equals(map.getTiledMap().getObjectType(0, objectID))) {
+					perso.setPosition(Position.rapport);
+					break;
+				} else
 					perso.setPosition(Position.base);
 			}
 		}
@@ -116,9 +120,7 @@ public class PlayerGui {
 		int tileW = this.map.getTiledMap().getTileWidth();
 		int tileH = this.map.getTiledMap().getTileHeight();
 		int logicLayer = this.map.getTiledMap().getLayerIndex("col");
-		Image tile = this.map.getTiledMap().getTileImage(
-				(int) x  / tileW,
-				(int) y  / tileH, logicLayer);
+		Image tile = this.map.getTiledMap().getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
 		boolean collision = tile != null;
 		if (collision) {
 			Color color = tile.getColor((int) x % tileW, (int) y % tileH);

@@ -1,17 +1,10 @@
 package action;
 
-import action.Action_CraftingTable.Action_Craft;
 import base.Base;
-import core.Recipe;
-import core.event.Event_extends;
-import craft.Craft_Category;
-import craft.RecipeArmors;
-import craft.RecipeItems;
-import craft.RecipeTools;
-import craft.RecipeWeapons;
+import gui.layout.StructRet;
 import perso.Personnage;
 
-public class Action_Equiper extends Action_Perso {
+public class Action_Equiper implements Actionable {
 
 	private Personnage perso;
 	private Base base;
@@ -29,10 +22,18 @@ public class Action_Equiper extends Action_Perso {
 		return out;
 	}
 
-	private String listeEquipable() {
-		return perso.inv.liteEquipable();
+	private StructRet listeEquipable() {
+		StructRet out = perso.inv.liteEquipable();
+		out.setHeader(this.perso.listeStuff());
+		return out;
 	}
 
+	public StructRet init(){
+		StructRet out = this.listeEquipable();
+		//out.add(Action_equiper.retour.name(), Action_equiper.retour.getId());
+		return out;
+	}
+	
 	public String help() {
 		String out = "";
 		out += this.listeEquipable();
@@ -41,40 +42,30 @@ public class Action_Equiper extends Action_Perso {
 		return out;
 	}
 
-	public String action(String in) {
-		try {
-			if (this.equiper)
-				return this.equiper(in);
-			else
-				return this.help();
-		} catch (NumberFormatException e) {
-
-			if (Action_equiper.retour.action.test(in))
-				return this.base();
-			else
-				return this.help();
-		}
-
+	public StructRet action(int id) {
+				return this.equiper(id);
 	}
 
-	private String equiper(String in) {
-		if (!in.equals("")) {
-			this.perso.setEquipable(this.perso.inv.getItem(Integer.parseInt(in.substring(0, 1))));
+	private StructRet equiper(int id) {
+			this.perso.setEquipable(this.perso.inv.getItem(id));
 			this.equiper = false;
-			this.perso.inv.removeItem(Integer.parseInt(in.substring(0, 1)));
-			return this.perso.listeStuff();
-		} else
-			return "erreur action_equiper";
+			this.perso.inv.removeItem(id);
+			return this.listeEquipable();
 	}
 
 	public enum Action_equiper {
 
-		retour("retour");
+		retour("retour", 99);
 
 		public core.Action action;
-
-		Action_equiper(String str) {
-			this.action = new core.Action(str);
+		private int id;
+		
+		public int getId(){
+			return id;
+		}
+		
+		Action_equiper(String str, int id) {
+			this.action = new core.Action(str, id);
 		}
 	}
 }

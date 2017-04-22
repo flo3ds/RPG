@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import gui.layout.StructRet;
 import perso.Personnage;
 
 abstract public class Event_extends {
@@ -37,17 +38,19 @@ abstract public class Event_extends {
 		this.duree = duree;
 	}
 
-	private String defHelp() {
-		String out = "";
+	private StructRet defHelp() {
+		StructRet out = new StructRet();
 		ListIterator<Action_event> it = this.list_action.listIterator();
 		while (it.hasNext()) {
-			String test = it.next().getName();
-			out += test + "\n";
+			Action_event test = it.next();
+			if(test.getId() != 99)
+			out.add(test.getName(), test.getId());
 		}
+		out.setHeader(getIntro());
 		return out;
 	}
 
-	public String getHelp() {
+	public StructRet getHelp() {
 		return this.defHelp();
 	}
 
@@ -87,10 +90,10 @@ abstract public class Event_extends {
 		this.list_action.add(action_event);
 	}
 
-	public Boolean test(String in) {
+	public Boolean test(int id) {
 		ListIterator<Action_event> it = this.list_action.listIterator();
 		while (it.hasNext()) {
-			if (it.next().getName().equals(in))
+			if (it.next().getId() == id)
 				return true;
 		}
 		return false;
