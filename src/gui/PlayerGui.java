@@ -16,10 +16,10 @@ public class PlayerGui {
 	private int direction = 0;
 	private boolean moving = false;
 	private Animation[] animations = new Animation[8];
-	private MapBase map;
 
-	public PlayerGui(MapBase map) {
-		this.map = map;
+
+	public PlayerGui() {
+		
 	}
 
 	public void init() throws SlickException {
@@ -49,21 +49,21 @@ public class PlayerGui {
 	}
 
 	public void update(int delta, Personnage perso) {
-		for (int objectID = 0; objectID < map.getTiledMap().getObjectCount(0); objectID++) {
-			if (x > map.getTiledMap().getObjectX(0, objectID)
-					&& x < map.getTiledMap().getObjectX(0, objectID) + map.getTiledMap().getObjectWidth(0, objectID)
-					&& y > map.getTiledMap().getObjectY(0, objectID)
-					&& y < map.getTiledMap().getObjectY(0, objectID) + map.getTiledMap().getObjectHeight(0, objectID)) {
-				if ("craft".equals(map.getTiledMap().getObjectType(0, objectID))) {
+		for (int objectID = 0; objectID < perso.getMap().getTiledMap().getObjectCount(0); objectID++) {
+			if (x > perso.getMap().getTiledMap().getObjectX(0, objectID)
+					&& x < perso.getMap().getTiledMap().getObjectX(0, objectID) + perso.getMap().getTiledMap().getObjectWidth(0, objectID)
+					&& y > perso.getMap().getTiledMap().getObjectY(0, objectID)
+					&& y < perso.getMap().getTiledMap().getObjectY(0, objectID) + perso.getMap().getTiledMap().getObjectHeight(0, objectID)) {
+				if ("craft".equals(perso.getMap().getTiledMap().getObjectType(0, objectID))) {
 					perso.setPosition(Position.craft);
 					break;
-				} else if ("coffre".equals(map.getTiledMap().getObjectType(0, objectID))) {
+				} else if ("coffre".equals(perso.getMap().getTiledMap().getObjectType(0, objectID))) {
 					perso.setPosition(Position.coffre);
 					break;
-				} else if ("portail".equals(map.getTiledMap().getObjectType(0, objectID))) {
+				} else if ("portail".equals(perso.getMap().getTiledMap().getObjectType(0, objectID))) {
 					perso.setPosition(Position.portail);
 					break;
-				}else if ("rapport".equals(map.getTiledMap().getObjectType(0, objectID))) {
+				}else if ("rapport".equals(perso.getMap().getTiledMap().getObjectType(0, objectID))) {
 					perso.setPosition(Position.rapport);
 					break;
 				} else
@@ -74,7 +74,7 @@ public class PlayerGui {
 		if (this.moving) {
 			float futurX = getFuturX(delta);
 			float futurY = getFuturY(delta);
-			boolean collision = isCollision(futurX, futurY);
+			boolean collision = isCollision(perso, futurX, futurY);
 			if (collision) {
 				this.moving = false;
 			} else {
@@ -116,11 +116,13 @@ public class PlayerGui {
 		this.moving = moving;
 	}
 
-	private boolean isCollision(float x, float y) {
-		int tileW = this.map.getTiledMap().getTileWidth();
-		int tileH = this.map.getTiledMap().getTileHeight();
-		int logicLayer = this.map.getTiledMap().getLayerIndex("col");
-		Image tile = this.map.getTiledMap().getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
+	private boolean isCollision(Personnage perso, float x, float y) {
+		int tileW = perso.getMap().getTiledMap().getTileWidth();
+		int tileH = perso.getMap().getTiledMap().getTileHeight();
+		int logicLayer = perso.getMap().getTiledMap().getLayerIndex("col");
+		if(logicLayer == -1)
+			return false;
+		Image tile = perso.getMap().getTiledMap().getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
 		boolean collision = tile != null;
 		if (collision) {
 			Color color = tile.getColor((int) x % tileW, (int) y % tileH);

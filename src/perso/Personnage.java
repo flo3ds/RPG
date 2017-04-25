@@ -1,9 +1,11 @@
 package perso;
 
+
 import action.Position;
 import core.Armor;
 import core.Time;
 import core.Weapon;
+import gui.map.Map_I;
 
 public class Personnage {
 
@@ -11,6 +13,7 @@ public class Personnage {
 	private int gold = 20;
 	private int vie = 100;
 	private short degat_base = 5;
+	private Map_I map;
 
 	private Armor armor = null;
 	private Weapon weapon = null;
@@ -19,7 +22,7 @@ public class Personnage {
 	public Position position = Position.base;
 	public Position lastPosition = Position.base;
 
-	public short oxygen;
+	public short oxygen = 100;
 
 	public Position getPosition() {
 		return this.position;
@@ -132,5 +135,18 @@ public class Personnage {
 			return "Il y a trop peu d'oxygen pour entreprendre une tache aussi physique.\n";
 		return "";
 	}
+	
+	public Map_I getMap(){
+		return map;
+	}
+	
+	public void setMap(Map_I map){
+		this.map = map;
+	}
+	
+	public void teleport(Map_I map){
+		this.map = map;
+	}
+
 
 }

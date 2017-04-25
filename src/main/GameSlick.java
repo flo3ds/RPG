@@ -12,15 +12,17 @@ import action.Action_Equiper;
 import action.Action_Event;
 import action.Action_Monde;
 import action.Action_Portail;
+import action.Monde_Actif;
 import action.Position;
 import armor.Armure_Cuir;
 import armor.Armure_Fer;
 import base.Base;
 import core.Time;
 import event.GenEvent;
-import gui.MapBase;
 import gui.PlayerGui;
 import gui.layout.Layout;
+import gui.map.MapBase;
+import gui.map.Map_I;
 import items.Bois;
 import items.Minerai;
 import perso.Personnage;
@@ -31,7 +33,7 @@ public class GameSlick extends BasicGame {
 	private GameContainer container;
 	private Input input;
 	private MapBase map = new MapBase();
-	private PlayerGui playerGui = new PlayerGui(map);
+	private PlayerGui playerGui = new PlayerGui();
 	private String out = "";
 
 	private Time time = new Time();
@@ -40,8 +42,9 @@ public class GameSlick extends BasicGame {
 	private GenEvent event = new GenEvent(perso);
 	private Base base = new Base(event);
 
-	private Action_Monde action_monde = new Action_Monde(perso, base);
-	private Action_Portail action_portail = new Action_Portail(perso, base);
+	private Monde_Actif monde_actif = new Monde_Actif();
+	private Action_Monde action_monde = new Action_Monde(perso, base, monde_actif);
+	private Action_Portail action_portail = new Action_Portail(perso, base, monde_actif);
 	private Action_Coffre action_coffre = new Action_Coffre(perso, base);
 	private Action_CraftingTable action_craft = new Action_CraftingTable(perso, base);
 	private Action_Event action_event = new Action_Event(perso, base);
@@ -94,6 +97,7 @@ public class GameSlick extends BasicGame {
 		layout = new Layout(null, input, 50, 50, 500, 500, "lol");
 		map.init();
 		playerGui.init();
+		perso.setMap(map);
 
 		perso.inv.putItem(new Minerai(Minerai.matiere.cuivre, 16));
 		perso.inv.putItem(new Minerai(Minerai.matiere.fer, 16));
@@ -106,7 +110,7 @@ public class GameSlick extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		map.render(g);
+		((Map_I)perso.getMap()).render(g);
 		playerGui.render(g);
 		g.drawString(out, 200, 200);
 		layout.render(container, g);

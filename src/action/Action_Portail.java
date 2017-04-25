@@ -1,7 +1,9 @@
 package action;
 
 import base.Base;
+import gui.GenWorld.GenWorldMap;
 import gui.layout.StructRet;
+import gui.map.Map;
 import perso.Personnage;
 
 public class Action_Portail implements Actionable{
@@ -9,6 +11,7 @@ public class Action_Portail implements Actionable{
 	private Personnage perso;
 	private Base base;
 	public Boolean sonder = false;
+	private Monde_Actif monde;
 	
 	private StructRet error() {
 		StructRet out = new StructRet();
@@ -16,15 +19,23 @@ public class Action_Portail implements Actionable{
 		return out;
 	}
 
-	public Action_Portail(Personnage perso, Base base) {
+	public Action_Portail(Personnage perso, Base base, Monde_Actif monde) {
 		this.perso = perso;
 		this.base = base;
+		this.monde = monde;
 	}
 
 	public StructRet explorer() {
 		this.perso.position = Position.monde;
 		this.perso.addTime(1);
-		return new StructRet();
+		monde.genMonde();
+		GenWorldMap.genWorldMap(monde.getMonde());
+		Map map = new Map();
+		map.init("sprites/mapTest2.map");
+		this.perso.teleport(map);
+		StructRet out = new StructRet();
+		out.add("", 999);
+		return out;
 	}
 
 	public StructRet sonder() {

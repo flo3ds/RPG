@@ -5,67 +5,62 @@ import action.action_monde.Action_Flore;
 import base.Base;
 import core.Item;
 import core.event.Event_extends;
-import monde.GenMonde;
 import perso.Personnage;
 import tools.Hache;
 
 public class Action_Monde {
 
-	public GenMonde monde;
 	public Action_Faune faune;
 	public Action_Flore flore;
 
 	private Personnage perso;
 	private Base base;
+	private Monde_Actif monde;
 
-	public Action_Monde(Personnage perso, Base base) {
+
+	public Action_Monde(Personnage perso, Base base, Monde_Actif monde) {
 		this.perso = perso;
 		this.base = base;
+		this.monde = monde;
 		faune = new Action_Faune(this.perso, this.base);
 		flore = new Action_Flore(this.perso, this.base);
 	}
 
 	public String analyseSol() {
-		return this.monde.sol.analyseSol();
+		return this.monde.getMonde().sol.analyseSol();
 	}
 
 	public String analyseFaune() {
 		this.perso.position = Position.faune;
-
-		return this.monde.faune.getAllDescription();
+		return this.monde.getMonde().faune.getAllDescription();
 	}
 
 	public String analyseFlore() {
 		this.perso.position = Position.flore;
-
-		return this.monde.flore.getAllDescription();
-	}
-
-	public void newMonde() {
-		monde = new GenMonde(this.perso);
+		return this.monde.getMonde().flore.getAllDescription();
 	}
 
 	public String miner() {
-		Object obj = this.monde.sol.minerais;
+		Object obj = this.monde.getMonde().sol.minerais;
 		if (this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)
 			((Item) obj).setNombre((short) (((Item) obj).getNombre() / 2));
 		else if (this.perso.getOxygen() < 33)
 			return this.perso.malusOxygen();
-		this.perso.inv.putItem(this.monde.sol.minerais);
-		return "Vous minez " + this.monde.sol.minerais.getNombre() + " de " + this.monde.sol.minerais.getMatiere()
+		this.perso.inv.putItem(this.monde.getMonde().sol.minerais);
+		return "Vous minez " + this.monde.getMonde().sol.minerais.getNombre() + " de " + this.monde.getMonde().sol.minerais.getMatiere()
 				+ ".\n" + this.perso.malusOxygen();
 
 	}
 
 	public String couperBois() {
 		if (this.perso.inv.haveItem(new Hache())) {
-			Object obj = this.monde.flore.arbres.bois;
+			Object obj = this.monde.getMonde().flore.arbres.bois;
 			if (this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)
 				((Item) obj).setNombre((short) (((Item) obj).getNombre() / 2));
 			else if (this.perso.getOxygen() < 33)
 				return this.perso.malusOxygen();
-			this.perso.inv.putItem(this.monde.flore.arbres.bois);
-			return "Vous coupez " + this.monde.flore.arbres.bois.getNombre() + " bois.\n" + this.perso.malusOxygen();
+			this.perso.inv.putItem(this.monde.getMonde().flore.arbres.bois);
+			return "Vous coupez " + this.monde.getMonde().flore.arbres.bois.getNombre() + " bois.\n" + this.perso.malusOxygen();
 		} else
 			return "Vous n'avez pas de hache";
 	}
@@ -79,11 +74,11 @@ public class Action_Monde {
 	}
 
 	public String getDescriptionGlobal() {
-		return this.monde.getDescriptionGlobal();
+		return this.monde.getMonde().getDescriptionGlobal();
 	}
 
 	public String getDescriptionSonde() {
-		return this.monde.getDescriptionSonde();
+		return this.monde.getMonde().getDescriptionSonde();
 	}
 
 	public String help() {
@@ -94,30 +89,27 @@ public class Action_Monde {
 		out += Action_monde.analyser_faune.action.getName() + "\n";
 		out += Action_monde.analyser_flore.action.getName() + "\n";
 		out += Action_monde.couper_bois.action.getName() + "\n";
-		out += this.help_perso();
 		return out;
 	}
 
-	public String action(String in) {
+	public String action(int id) {
 		if (this.perso.position == Position.flore) {
-			return this.flore.action(in, this.monde);
+			return this.flore.action(id, this.monde);
 		} else if (this.perso.position == Position.faune) {
-			return this.faune.action(in, this.monde);
+			return this.faune.action(id, this.monde);
 		} else {
-			if (Action_monde.analyser_sol.action.test(in))
+			if (Action_monde.analyser_sol.action.test(id))
 				return this.analyseSol();
-			else if (Action_monde.miner.action.test(in))
+			else if (Action_monde.miner.action.test(id))
 				return this.miner();
-			else if (Action_monde.analyser_faune.action.test(in)) {
+			else if (Action_monde.analyser_faune.action.test(id)) {
 				this.perso.position = Position.faune;
 				return this.analyseFaune();
-			} else if (Action_monde.analyser_flore.action.test(in))
+			} else if (Action_monde.analyser_flore.action.test(id))
 				return this.analyseFlore();
-			else if (Action_monde.base.action.test(in))
+			else if (Action_monde.base.action.test(id))
 				return this.base();
-			else if (this.actionPersoTest(in))
-				return this.actionPerso(this.perso, in);
-			else if (Action_monde.couper_bois.action.test(in))
+			else if (Action_monde.couper_bois.action.test(id))
 				return this.couperBois();
 			else
 				return this.help();
@@ -126,13 +118,20 @@ public class Action_Monde {
 
 	public enum Action_monde {
 
-		analyser_sol("analyser_sol"), miner("miner"), analyser_faune("analyser_faune"), analyser_flore(
-				"analyser_flore"), base("base"), couper_bois("couper_bois");
+		analyser_sol("analyser_sol", 0), miner("miner", 1),
+		analyser_faune("analyser_faune", 2),
+		analyser_flore("analyser_flore", 3), base("base", 99),
+		couper_bois("couper_bois", 4);
 
 		public core.Action action;
+		private int id;
+		
+		public int getId(){
+			return id;
+		}
 
-		Action_monde(String str) {
-			this.action = new core.Action(str);
+		Action_monde(String str, int id) {
+			this.action = new core.Action(str, id);
 		}
 	}
 

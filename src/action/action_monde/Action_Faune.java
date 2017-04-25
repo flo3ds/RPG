@@ -4,7 +4,7 @@ import action.Position;
 import base.Base;
 import core.Item;
 import core.event.Event_extends;
-import monde.GenMonde;
+import monde.Monde;
 import perso.Personnage;
 
 public class Action_Faune {
@@ -17,7 +17,7 @@ public class Action_Faune {
 		this.base = base;
 	}
 
-	public String action(String in, GenMonde monde) {
+	public String action(String in, Monde monde) {
 		if (Action_faune.chasser.action.test(in)) {
 			return this.Chasser(monde);
 		} else if (Action_faune.base.action.test(in))
@@ -44,7 +44,7 @@ public class Action_Faune {
 		return out;
 	}
 
-	public String Chasser(GenMonde monde) {
+	public String Chasser(Monde monde) {
 		if (monde.faune.nb_type_animal > 0) {
 			Object obj = monde.faune.steak;
 			if (this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)

@@ -41,8 +41,9 @@ public class Layout {
 			((Layoutable) obj.get(i)).update();
 
 		for (int i = 0; i < obj.size(); i++)
-			if (((Layoutable) obj.get(i)).clicked())
+			if (((Layoutable) obj.get(i)).clicked()){
 				this.redrawLine(((Button) obj.get(i)).getId());
+			}
 	}
 
 	public void close() {
@@ -72,8 +73,13 @@ public class Layout {
 		Iterator<String> text = buffer.getText().iterator();
 		int id[] = buffer.getId();
 		int i = 0;
-		while (text.hasNext())
+		while (text.hasNext()){
+			if(id [i] == 999){
+				this.close();
+				return;
+			}
 			addButton(text.next(), id[i++]);
+		}
 		show = true;
 	}
 

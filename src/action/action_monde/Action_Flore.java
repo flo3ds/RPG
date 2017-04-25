@@ -4,7 +4,7 @@ import action.Position;
 import base.Base;
 import core.Item;
 import core.event.Event_extends;
-import monde.GenMonde;
+import monde.Monde;
 import perso.Personnage;
 
 public class Action_Flore {
@@ -17,7 +17,7 @@ public class Action_Flore {
 		this.base = base;
 	}
 
-	public String action(String in, GenMonde monde) {
+	public String action(String in, Monde monde) {
 		if (Action_flore.cueillir.action.test(in)) {
 			return this.cueillir(monde);
 		} else if (Action_flore.base.action.test(in))
@@ -44,7 +44,7 @@ public class Action_Flore {
 		return out;
 	}
 
-	public String cueillir(GenMonde monde) {
+	public String cueillir(Monde monde) {
 		Object obj = monde.flore.plante;
 		if (this.perso.getOxygen() < 66 && this.perso.getOxygen() > 33)
 			((Item) obj).setNombre((short) (((Item) obj).getNombre() / 2));

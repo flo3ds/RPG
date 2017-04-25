@@ -4,22 +4,25 @@ import monde.athmosphere.Atmosphere;
 import monde.ciel.Ciel;
 import monde.dangerRare.Danger_Rare;
 import monde.faune.Faune;
+import monde.flore.Tronc;
 import monde.flore.Flore;
+import monde.sol.Pierre;
 import monde.sol.Sol;
-import perso.Personnage;
 
-public class GenMonde {
+public class Monde {
 
+	private GestionId gid= new GestionId();
 	public String name = "";
 	public Flore flore = new Flore();
 	public Ciel ciel = new Ciel();
-	public Sol sol = new Sol();
+	public Sol sol = new Sol(gid);
+	public Pierre pierre = new Pierre(gid);
+	public Tronc arbreGui = new Tronc(gid);
 	public Faune faune = new Faune();
 	public Atmosphere atmo = new Atmosphere();
 	public Danger_Rare dangerRare = new Danger_Rare();
 
-	public GenMonde(Personnage perso) {
-		perso.setOxygen(this.atmo.getOxygen());
+	public Monde() {
 	}
 
 	public String getDescriptionGlobal() {
