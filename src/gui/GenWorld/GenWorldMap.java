@@ -20,8 +20,8 @@ public class GenWorldMap {
 		process(xml, monde.sol, w, h);
 		process(xml, monde.pierre, w, h);
 		process(xml, monde.arbreGui, w, h);
-		//monde.arbreGui.fa.getLayer().setDataFeuillage(monde.arbreGui.getLayer().getData());
-		//process(xml, monde.arbreGui.fa, w, h);
+		monde.arbreGui.fa.getLayer().setDataFeuillage(monde.arbreGui.getLayer().getData());
+		process(xml, monde.arbreGui.fa, w, h);
 		
 		xml.write();
 	}

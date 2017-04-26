@@ -14,6 +14,7 @@ import org.w3c.dom.Element;
 
 import core.Rand;
 import gui.Pattern;
+import gui.map.Layer.Mode;
 import monde.GestionId;
 
 public class Layer {
@@ -72,7 +73,6 @@ public class Layer {
 	public void setHW(int height, int width){
 		this.height = height;
 		this.width = width;
-		this.setData(new int[height * width]);
 	}
 	
 	public void setTextureId(int textureId){
@@ -130,7 +130,7 @@ public class Layer {
 	
 	private int[] mergeMatrice(int[] data, Pattern pattern, int x, int y) {
 		int index = 0;
-		int[] out = new int[20 * 20];
+		int[] out = new int[width * height];
 		int[][] pat = pattern.getPattern();
 		int pw = pat[0].length;
 		int ph = pat.length;
@@ -142,8 +142,8 @@ public class Layer {
 
 		System.out.println("wh = " + pw + " | " + ph);
 		
-		for (int i = 0; i < 20; i++) {
-			for (int j = 0; j < 20; j++) {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
 				out[index] = data[index];
 				if (x + lol == j && y + lil == i && ok == false) {
 					
@@ -165,7 +165,6 @@ public class Layer {
 	
 	private String defData(){
 		int[] data = null;
-		
 		if(this.mode == Mode.plain)
 			data = plain();
 		else if (this.mode == Mode.parsemé)
@@ -173,6 +172,8 @@ public class Layer {
 		else
 			data = this.data;
 		
+		this.data = data;
+		//print();
 		 ByteBuffer byteBuffer = ByteBuffer.allocate(data.length * 4);
 		 byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 	     IntBuffer intBuffer = byteBuffer.asIntBuffer();
@@ -231,16 +232,46 @@ public class Layer {
 
 	public void setData(int[] data) {
 		this.data = data;
+		
 	}
 	
 	public void setDataFeuillage(int[] data){
+		int index = 0;
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				
+				if(i > 0 && data[index] != 0){
+					data[index-width] = this.textureId;
+					}
+				data[index] = 0;
+				index++;
+			}
+		}
 		this.data = data;
+		print();
+	}
+	
+	public void print(){
+		String  out = "";
+		int index = 0;
+		for (int i = 0; i < width; i++) {
+			out += "\n";
+			for (int j = 0; j < height; j++) {
+				out += data[index++] + " ";
+			}
+		}
+
+		System.out.println(out);
 	}
 
 	public enum Mode{
 		
 		none, plain, parsemé;
 		
+	}
+
+	public void setMode(Mode mode) {
+		this.mode = mode;
 	}
 	
 }
