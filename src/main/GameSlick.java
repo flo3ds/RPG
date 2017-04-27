@@ -100,6 +100,8 @@ public class GameSlick extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
+		g.translate(container.getWidth() / 2 - playerGui.getX(), 
+	            container.getHeight() / 2 - playerGui.getY());
 		((Map_I) perso.getMap()).render(g);
 		playerGui.render(g);
 		g.drawString(out, 200, 200);
