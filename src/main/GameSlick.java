@@ -50,46 +50,36 @@ public class GameSlick extends BasicGame {
 	private Action_Event action_event = new Action_Event(perso, base);
 	private Action_Equiper action_equiper = new Action_Equiper(perso, base);
 	private Layout layout;
+	private int memoire = -1;
+	private int compteurmemoire=0;
 
 	public GameSlick() {
 		super("Lesson 1 :: WindowGame");
 	}
-/*
-	public String action(String in) {
-		if (perso.position == Position.base) {
-			return action_base.action(in);
-		} else if (perso.position == Position.portail) {
-			if (Action_Portail.Action_portail.explorer.action.test(in)) {
-				if (!this.action_portail.sonder)
-					this.action_monde.newMonde();
-				else
-					this.action_portail.sonder = false;
-				action_portail.action(in);
-				return this.action_monde.getDescriptionGlobal();
-			} else if (Action_Portail.Action_portail.sonder.action.test(in)) {
-				this.action_portail.sonder = true;
-				this.action_monde.newMonde();
-				action_portail.action(in);
-				return this.action_monde.getDescriptionSonde();
-			}
-			return action_portail.action(in);
-		} else if (perso.position == Position.coffre) {
-			return action_coffre.action(in);
-		} else if (perso.position == Position.craft) {
-			return action_craft.action(in);
-		} else if (perso.position == Position.event) {
-			return action_event.action(in);
-		} else if (perso.position == Position.equiper) {
-			return action_equiper.action(in);
-		} else if (perso.position == Position.monde || perso.position == Position.faune
-				|| perso.position == Position.flore) {
-			return action_monde.action(in);
+	/*
+	 * public String action(String in) { if (perso.position == Position.base) {
+	 * return action_base.action(in); } else if (perso.position ==
+	 * Position.portail) { if
+	 * (Action_Portail.Action_portail.explorer.action.test(in)) { if
+	 * (!this.action_portail.sonder) this.action_monde.newMonde(); else
+	 * this.action_portail.sonder = false; action_portail.action(in); return
+	 * this.action_monde.getDescriptionGlobal(); } else if
+	 * (Action_Portail.Action_portail.sonder.action.test(in)) {
+	 * this.action_portail.sonder = true; this.action_monde.newMonde();
+	 * action_portail.action(in); return
+	 * this.action_monde.getDescriptionSonde(); } return
+	 * action_portail.action(in); } else if (perso.position == Position.coffre)
+	 * { return action_coffre.action(in); } else if (perso.position ==
+	 * Position.craft) { return action_craft.action(in); } else if
+	 * (perso.position == Position.event) { return action_event.action(in); }
+	 * else if (perso.position == Position.equiper) { return
+	 * action_equiper.action(in); } else if (perso.position == Position.monde ||
+	 * perso.position == Position.faune || perso.position == Position.flore) {
+	 * return action_monde.action(in);
+	 * 
+	 * } else return "error GAME GUI"; }
+	 */
 
-		} else
-			return "error GAME GUI";
-	}
-*/
-	
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		this.container = container;
@@ -110,7 +100,9 @@ public class GameSlick extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
-		((Map_I)perso.getMap()).render(g);
+		g.translate(container.getWidth() / 2 - playerGui.getX(), 
+	            container.getHeight() / 2 - playerGui.getY());
+		((Map_I) perso.getMap()).render(g);
 		playerGui.render(g);
 		g.drawString(out, 200, 200);
 		layout.render(container, g);
@@ -130,18 +122,30 @@ public class GameSlick extends BasicGame {
 		case Input.KEY_UP:
 			playerGui.setDirection(0);
 			playerGui.setMoving(true);
+			if(memoire==-1)
+			memoire = 0;
+			compteurmemoire++;
 			break;
 		case Input.KEY_LEFT:
 			playerGui.setDirection(1);
 			playerGui.setMoving(true);
+			if(memoire==-1)
+			memoire = 1;
+			compteurmemoire++;
 			break;
 		case Input.KEY_DOWN:
 			playerGui.setDirection(2);
 			playerGui.setMoving(true);
+			if(memoire==-1)
+			memoire = 2;
+			compteurmemoire++;
 			break;
 		case Input.KEY_RIGHT:
 			playerGui.setDirection(3);
 			playerGui.setMoving(true);
+			if(memoire==-1)
+			memoire = 3;
+			compteurmemoire++;
 			break;
 		case Input.KEY_SPACE:
 			actionSpace();
@@ -162,7 +166,7 @@ public class GameSlick extends BasicGame {
 			layout.drawSquare(perso.inv.liste());
 		}
 	}
-	
+
 	private void stuff() {
 		if (layout.isShow())
 			layout.close();
@@ -188,6 +192,75 @@ public class GameSlick extends BasicGame {
 
 	@Override
 	public void keyReleased(int key, char c) {
+		switch (key) {
+		case Input.KEY_UP:
+			
+			if (memoire==-1){
+				playerGui.setMoving(false);
+			}
+			else if (memoire==0){
+					memoire=-1;
+				}
+			else
+				playerGui.setDirection(memoire);
+			compteurmemoire--;
+			if(compteurmemoire==0){
+				memoire=-1;
+				playerGui.setMoving(false);
+			}
+			
+			break;
+		case Input.KEY_LEFT:
+			if (memoire==-1){
+				playerGui.setMoving(false);
+			}
+			else if (memoire==1){
+					memoire=-1;
+				}
+			
+			else
+				playerGui.setDirection(memoire);
+			compteurmemoire--;
+			if(compteurmemoire==0){
+				memoire=-1;
+				playerGui.setMoving(false);
+			}
+		
+			break;
+		case Input.KEY_DOWN:
+			
+			if (memoire==-1){
+				playerGui.setMoving(false);
+			}
+			else if (memoire==2){
+					memoire=-1;
+				}
+			else
+				playerGui.setDirection(memoire);
+			compteurmemoire--;
+			if(compteurmemoire==0){
+				memoire=-1;
+				playerGui.setMoving(false);
+			}
+			
+			break;
+		case Input.KEY_RIGHT:
+			
+			if (memoire==-1){
+				playerGui.setMoving(false);
+			}
+			else if (memoire==3){
+					memoire=-1;
+				}
+			else
+				playerGui.setDirection(memoire);
+			compteurmemoire--;
+			if(compteurmemoire==0){
+				memoire=-1;
+				playerGui.setMoving(false);
+			}
+			break;
+		}
 		if (Input.KEY_ESCAPE == key) {
 			container.exit();
 		}
