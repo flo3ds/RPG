@@ -7,6 +7,7 @@ import java.util.Iterator;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -43,7 +44,7 @@ public class XMLMap {
 	}
 	
 	public void setLayer(Element layer){
-		this.tileset.add(layer);
+		this.layer.add(layer);
 	}
 	
 	
@@ -61,7 +62,7 @@ public class XMLMap {
 		map.setAttribute("height", "20");
 		map.setAttribute("tilewidth", "32");
 		map.setAttribute("tileheight", "32");
-		map.setAttribute("nextobjectid", "17");
+		map.setAttribute("nextobjectid", "1");
 		return map;
 	}
 	
@@ -83,6 +84,7 @@ public class XMLMap {
 	Transformer transformer = null;
 	try {
 		transformer = transformerFactory.newTransformer();
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 	} catch (TransformerConfigurationException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

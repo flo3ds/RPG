@@ -12,21 +12,25 @@ import monde.MondeObj;
 public class GenWorldMap {
 
 	public static void genWorldMap(Monde monde){
-		XMLMap xml = new XMLMap("sprites/mapTest2.map");
+		String name = "test";
+		//créér le dossier
+		XMLMap xml = new XMLMap("world/" + name + "/test.map");
 		
 		int w = 20;
 		int h = 20;
 		
-		process(xml, monde.sol, w, h);
-		process(xml, monde.pierre, w, h);
-		process(xml, monde.arbreGui, w, h);
-		monde.arbreGui.fa.getLayer().setDataFeuillage(monde.arbreGui.getLayer().getData());
-		process(xml, monde.arbreGui.fa, w, h);
-		
+		process(xml, name, monde.sol, w, h);
+		process(xml, name, monde.pierre, w, h);
+		monde.tronc.getLayer().getXml(xml.getDoc());
+		monde.tronc.fa.getLayer().setDataUp(monde.tronc.getLayer().getData());
+		monde.tronc.getLayer().setMode(Layer.Mode.none);
+		process(xml, name, monde.tronc, w, h);
+		process(xml, name, monde.tronc.fa, w, h);
+		 
 		xml.write();
 	}
 	
-	private static void process(XMLMap xml, MondeObj obj, int w, int h){
+	private static void process(XMLMap xml,String name, MondeObj obj, int w, int h){
 		
 		if(obj instanceof MultiTileset_I){
 			Layer layer = obj.getLayer();
@@ -40,6 +44,7 @@ public class GenWorldMap {
 		Layer layer = obj.getLayer();
 		layer.setHW(w, h);
 		xml.setLayer(layer.getXml(xml.getDoc()));
+		obj.pngProcess("world/"+name+"/");
 		xml.setTileset(((Tileset)obj.getTileset()).getXml(xml.getDoc()));
 	}}
 	

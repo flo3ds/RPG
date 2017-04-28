@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="tronc" tilewidth="96" tileheight="96" tilecount="2">
+  <image source="tileset/tronc.png" width="192" height="96"/>
+ </tileset>
+ <tileset firstgid="3" name="arbre_fueillage" tilewidth="96" tileheight="96" tilecount="4">
+  <image source="tileset/arbre_fueillage.png" width="192" height="224"/>
+ </tileset>
+ <layer name="tr" width="20" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgGAWjYBTQGzAOtANGwSigAgAAY+6P+kAGAAA=
+  </data>
+ </layer>
+ <layer name="Calque de Tile 1" width="20" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgGAWjYPgB5oF2wCgYBSMAAAArGpEoQAYAAA==
+  </data>
+ </layer>
+ <layer name="Calque 3" width="20" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NgGAWDFbAOtANGwSgYBaMADwAAIi1YdUAGAAA=
+  </data>
+ </layer>
+</map>

@@ -14,7 +14,10 @@ public class MapBase implements Map_I{
 	}
 
 	public void render(Graphics g) {
-		this.map.render(0, 0);
+		int nb = this.map.getLayerCount();
+		for(int i=0; i < nb; i++)
+			this.map.render(0, 0, i);
+		
 	}
 
 	public TiledMap getTiledMap() {

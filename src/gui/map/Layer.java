@@ -36,11 +36,13 @@ public class Layer {
 	}
 
 	public void addArrayTileset(GestionId gid, Tileset tileset) {
+		this.data = new int[height*width];
 		tileset.setFirstgid(gid.getIdAndAddCount(tileset.getCount()));
 		this.ArrayTileset.add(tileset);
 	}
 	
 	public Layer(String name, Mode mode, Tileset tileset){
+		this.data = new int[height*width];
 		this.name = name;
 		this.mode = mode;
 		this.tileset = tileset;
@@ -173,7 +175,7 @@ public class Layer {
 			data = this.data;
 		
 		this.data = data;
-		//print();
+		 print();
 		 ByteBuffer byteBuffer = ByteBuffer.allocate(data.length * 4);
 		 byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 	     IntBuffer intBuffer = byteBuffer.asIntBuffer();
@@ -231,19 +233,32 @@ public class Layer {
 	}
 
 	public void setData(int[] data) {
-		this.data = data;
-		
-	}
-	
-	public void setDataFeuillage(int[] data){
 		int index = 0;
+		this.data = data;
+		print();
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				
-				if(i > 0 && data[index] != 0){
+				if(data[index] != 0)
+					data[index] = this.textureId;
+					else
+				data[index] = 0;
+				index++;
+			}
+		}
+		this.data = data;
+		print();
+		
+	}
+	
+	public void setDataDown(int[] data){
+		int index = height * width;
+		for (int i = height; i > height; i--) {
+			for (int j = width; j > width; j--) {
+				data[index] = 0;
+				if(i < height && data[index] != 0){
 					data[index-width] = this.textureId;
 					}
-				data[index] = 0;
 				index++;
 			}
 		}
@@ -251,8 +266,25 @@ public class Layer {
 		print();
 	}
 	
+	public void setDataUp(int[] data){
+		int index = 0;
+		int buffer[] = data.clone();
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				
+				if(i > 0 && buffer[index] != 0){
+					buffer[index-width] = this.textureId;
+					}
+				buffer[index] = 0;
+				index++;
+			}
+		}
+		this.data = buffer;
+		print();
+	}
+	
 	public void print(){
-		String  out = "";
+		String  out = name;
 		int index = 0;
 		for (int i = 0; i < width; i++) {
 			out += "\n";

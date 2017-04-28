@@ -31,7 +31,7 @@ public class Action_Portail implements Actionable{
 		monde.genMonde();
 		GenWorldMap.genWorldMap(monde.getMonde());
 		Map map = new Map();
-		map.init("sprites/mapTest2.map");
+		map.init("world/test/test.map");
 		this.perso.teleport(map);
 		StructRet out = new StructRet();
 		out.add("", 999);

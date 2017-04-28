@@ -1,5 +1,8 @@
 package gui.map;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -12,11 +15,12 @@ public class Tileset {
 	private int tilewidth = 32;
 	
 	private String path;
+	private String file;
 	private int img_width;
 	private int img_height;
 			
-	public Tileset(String name, String path, int tilecount,int tilewidth, int tileheight, int img_width, int img_height){
-		this.path = "tileset/" + path;
+	public Tileset(String name, String file, int tilecount,int tilewidth, int tileheight, int img_width, int img_height){
+		this.file = file;
 		this.name = name;
 		this.tilecount = tilecount;
 		this.img_width = img_width;
@@ -25,8 +29,20 @@ public class Tileset {
 		this.tileheight = tileheight;
 	}
 	
+	public void setPath(String path){
+		this.path = path;
+	}
+	
+	public String getPath(){
+		return path;
+	}
+	
 	public String getName(){
 		return name;
+	}
+	
+	public String getFile(){
+		return file;
 	}
 	
 	public void setFirstgid(int gid){
@@ -49,7 +65,7 @@ public class Tileset {
 		tileset.setAttribute("tileheight", tileheight+"");
 		tileset.setAttribute("tilecount", tilecount+"");
 		Element image = document.createElement("image");
-		image.setAttribute("source", path);
+		image.setAttribute("source", file);
 		image.setAttribute("width", ""+img_width);
 		image.setAttribute("height", ""+img_height);
 		tileset.appendChild(image)

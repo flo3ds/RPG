@@ -1,6 +1,12 @@
 package monde;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import gui.Pattern;
 import gui.map.Layer;
@@ -15,7 +21,7 @@ public abstract class MondeObj {
 
 	/** The layer. */
 	private Layer layer;
-	
+	private Color color = null;
 	/** The firstgid. */
 	private int firstgid;
 	
@@ -99,6 +105,48 @@ public abstract class MondeObj {
 	public void setFirstgid(int firstgid) {
 		this.firstgid = firstgid;
 	}
+	
+	public void pngProcess(String path){
+		BufferedImage loadImg = null;
+		try {
+			loadImg = ImageIO.read(new File("sprites/tileset/" + ((Tileset)this.getTileset()).getFile()));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		if(color != null)
+		tint(loadImg, color);
+		
+		File outputfile = new File(path+layer.getTileset().getFile());
+		try {
+			ImageIO.write(loadImg, "png", outputfile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public Color getColor(){
+		return color;
+	}
+	
+	public void setColor(Color color){
+		this.color = color;
+	}
+
+	public static void tint(BufferedImage image, Color color) {
+		    for (int x = 0; x < image.getWidth(); x++) {
+		        for (int y = 0; y < image.getHeight(); y++) {
+		            Color pixelColor = new Color(image.getRGB(x, y), true);
+		            int r = (pixelColor.getRed() + color.getRed()) / 2;
+		            int g = (pixelColor.getGreen() + color.getGreen()) / 2;
+		            int b = (pixelColor.getBlue() + color.getBlue()) / 2;
+		            int a = pixelColor.getAlpha();
+		            int rgba = (a << 24) | (r << 16) | (g << 8) | b;
+		            image.setRGB(x, y, rgba);
+		        }
+		    }
+		}
 
 	
 	
