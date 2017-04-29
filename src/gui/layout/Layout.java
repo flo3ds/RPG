@@ -36,12 +36,12 @@ public class Layout {
 		this.action = action;
 	}
 
-	public void update() {
+	public void update(int xd, int yd) {
 		for (int i = 0; i < obj.size(); i++)
-			((Layoutable) obj.get(i)).update();
+			((Layoutable) obj.get(i)).update(xd, yd);
 
 		for (int i = 0; i < obj.size(); i++)
-			if (((Layoutable) obj.get(i)).clicked()){
+			if (((Layoutable) obj.get(i)).clicked(xd, yd)){
 				this.redrawLine(((Button) obj.get(i)).getId());
 			}
 	}
@@ -50,7 +50,9 @@ public class Layout {
 		show = false;
 	}
 
-	public void open(Object action) {
+	public void open(Object action, float x, float y) {
+		this.x = (int)x+50;
+		this.y = (int)y+50;
 		obj.clear();
 		nbLine = 0;
 		this.action = action;

@@ -7,19 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/ibxm.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/jinput.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/jnlp.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/jogg-0.0.7.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/jorbis-0.0.15.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/lwjgl.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/lwjgl_util.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/lwjgl_util_applet.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/natives-linux.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/natives-mac.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/natives/Pack200Task.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/slick.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/slick-examples.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Label/git/RPG3/lib/tinylinepp.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/slick2d"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

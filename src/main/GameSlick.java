@@ -35,6 +35,8 @@ public class GameSlick extends BasicGame {
 	private MapBase map = new MapBase();
 	private PlayerGui playerGui = new PlayerGui();
 	private String out = "";
+	private float x;
+	private float y = 0;
 
 	private Time time = new Time();
 
@@ -56,29 +58,7 @@ public class GameSlick extends BasicGame {
 	public GameSlick() {
 		super("Lesson 1 :: WindowGame");
 	}
-	/*
-	 * public String action(String in) { if (perso.position == Position.base) {
-	 * return action_base.action(in); } else if (perso.position ==
-	 * Position.portail) { if
-	 * (Action_Portail.Action_portail.explorer.action.test(in)) { if
-	 * (!this.action_portail.sonder) this.action_monde.newMonde(); else
-	 * this.action_portail.sonder = false; action_portail.action(in); return
-	 * this.action_monde.getDescriptionGlobal(); } else if
-	 * (Action_Portail.Action_portail.sonder.action.test(in)) {
-	 * this.action_portail.sonder = true; this.action_monde.newMonde();
-	 * action_portail.action(in); return
-	 * this.action_monde.getDescriptionSonde(); } return
-	 * action_portail.action(in); } else if (perso.position == Position.coffre)
-	 * { return action_coffre.action(in); } else if (perso.position ==
-	 * Position.craft) { return action_craft.action(in); } else if
-	 * (perso.position == Position.event) { return action_event.action(in); }
-	 * else if (perso.position == Position.equiper) { return
-	 * action_equiper.action(in); } else if (perso.position == Position.monde ||
-	 * perso.position == Position.faune || perso.position == Position.flore) {
-	 * return action_monde.action(in);
-	 * 
-	 * } else return "error GAME GUI"; }
-	 */
+	
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
@@ -92,7 +72,6 @@ public class GameSlick extends BasicGame {
 		perso.inv.putItem(new Minerai(Minerai.matiere.cuivre, 16));
 		perso.inv.putItem(new Minerai(Minerai.matiere.fer, 16));
 		perso.inv.putItem(new Bois(8));
-		perso.inv.putItem(new Armure_Fer());
 		perso.inv.putItem(new Armure_Cuir());
 		perso.inv.putItem(new Epee_Fer());
 
@@ -100,6 +79,9 @@ public class GameSlick extends BasicGame {
 
 	@Override
 	public void render(GameContainer container, Graphics g) throws SlickException {
+		x = (-1)*(container.getWidth() / 2 - playerGui.getX());
+		y = (-1)*(container.getHeight() / 2 - playerGui.getY());
+		System.out.println("x: "+x+" y: "+y);
 		g.translate(container.getWidth() / 2 - playerGui.getX(), 
 	            container.getHeight() / 2 - playerGui.getY());
 		((Map_I) perso.getMap()).render(g);
@@ -111,7 +93,7 @@ public class GameSlick extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta) throws SlickException {
 		playerGui.update(delta, perso);
-		layout.update();
+		layout.update((int)x,(int) y);
 		this.event.genEvent();
 
 	}
@@ -171,7 +153,7 @@ public class GameSlick extends BasicGame {
 		if (layout.isShow())
 			layout.close();
 		else {
-			layout.open(action_equiper);
+			layout.open(action_equiper, x, y);
 		}
 	}
 
@@ -180,13 +162,13 @@ public class GameSlick extends BasicGame {
 			layout.close();
 		else {
 			if (perso.getPosition().toString().equals(Position.craft.name()))
-				layout.open(action_craft);
+				layout.open(action_craft, x, y);
 			else if (perso.getPosition().toString().equals(Position.coffre.name()))
-				layout.open(action_coffre);
+				layout.open(action_coffre, x, y);
 			else if (perso.getPosition().toString().equals(Position.portail.name()))
-				layout.open(action_portail);
+				layout.open(action_portail, x, y);
 			else if (perso.getPosition().toString().equals(Position.rapport.name()))
-				layout.open(action_event);
+				layout.open(action_event, x ,y);
 		}
 	}
 

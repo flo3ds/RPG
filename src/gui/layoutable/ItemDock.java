@@ -47,7 +47,7 @@ public class ItemDock implements Layoutable {
 	}
 
 	@Override
-	public Boolean clicked() {
+	public Boolean clicked(int xd, int yd) {
 		return false;
 
 	}
@@ -60,7 +60,7 @@ public class ItemDock implements Layoutable {
 	}
 
 	@Override
-	public void update() {
+	public void update(int xd, int yd) {
 		// TODO Auto-generated method stub
 
 	}

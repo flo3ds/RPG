@@ -36,9 +36,9 @@ public class Button implements Layoutable {
 		return id;
 	}
 
-	public void update() {
-		int x = input.getMouseX();
-		int y = input.getMouseY();
+	public void update(int xd, int yd) {
+		int x = input.getMouseX() + xd;
+		int y = input.getMouseY() + yd;
 		color_bg = color_bg_normal;
 		if (x < this.x + width && x > this.x && y < this.y + height && y > this.y) {
 			color_text = color_text_over;
@@ -57,7 +57,7 @@ public class Button implements Layoutable {
 		this.texte = texte;
 	}
 
-	public Boolean clicked() {
+	public Boolean clicked(int xd, int yd) {
 		if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)) {
 			this.leftDown = true;
 		} else {

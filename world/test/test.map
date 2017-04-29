@@ -13,15 +13,15 @@
 <image height="192" source="test.png" width="192"/>
 </tileset>
 <layer height="20" name="sol" width="20">
-<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNkYGBgHMWjeBSP4lE8iknEALhlz4pABgAA</data>
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNhYGBgGcWjeBSP4lE8iknEAEAZGCFABgAA</data>
 </layer>
 <layer height="20" name="pierre" width="20">
-<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgwATsWMSGGiDWD/Ty62AO08HsNhgg1Y3EqCfFzKEQRsQAWvljMIXPYHILqYAebqemHQCeRENWQAYAAA==</data>
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgGAUDCTgG2FwOHGxKzSVWHyHzaBU+IxUM9vAc7O6jBcDnZ2qEBy3DFABfyp+MQAYAAA==</data>
 </layer>
 <layer height="20" name="tronc" width="20">
-<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgwAScUEwIEKOGnoBW7hls/hxoQGz6wKV3FEDAYA8LYt3HiUaPAvxgOIUTAO0OjMJABgAA</data>
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgoC3gpLH5o2AUUAMMhnQ62NwwGNyDDXAykO42WvkL3azBGma0AgB2oxlMQAYAAA==</data>
 </layer>
 <layer height="20" name="test" width="20">
-<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgGDjAO8TMHaqAl4H8MBkNSwQY7GFBrPt40ehRgB+MhhNuAAB3zQ/+QAYAAA==</data>
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgQAW8DKNgFAx+MBjS6WBzw2BwDzbAy0C622jlL3SzBmuYDRUAAI2Mv1ZABgAA</data>
 </layer>
 </map>

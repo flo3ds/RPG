@@ -27,7 +27,7 @@ public class Feuillage_arbre extends MondeObj {
 		this.setTexture(2);
 		this.getLayer().setMode(Layer.Mode.none);
 
-		this.setColor(new Color(255,0,0));
+		this.setColor(new Color(Rand.entier(0, 255),Rand.entier(0, 255),Rand.entier(0, 255)));
 		
 
 	}
