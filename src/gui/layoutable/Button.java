@@ -62,8 +62,8 @@ public class Button implements Layoutable {
 			this.leftDown = true;
 		} else {
 			if (this.leftDown) {
-				int x = input.getMouseX();
-				int y = input.getMouseY();
+				int x = input.getMouseX() + xd;
+				int y = input.getMouseY() + yd;
 				if (x < this.x + width && x > this.x && y < this.y + height && y > this.y)
 					return true;
 				this.leftDown = false;

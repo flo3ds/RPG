@@ -28,12 +28,12 @@ public class Action_Equiper implements Actionable {
 		return out;
 	}
 
-	public StructRet init(){
+	public StructRet init() {
 		StructRet out = this.listeEquipable();
-		//out.add(Action_equiper.retour.name(), Action_equiper.retour.getId());
+		// out.add(Action_equiper.retour.name(), Action_equiper.retour.getId());
 		return out;
 	}
-	
+
 	public String help() {
 		String out = "";
 		out += this.listeEquipable();
@@ -43,14 +43,14 @@ public class Action_Equiper implements Actionable {
 	}
 
 	public StructRet action(int id) {
-				return this.equiper(id);
+		return this.equiper(id);
 	}
 
 	private StructRet equiper(int id) {
-			this.perso.setEquipable(this.perso.inv.getItem(id));
-			this.equiper = false;
-			this.perso.inv.removeItem(id);
-			return this.listeEquipable();
+		this.perso.setEquipable(this.perso.inv.getItem(id));
+		this.equiper = false;
+		this.perso.inv.removeItem(id);
+		return this.listeEquipable();
 	}
 
 	public enum Action_equiper {
@@ -59,11 +59,11 @@ public class Action_Equiper implements Actionable {
 
 		public core.Action action;
 		private int id;
-		
-		public int getId(){
+
+		public int getId() {
 			return id;
 		}
-		
+
 		Action_equiper(String str, int id) {
 			this.action = new core.Action(str, id);
 		}

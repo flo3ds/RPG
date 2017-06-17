@@ -18,8 +18,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-
-
 public class XMLMap {
 
 	private DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -29,7 +27,7 @@ public class XMLMap {
 	private ArrayList<Element> tileset = new ArrayList<Element>();
 	private ArrayList<Element> layer = new ArrayList<Element>();
 
-	public XMLMap(String path){
+	public XMLMap(String path) {
 		try {
 			docBuilder = docFactory.newDocumentBuilder();
 			doc = docBuilder.newDocument();
@@ -38,22 +36,20 @@ public class XMLMap {
 		}
 		this.path = path;
 	}
-	
-	public void setTileset(Element tileset){
+
+	public void setTileset(Element tileset) {
 		this.tileset.add(tileset);
 	}
-	
-	public void setLayer(Element layer){
+
+	public void setLayer(Element layer) {
 		this.layer.add(layer);
 	}
-	
-	
-	
-	public Document getDoc(){
+
+	public Document getDoc() {
 		return doc;
 	}
-	
-	private Element map(){
+
+	private Element map() {
 		Element map = doc.createElement("map");
 		map.setAttribute("version", "1.0");
 		map.setAttribute("orientation", "orthogonal");
@@ -65,44 +61,43 @@ public class XMLMap {
 		map.setAttribute("nextobjectid", "1");
 		return map;
 	}
-	
-	public void write(){
 
-	Element map = map();
-	doc.appendChild(map);
+	public void write() {
 
-	Iterator<Element> it = this.tileset.iterator();
-	while(it.hasNext())
-		map.appendChild(it.next());
+		Element map = map();
+		doc.appendChild(map);
 
-	
-	it = this.layer.iterator();
-	while(it.hasNext())
-		map.appendChild(it.next());
+		Iterator<Element> it = this.tileset.iterator();
+		while (it.hasNext())
+			map.appendChild(it.next());
 
-	TransformerFactory transformerFactory = TransformerFactory.newInstance();
-	Transformer transformer = null;
-	try {
-		transformer = transformerFactory.newTransformer();
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	} catch (TransformerConfigurationException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		it = this.layer.iterator();
+		while (it.hasNext())
+			map.appendChild(it.next());
+
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = null;
+		try {
+			transformer = transformerFactory.newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DOMSource source = new DOMSource(doc);
+		StreamResult result = new StreamResult(new File(path));
+
+		// Output to console for testing
+		// StreamResult result = new StreamResult(System.out);
+
+		try {
+			transformer.transform(source, result);
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		System.out.println("File saved!");
 	}
-	DOMSource source = new DOMSource(doc);
-	StreamResult result = new StreamResult(new File(path));
-
-	// Output to console for testing
-	// StreamResult result = new StreamResult(System.out);
-
-	try {
-		transformer.transform(source, result);
-	} catch (TransformerException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
-
-	System.out.println("File saved!");
-}
 
 }

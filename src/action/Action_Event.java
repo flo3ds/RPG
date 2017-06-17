@@ -12,7 +12,7 @@ import perso.Personnage;
  * dependent pas d'un lieux et qu'il peut faire en permanance Exemple : Regarder
  * son inventaire...
  */
-public class Action_Event implements Actionable{
+public class Action_Event implements Actionable {
 
 	private Personnage perso;
 	private Base base;
@@ -23,9 +23,9 @@ public class Action_Event implements Actionable{
 	}
 
 	public StructRet init() {
-		if(this.base.event.getEvent() != null)
+		if (this.base.event.getEvent() != null)
 			return ((Event_extends) this.base.event.getEvent()).getHelp();
-		else{
+		else {
 			StructRet out = new StructRet();
 			out.setHeader("RAS");
 			return out;
@@ -38,7 +38,7 @@ public class Action_Event implements Actionable{
 		else
 			return this.error();
 	}
-	
+
 	private StructRet error() {
 		StructRet out = new StructRet();
 		out.add("error", 0);

@@ -1,6 +1,5 @@
 package perso;
 
-
 import action.Position;
 import core.Armor;
 import core.Time;
@@ -135,18 +134,17 @@ public class Personnage {
 			return "Il y a trop peu d'oxygen pour entreprendre une tache aussi physique.\n";
 		return "";
 	}
-	
-	public Map_I getMap(){
+
+	public Map_I getMap() {
 		return map;
 	}
-	
-	public void setMap(Map_I map){
-		this.map = map;
-	}
-	
-	public void teleport(Map_I map){
+
+	public void setMap(Map_I map) {
 		this.map = map;
 	}
 
+	public void teleport(Map_I map) {
+		this.map = map;
+	}
 
 }

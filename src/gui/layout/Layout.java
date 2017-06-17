@@ -37,13 +37,18 @@ public class Layout {
 	}
 
 	public void update(int xd, int yd) {
-		for (int i = 0; i < obj.size(); i++)
-			((Layoutable) obj.get(i)).update(xd, yd);
+		if (show == true) {
+			x = xd + 50;
+			y = yd + 50;
 
-		for (int i = 0; i < obj.size(); i++)
-			if (((Layoutable) obj.get(i)).clicked(xd, yd)){
-				this.redrawLine(((Button) obj.get(i)).getId());
-			}
+			for (int i = 0; i < obj.size(); i++)
+				((Layoutable) obj.get(i)).update(xd, yd);
+
+			for (int i = 0; i < obj.size(); i++)
+				if (((Layoutable) obj.get(i)).clicked(xd, yd)) {
+					this.redrawLine(((Button) obj.get(i)).getId());
+				}
+		}
 	}
 
 	public void close() {
@@ -51,8 +56,8 @@ public class Layout {
 	}
 
 	public void open(Object action, float x, float y) {
-		this.x = (int)x+50;
-		this.y = (int)y+50;
+		this.x = (int) x + 50;
+		this.y = (int) y + 50;
 		obj.clear();
 		nbLine = 0;
 		this.action = action;
@@ -75,8 +80,8 @@ public class Layout {
 		Iterator<String> text = buffer.getText().iterator();
 		int id[] = buffer.getId();
 		int i = 0;
-		while (text.hasNext()){
-			if(id [i] == 999){
+		while (text.hasNext()) {
+			if (id[i] == 999) {
 				this.close();
 				return;
 			}

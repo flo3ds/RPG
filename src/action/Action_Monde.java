@@ -17,7 +17,6 @@ public class Action_Monde {
 	private Base base;
 	private Monde_Actif monde;
 
-
 	public Action_Monde(Personnage perso, Base base, Monde_Actif monde) {
 		this.perso = perso;
 		this.base = base;
@@ -47,8 +46,8 @@ public class Action_Monde {
 		else if (this.perso.getOxygen() < 33)
 			return this.perso.malusOxygen();
 		this.perso.inv.putItem(this.monde.getMonde().sol.minerais);
-		return "Vous minez " + this.monde.getMonde().sol.minerais.getNombre() + " de " + this.monde.getMonde().sol.minerais.getMatiere()
-				+ ".\n" + this.perso.malusOxygen();
+		return "Vous minez " + this.monde.getMonde().sol.minerais.getNombre() + " de "
+				+ this.monde.getMonde().sol.minerais.getMatiere() + ".\n" + this.perso.malusOxygen();
 
 	}
 
@@ -60,7 +59,8 @@ public class Action_Monde {
 			else if (this.perso.getOxygen() < 33)
 				return this.perso.malusOxygen();
 			this.perso.inv.putItem(this.monde.getMonde().flore.arbres.bois);
-			return "Vous coupez " + this.monde.getMonde().flore.arbres.bois.getNombre() + " bois.\n" + this.perso.malusOxygen();
+			return "Vous coupez " + this.monde.getMonde().flore.arbres.bois.getNombre() + " bois.\n"
+					+ this.perso.malusOxygen();
 		} else
 			return "Vous n'avez pas de hache";
 	}
@@ -118,15 +118,13 @@ public class Action_Monde {
 
 	public enum Action_monde {
 
-		analyser_sol("analyser_sol", 0), miner("miner", 1),
-		analyser_faune("analyser_faune", 2),
-		analyser_flore("analyser_flore", 3), base("base", 99),
-		couper_bois("couper_bois", 4);
+		analyser_sol("analyser_sol", 0), miner("miner", 1), analyser_faune("analyser_faune",
+				2), analyser_flore("analyser_flore", 3), base("base", 99), couper_bois("couper_bois", 4);
 
 		public core.Action action;
 		private int id;
-		
-		public int getId(){
+
+		public int getId() {
 			return id;
 		}
 

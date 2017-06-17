@@ -5,13 +5,10 @@ import java.util.ArrayList;
 public class StructRet {
 
 	/*
-	 * ID reservé :
-	 * 99 bouton retour
-	 * 999 fermé le layout
+	 * ID reservé : 99 bouton retour 999 fermé le layout
 	 * 
 	 */
-	
-	
+
 	private int[] id = new int[100];
 	private int nbId = 0;
 	private ArrayList<String> text = new ArrayList<String>();

@@ -12,13 +12,13 @@ import monde.sol.Sol;
 
 public class Monde {
 
-	private GestionId gid= new GestionId();
+	private GestionId gid = new GestionId();
 	public String name = "";
 	public Flore flore = new Flore();
 	public Ciel ciel = new Ciel();
 	public Sol sol = new Sol(gid);
 	public Pierre pierre = new Pierre(gid);
-	//public Feuillage_arbre fa = new Feuillage_arbre(gid);
+	// public Feuillage_arbre fa = new Feuillage_arbre(gid);
 	public Tronc tronc = new Tronc(gid);
 	public Faune faune = new Faune();
 	public Atmosphere atmo = new Atmosphere();

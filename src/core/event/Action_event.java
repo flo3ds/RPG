@@ -13,8 +13,8 @@ public class Action_event {
 	public String getName() {
 		return this.str;
 	}
-	
-	public int getId(){
+
+	public int getId() {
 		return id;
 	}
 

@@ -17,9 +17,8 @@ public class PlayerGui {
 	private boolean moving = false;
 	private Animation[] animations = new Animation[8];
 
-
 	public PlayerGui() {
-		
+
 	}
 
 	public void init() throws SlickException {
@@ -51,9 +50,11 @@ public class PlayerGui {
 	public void update(int delta, Personnage perso) {
 		for (int objectID = 0; objectID < perso.getMap().getTiledMap().getObjectCount(0); objectID++) {
 			if (x > perso.getMap().getTiledMap().getObjectX(0, objectID)
-					&& x < perso.getMap().getTiledMap().getObjectX(0, objectID) + perso.getMap().getTiledMap().getObjectWidth(0, objectID)
+					&& x < perso.getMap().getTiledMap().getObjectX(0, objectID)
+							+ perso.getMap().getTiledMap().getObjectWidth(0, objectID)
 					&& y > perso.getMap().getTiledMap().getObjectY(0, objectID)
-					&& y < perso.getMap().getTiledMap().getObjectY(0, objectID) + perso.getMap().getTiledMap().getObjectHeight(0, objectID)) {
+					&& y < perso.getMap().getTiledMap().getObjectY(0, objectID)
+							+ perso.getMap().getTiledMap().getObjectHeight(0, objectID)) {
 				if ("craft".equals(perso.getMap().getTiledMap().getObjectType(0, objectID))) {
 					perso.setPosition(Position.craft);
 					break;
@@ -63,7 +64,7 @@ public class PlayerGui {
 				} else if ("portail".equals(perso.getMap().getTiledMap().getObjectType(0, objectID))) {
 					perso.setPosition(Position.portail);
 					break;
-				}else if ("rapport".equals(perso.getMap().getTiledMap().getObjectType(0, objectID))) {
+				} else if ("rapport".equals(perso.getMap().getTiledMap().getObjectType(0, objectID))) {
 					perso.setPosition(Position.rapport);
 					break;
 				} else
@@ -120,7 +121,7 @@ public class PlayerGui {
 		int tileW = perso.getMap().getTiledMap().getTileWidth();
 		int tileH = perso.getMap().getTiledMap().getTileHeight();
 		int logicLayer = perso.getMap().getTiledMap().getLayerIndex("col");
-		if(logicLayer == -1)
+		if (logicLayer == -1)
 			return false;
 		Image tile = perso.getMap().getTiledMap().getTileImage((int) x / tileW, (int) y / tileH, logicLayer);
 		boolean collision = tile != null;

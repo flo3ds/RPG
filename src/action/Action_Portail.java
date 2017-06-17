@@ -6,13 +6,13 @@ import gui.layout.StructRet;
 import gui.map.Map;
 import perso.Personnage;
 
-public class Action_Portail implements Actionable{
+public class Action_Portail implements Actionable {
 
 	private Personnage perso;
 	private Base base;
 	public Boolean sonder = false;
 	private Monde_Actif monde;
-	
+
 	private StructRet error() {
 		StructRet out = new StructRet();
 		out.add("error", 0);

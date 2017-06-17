@@ -43,8 +43,8 @@ abstract public class Event_extends {
 		ListIterator<Action_event> it = this.list_action.listIterator();
 		while (it.hasNext()) {
 			Action_event test = it.next();
-			if(test.getId() != 99)
-			out.add(test.getName(), test.getId());
+			if (test.getId() != 99)
+				out.add(test.getName(), test.getId());
 		}
 		out.setHeader(getIntro());
 		return out;

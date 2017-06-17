@@ -29,8 +29,10 @@ public class GenEvent {
 				this.end = perso.getTime().getTime();
 			}
 		}
-		/*if (this.obj != null)
-			System.out.println("Event : " + this.obj.getClass());*/
+		/*
+		 * if (this.obj != null) System.out.println("Event : " +
+		 * this.obj.getClass());
+		 */
 	}
 
 	public short randEventPourCent() {
