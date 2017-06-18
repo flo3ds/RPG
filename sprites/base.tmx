@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="17">
+ 
+ <tileset firstgid="1" name="herbe" tilewidth="32" tileheight="32" tilecount="18">
+  <image source="LPC Base Assets/tiles/dirt2.png" width="96" height="192"/>
+ </tileset>
+ <tileset firstgid="19" name="mur" tilewidth="32" tileheight="32" tilecount="63">
+  <image source="LPC Base Assets/tiles/house.png" width="288" height="224"/>
+ </tileset>
+ <tileset firstgid="82" name="autre" tilewidth="32" tileheight="32" tilecount="100">
+  <image source="LPC Base Assets/tiles/castlefloors.png" width="320" height="320"/>
+ </tileset>
+ <tileset firstgid="182" name="craft" tilewidth="32" tileheight="32" tilecount="4">
+  <image source="pinta/craft.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="186" name="coffre" tilewidth="32" tileheight="32" tilecount="4">
+  <image source="pinta/coffre.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="190" name="perso" tilewidth="32" tileheight="32" tilecount="2">
+  <image source="commandant.png" width="32" height="64"/>
+ </tileset>
+ <tileset firstgid="192" name="portail" tilewidth="32" tileheight="32" tilecount="32">
+  <image source="pinta/portail.png" width="256" height="128"/>
+ </tileset>
+ 
+ <layer name="col" width="20" height="20">
+	  <data encoding="base64" compression="gzip">
+	   H4sIAAAAAAAAA+3TuwmAMABF0ew/goMoKOoKfuNfV/E2FqaQp6QR8uA0CdxUMeYfiz566sVIhLdTZEJPaV3Lhd7bhd79rvDcK52zCjUatOjQw2IQeu5GTJixYMWGHYfQ8/k/wsKUnW/9uX9ABgAA
+	  </data>
+	 </layer>
+	 <layer name="fond" width="20" height="20">
+	  <data encoding="base64" compression="gzip">
+	   H4sIAAAAAAAAA2NgGLkgjUQ8at6oeYPZPFzmo7NHwSigFgAAK7n3AUAGAAA=
+	  </data>
+	 </layer>
+	 <layer name="Calque de Tile 1" width="20" height="20">
+	  <data encoding="base64" compression="gzip">
+	   H4sIAAAAAAAAA+3POQ6CUBhF4dezI6VTO+Ny0WgUVHBAcWJwBLfiaWwoeP+j03CTrz3JtZRS1g9ooW3Iruj14WCo9BtjgoGmNxK0vpsKeqb7t56HORZYwkeAFdaC3qzU22CLEDvsEeGAo6DnlnonnHFBjAQpMlxr/L3hjgeeeCFHgbem10HXUK+i12hIfABZBrF2QAYAAA==
+	  </data>
+ </layer>
+ 
+ <objectgroup name="triger" width="20" height="20">
+  <object id="1" name="craft" type="craft" x="69" y="66" width="90" height="94"/>
+  <object id="12" name="coffre" type="coffre" x="413" y="65" width="97" height="96"/>
+  <object id="14" name="rapport" type="rapport" x="66" y="273" width="96" height="107"/>
+  <object id="16" name="portail" type="portail" x="276" y="314" width="148" height="96"/>
+ </objectgroup>
+ 
+</map>

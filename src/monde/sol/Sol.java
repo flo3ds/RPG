@@ -12,13 +12,13 @@ public class Sol extends MondeObj {
 	private String name;
 	public Minerai minerais = GenMinerai.genMinerai();
 
-	public Sol(GestionId gid) {
-
-		super(gid, new Tileset("sol", "sol.png", 6, 32, 32, 32, 256));
+	public Sol(GestionId gid, int width, int height) {
+		super(gid, new Tileset("sol", "sol.png", 6, 32, 32, 32, 256), width, height);
 		int rand = Rand.entier(0, Type.values().length);
 		this.name = Type.values()[rand].toString();
 
 		setTexture(Type.values()[rand].getId());
+		this.getLayer().defData();
 	}
 
 	public String getDescription() {

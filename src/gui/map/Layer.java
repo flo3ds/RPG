@@ -1,6 +1,9 @@
 package gui.map;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -8,6 +11,8 @@ import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.zip.GZIPOutputStream;
+
+import javax.imageio.ImageIO;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,6 +33,7 @@ public class Layer {
 	private Tileset tileset;
 	private Pattern pattern = null;
 	private int[] data;
+	private String strData;
 
 	private ArrayList<Tileset> ArrayTileset = new ArrayList<Tileset>();
 
@@ -61,6 +67,14 @@ public class Layer {
 				data[i] = layer.data[i];
 		}
 	}
+	
+	public void reabiliteLayer() {
+		for (int i = 0; i < data.length; i++) {
+			if (data[i] != 0 )
+				data[i] = this.textureId;
+		}
+
+	}
 
 	public void setPattern(Pattern pattern) {
 		this.pattern = pattern;
@@ -79,7 +93,7 @@ public class Layer {
 		this.populate = populate;
 	}
 
-	public void setHW(int height, int width) {
+	public void setHW(int width, int height) {
 		this.height = height;
 		this.width = width;
 	}
@@ -96,7 +110,7 @@ public class Layer {
 		Element data = doc.createElement("data");
 		data.setAttribute("encoding", "base64");
 		data.setAttribute("compression", "gzip");
-		data.setTextContent(this.defData());
+		data.setTextContent(strData);
 		layer.appendChild(data);
 		return layer;
 	}
@@ -172,17 +186,18 @@ public class Layer {
 		return out;
 	}
 
-	private String defData() {
+	public void defData() {
 		int[] data = null;
 		if (this.mode == Mode.plain)
 			data = plain();
 		else if (this.mode == Mode.parsemé)
 			data = parsemé();
+		else if (this.mode == Mode.vide)
+			data = new int[width * height];
 		else
 			data = this.data;
 
 		this.data = data;
-		print();
 		ByteBuffer byteBuffer = ByteBuffer.allocate(data.length * 4);
 		byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 		IntBuffer intBuffer = byteBuffer.asIntBuffer();
@@ -195,9 +210,8 @@ public class Layer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("gzip = " + array.length);
-
-		return Base64.getEncoder().encodeToString(array);
+		
+		strData = Base64.getEncoder().encodeToString(array);
 	}
 
 	private byte[] decompress(byte[] contentBytes) throws IOException {
@@ -238,7 +252,6 @@ public class Layer {
 	public void setData(int[] data) {
 		int index = 0;
 		this.data = data;
-		print();
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 
@@ -250,7 +263,6 @@ public class Layer {
 			}
 		}
 		this.data = data;
-		print();
 
 	}
 
@@ -266,7 +278,6 @@ public class Layer {
 			}
 		}
 		this.data = data;
-		print();
 	}
 
 	public void setDataUp(int[] data) {
@@ -283,7 +294,6 @@ public class Layer {
 			}
 		}
 		this.data = buffer;
-		print();
 	}
 
 	public void print() {
@@ -301,12 +311,14 @@ public class Layer {
 
 	public enum Mode {
 
-		none, plain, parsemé;
+		none, plain, parsemé, vide;
 
 	}
 
 	public void setMode(Mode mode) {
 		this.mode = mode;
 	}
+	
+	
 
 }

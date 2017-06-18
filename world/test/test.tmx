@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<map height="20" nextobjectid="1" orientation="orthogonal" renderorder="right-down" tileheight="32" tilewidth="32" version="1.0" width="20">
+<tileset firstgid="1" name="col" tilecount="1" tileheight="32" tilewidth="32">
+<image height="32" source="col.png" width="32"/>
+</tileset>
+<tileset firstgid="2" name="sol" tilecount="6" tileheight="32" tilewidth="32">
+<image height="256" source="sol.png" width="32"/>
+</tileset>
+<tileset firstgid="8" name="pierre" tilecount="2" tileheight="32" tilewidth="32">
+<image height="64" source="pierre.png" width="32"/>
+</tileset>
+<tileset firstgid="10" name="tronc" tilecount="2" tileheight="96" tilewidth="96">
+<image height="96" source="tronc.png" width="192"/>
+</tileset>
+<tileset firstgid="12" name="test" tilecount="4" tileheight="96" tilewidth="96">
+<image height="192" source="test.png" width="192"/>
+</tileset>
+<layer height="20" name="col" width="20">
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgQABGHDQ+QIwaWgBK7WWkghmDAZDiB3r6lxrxQ45ZwyVeBxsgNUypFf/0SN/kpBlaumsopV8ABdUegEAGAAA=</data>
+</layer>
+<layer height="20" name="sol" width="20">
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNiYGBgGsWjeBSP4lE8iknEAC9MrVpABgAA</data>
+</layer>
+<layer height="20" name="pierre" width="20">
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgwAQcWMSGGxgJfkQH9PTzSAzfUUB9QI90RI4dpOgZznkBAJL2MSdABgAA</data>
+</layer>
+<layer height="20" name="tronc" width="20">
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgQAAuBlSAzscGiFFDC0ANewfK7dQEw8EP2AAXDjYx+oZrmAwkIDVMKY0DcvRTYudgSjODyS2EAADoDSxLQAYAAA==</data>
+</layer>
+<layer height="20" name="test" width="20">
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgoA/gGyRmDDQYDn7ABvhwsInRN1zDZCABqWFKaRyQo58SOwdTmhlMbqE3AADIcdQZQAYAAA==</data>
+</layer>
+</map>

@@ -21,7 +21,7 @@ public class Map implements Map_I {
 	public void render(Graphics g) {
 		int nb = this.map.getLayerCount();
 		for (int i = 0; i < nb; i++)
-			this.map.render(0, 0, i);
+				this.map.render(0, 0, i);
 	}
 
 	public TiledMap getTiledMap() {

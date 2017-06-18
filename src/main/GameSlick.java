@@ -80,7 +80,6 @@ public class GameSlick extends BasicGame {
 	public void render(GameContainer container, Graphics g) throws SlickException {
 		x = (-1) * (container.getWidth() / 2 - playerGui.getX());
 		y = (-1) * (container.getHeight() / 2 - playerGui.getY());
-		System.out.println("x: " + x + " y: " + y);
 		g.translate(container.getWidth() / 2 - playerGui.getX(), container.getHeight() / 2 - playerGui.getY());
 		((Map_I) perso.getMap()).render(g);
 		playerGui.render(g);

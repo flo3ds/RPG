@@ -14,8 +14,8 @@ public class Monde_Actif {
 		this.monde = monde;
 	}
 
-	public void genMonde() {
-		this.monde = new Monde();
+	public void genMonde(int width, int height) {
+		this.monde = new Monde(width, height);
 	}
 
 }

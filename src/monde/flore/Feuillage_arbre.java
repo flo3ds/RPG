@@ -21,14 +21,11 @@ public class Feuillage_arbre extends MondeObj {
 
 	public Tronc tronc;
 
-	public Feuillage_arbre(GestionId gid) {
-		super(gid, new Tileset("test", "test.png", 4, 96, 96, 96 * 2, 96 * 2));
-		// tronc = new Tronc(gid);
+	public Feuillage_arbre(GestionId gid, int width, int height) {
+		super(gid, new Tileset("test", "test.png", 4, 96, 96, 96 * 2, 96 * 2), width, height);
 		this.setTexture(2);
 		this.getLayer().setMode(Layer.Mode.none);
-
 		this.setColor(new Color(Rand.entier(0, 255), Rand.entier(0, 255), Rand.entier(0, 255)));
-
 	}
 
 }

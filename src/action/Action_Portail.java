@@ -28,10 +28,10 @@ public class Action_Portail implements Actionable {
 	public StructRet explorer() {
 		this.perso.position = Position.monde;
 		this.perso.addTime(1);
-		monde.genMonde();
+		monde.genMonde(20, 20);
 		GenWorldMap.genWorldMap(monde.getMonde());
 		Map map = new Map();
-		map.init("world/test/test.map");
+		map.init("world/test/test.tmx");
 		this.perso.teleport(map);
 		StructRet out = new StructRet();
 		out.add("", 999);

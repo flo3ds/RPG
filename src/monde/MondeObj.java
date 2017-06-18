@@ -21,7 +21,9 @@ public abstract class MondeObj {
 
 	/** The layer. */
 	private Layer layer;
+	private Layer col;
 	private Color color = null;
+	private Boolean colisable = false;
 	/** The firstgid. */
 	private int firstgid;
 
@@ -31,10 +33,22 @@ public abstract class MondeObj {
 	 * @param GestionId
 	 * @param Tileset
 	 */
-	public MondeObj(GestionId gid, Tileset tileset) {
+	public MondeObj(GestionId gid, Tileset tileset, int width, int height) {
 		firstgid = gid.getIdAndAddCount(tileset.getCount());
 		tileset.setFirstgid(this.firstgid);
 		this.layer = new Layer(tileset.getName(), Layer.Mode.plain, tileset);
+		this.layer.setHW(width, height);
+		this.col = new Layer(tileset.getName(), Layer.Mode.plain, tileset);
+		this.col.setHW(width, height);
+	}
+	
+	public MondeObj(GestionId gid, Tileset tileset, int width, int height, Layer.Mode mode) {
+		firstgid = gid.getIdAndAddCount(tileset.getCount());
+		tileset.setFirstgid(this.firstgid);
+		this.layer = new Layer(tileset.getName(), mode, tileset);
+		this.layer.setHW(width, height);
+		this.col = new Layer(tileset.getName(), mode, tileset);
+		this.col.setHW(width, height);
 	}
 
 	public MondeObj(String name) {
@@ -108,6 +122,22 @@ public abstract class MondeObj {
 		this.firstgid = firstgid;
 	}
 
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public Layer getCol() {
+		return col;
+	}
+
+	public void setCol(Layer col) {
+		this.col = col;
+	}
+	
 	public void pngProcess(String path) {
 		BufferedImage loadImg = null;
 		try {
@@ -116,6 +146,7 @@ public abstract class MondeObj {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+
 		if (color != null)
 			tint(loadImg, color);
 
@@ -127,15 +158,7 @@ public abstract class MondeObj {
 			e.printStackTrace();
 		}
 	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
+	
 	public static void tint(BufferedImage image, Color color) {
 		for (int x = 0; x < image.getWidth(); x++) {
 			for (int y = 0; y < image.getHeight(); y++) {
@@ -149,5 +172,14 @@ public abstract class MondeObj {
 			}
 		}
 	}
+
+	public Boolean colisable() {
+		return colisable;
+	}
+	
+	public void setColisable(){
+		colisable = true;
+	}
+
 
 }
