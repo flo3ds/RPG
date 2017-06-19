@@ -12,7 +12,7 @@ import perso.Personnage;
 
 public class PlayerGui {
 
-	private float x = 300, y = 300;
+	private float x = 1300, y = 1400;
 	private int direction = 0;
 	private boolean moving = false;
 	private Animation[] animations = new Animation[8];

@@ -9,7 +9,7 @@ public class MapBase implements Map_I {
 	private TiledMap map;
 
 	public void init() throws SlickException {
-		this.map = new TiledMap("sprites/map.map");
+		this.map = new TiledMap("sprites/base/mapBase.tmx");
 
 	}
 
