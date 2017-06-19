@@ -16,18 +16,18 @@
 <image height="192" source="test.png" width="192"/>
 </tileset>
 <layer height="20" name="col" width="20">
-<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgGAXUAox01jfUwEjxJz0BvcKUmvbQMx3gsotU8VGAHQAAmU2mwUAGAAA=</data>
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgoC5gpLJ59LJ/oN09CgYvGMi0Qazdo+kXFYyU8BhofwIA5Cz3gEAGAAA=</data>
 </layer>
 <layer height="20" name="sol" width="20">
 <data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNnYGBgH8WjeBSP4lE8iknEANcwevFABgAA</data>
 </layer>
 <layer height="20" name="pierre" width="20">
-<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgGAXUAhx01jfUwEjxJz0BvcKUmvbQMx3gsotU8VGAHQAAVfio4EAGAAA=</data>
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgoC7gpLJ59LJ/oN09CgYvGMi0Qazdo+kXFYyU8BhofwIAr6hWwkAGAAA=</data>
 </layer>
 <layer height="20" name="tronc" width="20">
-<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgIA5wEamO2mCg7MUHyHETrf0xWMJpsLhjsIGhEC4D6cbBHD6DzW2DyT0AhLJv2kAGAAA=</data>
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgYGDgYhgFgwUMZFwMhnRADzdQw47BEFa0AKT6a7iGwyjABNjiGgCyKEAgQAYAAA==</data>
 </layer>
 <layer height="20" name="test" width="20">
-<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgoC7go7J51ADkuInW/hgs4TRY3DHYwFAIl4F042AOn8HmtsHmHmoCAPcOrmVABgAA</data>
+<data compression="gzip" encoding="base64">H4sIAAAAAAAAAGNgGAWUAL4RajcM0MMN1LBjMIQVLQCp/hqu4TAKMAE94hoA4jeel0AGAAA=</data>
 </layer>
 </map>
