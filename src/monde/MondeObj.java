@@ -24,6 +24,9 @@ public abstract class MondeObj {
 	private Layer col;
 	private Color color = null;
 	private Boolean colisable = false;
+	private int width = 20;
+	private int height = 20;
+
 	/** The firstgid. */
 	private int firstgid;
 
@@ -38,8 +41,9 @@ public abstract class MondeObj {
 		tileset.setFirstgid(this.firstgid);
 		this.layer = new Layer(tileset.getName(), Layer.Mode.plain, tileset);
 		this.layer.setHW(width, height);
-		this.col = new Layer(tileset.getName(), Layer.Mode.plain, tileset);
-		this.col.setHW(width, height);
+		this.width = width;
+		this.height = height;
+		this.getLayer().defData();
 	}
 	
 	public MondeObj(GestionId gid, Tileset tileset, int width, int height, Layer.Mode mode) {
@@ -47,8 +51,7 @@ public abstract class MondeObj {
 		tileset.setFirstgid(this.firstgid);
 		this.layer = new Layer(tileset.getName(), mode, tileset);
 		this.layer.setHW(width, height);
-		this.col = new Layer(tileset.getName(), mode, tileset);
-		this.col.setHW(width, height);
+		this.getLayer().defData();
 	}
 
 	public MondeObj(String name) {
@@ -73,6 +76,7 @@ public abstract class MondeObj {
 	 */
 	public void setParsemé(int pop) {
 		this.layer.isParsemé(pop);
+		this.getLayer().defData();
 	}
 
 	/**
@@ -179,6 +183,10 @@ public abstract class MondeObj {
 	
 	public void setColisable(){
 		colisable = true;
+		this.col = new Layer("col", Layer.Mode.vide);
+		this.col.setHW(width, height);
+		this.getCol().defData();
+		this.getCol().mergerLayer(this.getLayer());
 	}
 
 

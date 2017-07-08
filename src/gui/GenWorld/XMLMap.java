@@ -26,11 +26,15 @@ public class XMLMap {
 	private String path;
 	private ArrayList<Element> tileset = new ArrayList<Element>();
 	private ArrayList<Element> layer = new ArrayList<Element>();
-
-	public XMLMap(String path) {
+	private int width;
+	private int height;
+	
+	public XMLMap(String path, int width, int height) {
 		try {
 			docBuilder = docFactory.newDocumentBuilder();
 			doc = docBuilder.newDocument();
+			this.width = width;
+			this.height = height;
 		} catch (ParserConfigurationException e1) {
 			e1.printStackTrace();
 		}
@@ -54,8 +58,8 @@ public class XMLMap {
 		map.setAttribute("version", "1.0");
 		map.setAttribute("orientation", "orthogonal");
 		map.setAttribute("renderorder", "right-down");
-		map.setAttribute("width", "20");
-		map.setAttribute("height", "20");
+		map.setAttribute("width",""+width);
+		map.setAttribute("height", ""+height);
 		map.setAttribute("tilewidth", "32");
 		map.setAttribute("tileheight", "32");
 		map.setAttribute("nextobjectid", "1");

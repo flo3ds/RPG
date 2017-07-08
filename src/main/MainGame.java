@@ -2,8 +2,6 @@ package main;
 
 import java.io.IOException;
 
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.SlickException;
 
 public class MainGame {
 
@@ -13,12 +11,15 @@ public class MainGame {
 		 * else { new GameGUI(); }
 		 */
 		// GameGUI window = new GameGUI();
+		/*
 		try {
 			new AppGameContainer(new GameSlick(), 600, 600, false).start();
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
+		new GameLWJGL();
 
 	}
 

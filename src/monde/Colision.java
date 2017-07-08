@@ -11,8 +11,9 @@ public class Colision extends MondeObj {
 
 
 	public Colision(GestionId gid, int width, int height) {
-		super(gid, new Tileset("col", "col.png", 1, 32, 32, 32, 32), width, height, Layer.Mode.none);
+		super(gid, new Tileset("col", "col.png", 1, 32, 32, 32, 32), width, height, Layer.Mode.vide);
 		this.setTexture(0);
+		this.getLayer().defData();
 		
 	}
 

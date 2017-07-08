@@ -4,6 +4,7 @@ import action.Position;
 import core.Armor;
 import core.Time;
 import core.Weapon;
+import gui.PlayerGui;
 import gui.map.Map_I;
 
 public class Personnage {
@@ -16,6 +17,8 @@ public class Personnage {
 
 	private Armor armor = null;
 	private Weapon weapon = null;
+	
+	private PlayerGui playerGui;
 
 	public Inventaire inv = new Inventaire();
 	public Position position = Position.base;
@@ -82,6 +85,7 @@ public class Personnage {
 
 	public Personnage(Time time) {
 		this.time = time;
+		this.playerGui = playerGui;
 	}
 
 	public void addTime(long jours) {
@@ -144,7 +148,10 @@ public class Personnage {
 	}
 
 	public void teleport(Map_I map) {
+		this.playerGui.setX(400);
+		this.playerGui.setY(200);
 		this.map = map;
+	
 	}
 
 }

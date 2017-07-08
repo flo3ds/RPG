@@ -62,6 +62,7 @@ public class Layer {
 	}
 	
 	public void mergerLayer(Layer layer) {
+		
 		for (int i = 0; i < data.length; i++) {
 			if (layer.data[i] != 0 )
 				data[i] = layer.data[i];
@@ -163,22 +164,17 @@ public class Layer {
 		x--;
 		y--;
 
-		System.out.println("wh = " + pw + " | " + ph);
-
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				out[index] = data[index];
 				if (x + lol == j && y + lil == i && ok == false) {
-
 					out[index] = pat[lil][lol++];
 					if (lol + 1 > pw) {
 						lol = 0;
 						lil++;
 						if (lil + 1 > ph)
 							ok = true;
-
 					}
-
 				}
 				index++;
 			}
@@ -212,6 +208,7 @@ public class Layer {
 		}
 		
 		strData = Base64.getEncoder().encodeToString(array);
+		System.out.println(name + " " + width*height);
 	}
 
 	private byte[] decompress(byte[] contentBytes) throws IOException {

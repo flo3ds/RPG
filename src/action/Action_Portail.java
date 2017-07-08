@@ -26,10 +26,12 @@ public class Action_Portail implements Actionable {
 	}
 
 	public StructRet explorer() {
+		int width = 80;
+		int height = 80;
 		this.perso.position = Position.monde;
 		this.perso.addTime(1);
-		monde.genMonde(20, 20);
-		GenWorldMap.genWorldMap(monde.getMonde());
+		monde.genMonde(width, height);
+		GenWorldMap.genWorldMap(monde.getMonde(), width, height);
 		Map map = new Map();
 		map.init("world/test/test.tmx");
 		this.perso.teleport(map);

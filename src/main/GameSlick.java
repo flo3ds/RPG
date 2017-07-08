@@ -40,7 +40,7 @@ public class GameSlick extends BasicGame {
 
 	private Time time = new Time();
 
-	private Personnage perso = new Personnage(time);
+	private Personnage perso = new Personnage(time, playerGui);
 	private GenEvent event = new GenEvent(perso);
 	private Base base = new Base(event);
 
@@ -99,56 +99,52 @@ public class GameSlick extends BasicGame {
 	public void keyPressed(int key, char c) {
 		switch (key) {
 		case Input.KEY_UP:
-			if(!layout.isShow()){
-			playerGui.setDirection(0);
-			playerGui.setMoving(true);
-			if (memoire == -1)
-				memoire = 0;
-			compteurmemoire++;
-			}
-			else{
-				memoire=-1;
-				compteurmemoire=1;
-				System.out.println(memoire+" "+compteurmemoire);
+			if (!layout.isShow()) {
+				playerGui.setDirection(0);
+				playerGui.setMoving(true);
+				if (memoire == -1)
+					memoire = 0;
+				compteurmemoire++;
+			} else {
+				memoire = -1;
+				compteurmemoire = 1;
+				System.out.println(memoire + " " + compteurmemoire);
 			}
 			break;
 		case Input.KEY_LEFT:
-			if(!layout.isShow()){
-			playerGui.setDirection(1);
-			playerGui.setMoving(true);
-			if (memoire == -1)
-				memoire = 1;
-			compteurmemoire++;
-			}
-			else{
-				memoire=-1;
-				compteurmemoire=1;
+			if (!layout.isShow()) {
+				playerGui.setDirection(1);
+				playerGui.setMoving(true);
+				if (memoire == -1)
+					memoire = 1;
+				compteurmemoire++;
+			} else {
+				memoire = -1;
+				compteurmemoire = 1;
 			}
 			break;
 		case Input.KEY_DOWN:
-			if(!layout.isShow()){
-			playerGui.setDirection(2);
-			playerGui.setMoving(true);
-			if (memoire == -1)
-				memoire = 2;
-			compteurmemoire++;
-			}
-			else{
-				memoire=-1;
-				compteurmemoire=1;
+			if (!layout.isShow()) {
+				playerGui.setDirection(2);
+				playerGui.setMoving(true);
+				if (memoire == -1)
+					memoire = 2;
+				compteurmemoire++;
+			} else {
+				memoire = -1;
+				compteurmemoire = 1;
 			}
 			break;
 		case Input.KEY_RIGHT:
-			if(!layout.isShow()){
-			playerGui.setDirection(3);
-			playerGui.setMoving(true);
-			if (memoire == -1)
-				memoire = 3;
-			compteurmemoire++;
-			}
-			else{
-				memoire=-1;
-				compteurmemoire=1;
+			if (!layout.isShow()) {
+				playerGui.setDirection(3);
+				playerGui.setMoving(true);
+				if (memoire == -1)
+					memoire = 3;
+				compteurmemoire++;
+			} else {
+				memoire = -1;
+				compteurmemoire = 1;
 			}
 			break;
 		case Input.KEY_SPACE:
@@ -198,7 +194,7 @@ public class GameSlick extends BasicGame {
 	public void keyReleased(int key, char c) {
 		switch (key) {
 		case Input.KEY_UP:
-System.out.println(memoire+" "+compteurmemoire);
+			System.out.println(memoire + " " + compteurmemoire);
 			if (memoire == -1) {
 				playerGui.setMoving(false);
 			} else if (memoire == 0) {

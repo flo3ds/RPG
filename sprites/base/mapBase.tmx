@@ -1,134 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.1" orientation="orthogonal" renderorder="right-up" width="100" height="100" tilewidth="32" tileheight="32" nextobjectid="7">
- <tileset firstgid="1" name="barrel" tilewidth="32" tileheight="32" tilecount="8" columns="4">
-  <image source="tileset/barrel.png" trans="000000" width="128" height="64"/>
- </tileset>
- <tileset firstgid="9" name="brackish" tilewidth="32" tileheight="32" tilecount="18" columns="3">
-  <image source="tileset/brackish.png" trans="000000" width="96" height="192"/>
- </tileset>
- <tileset firstgid="27" name="buckets" tilewidth="32" tileheight="32" tilecount="6" columns="3">
-  <image source="tileset/buckets.png" trans="000000" width="96" height="64"/>
- </tileset>
- <tileset firstgid="33" name="cabinets" tilewidth="32" tileheight="32" tilecount="78" columns="6">
-  <image source="tileset/cabinets.png" trans="000000" width="192" height="416"/>
- </tileset>
- <tileset firstgid="111" name="castle_lightsources" tilewidth="32" tileheight="32" tilecount="20" columns="5">
-  <image source="tileset/castle_lightsources.png" trans="000000" width="160" height="128"/>
- </tileset>
- <tileset firstgid="131" name="cement" tilewidth="32" tileheight="32" tilecount="18" columns="3">
+ <tileset firstgid="1" name="cement" tilewidth="32" tileheight="32" tilecount="18" columns="3">
   <image source="tileset/cement.png" trans="000000" width="96" height="192"/>
  </tileset>
- <tileset firstgid="149" name="cementstair" tilewidth="32" tileheight="32" tilecount="20" columns="5">
+ <tileset firstgid="19" name="cementstair" tilewidth="32" tileheight="32" tilecount="20" columns="5">
   <image source="tileset/cementstair.png" trans="000000" width="160" height="128"/>
  </tileset>
- <tileset firstgid="169" name="chests" tilewidth="32" tileheight="32" tilecount="6" columns="2">
-  <image source="tileset/chests.png" trans="000000" width="64" height="96"/>
- </tileset>
- <tileset firstgid="175" name="dirt2" tilewidth="32" tileheight="32" tilecount="18" columns="3">
-  <image source="tileset/dirt2.png" trans="000000" width="96" height="192"/>
- </tileset>
- <tileset firstgid="193" name="dirt-tiles" tilewidth="32" tileheight="32" tilecount="96" columns="12">
-  <image source="tileset/dirt-tiles.png" trans="000000" width="384" height="256"/>
- </tileset>
- <tileset firstgid="289" name="dungeon" tilewidth="32" tileheight="32" tilecount="104" columns="13">
-  <image source="tileset/dungeon.png" trans="000000" width="416" height="256"/>
- </tileset>
- <tileset firstgid="393" name="house" tilewidth="32" tileheight="32" tilecount="63" columns="9">
-  <image source="tileset/house.png" trans="000000" width="288" height="224"/>
- </tileset>
- <tileset firstgid="456" name="kitchen" tilewidth="32" tileheight="32" tilecount="8" columns="2">
-  <image source="tileset/kitchen.png" trans="000000" width="64" height="128"/>
- </tileset>
- <tileset firstgid="464" name="Industrial-TileSheet" tilewidth="32" tileheight="32" tilecount="640" columns="20">
+ <tileset firstgid="39" name="Industrial-TileSheet" tilewidth="32" tileheight="32" tilecount="640" columns="20">
   <image source="tileset/Industrial-TileSheet.png" trans="000000" width="640" height="1024"/>
  </tileset>
- <tileset firstgid="1104" name="inside" tilewidth="32" tileheight="32" tilecount="100" columns="10">
-  <image source="tileset/inside.png" trans="000000" width="320" height="320"/>
- </tileset>
- <tileset firstgid="1204" name="lava" tilewidth="32" tileheight="32" tilecount="18" columns="3">
-  <image source="tileset/lava.png" trans="000000" width="96" height="192"/>
- </tileset>
- <tileset firstgid="1222" name="pixeland" tilewidth="32" tileheight="32" tilecount="56" columns="8">
-  <image source="tileset/pixeland.PNG" trans="000000" width="283" height="250"/>
- </tileset>
- <tileset firstgid="1278" name="plums" tilewidth="32" tileheight="32" tilecount="475" columns="25">
-  <image source="tileset/plums.png" trans="000000" width="800" height="608"/>
- </tileset>
- <tileset firstgid="1753" name="rock" tilewidth="32" tileheight="32" tilecount="2" columns="2">
-  <image source="tileset/rock.png" trans="000000" width="64" height="32"/>
- </tileset>
- <tileset firstgid="1755" name="stairs" tilewidth="32" tileheight="32" tilecount="112" columns="8">
-  <image source="tileset/stairs.png" trans="000000" width="256" height="448"/>
- </tileset>
- <tileset firstgid="1867" name="terrain" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
+ <tileset firstgid="679" name="terrain" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
   <image source="tileset/terrain.png" trans="000000" width="1024" height="1024"/>
  </tileset>
- <tileset firstgid="2891" name="treetop" tilewidth="32" tileheight="32" tilecount="42" columns="6">
-  <image source="tileset/treetop.png" trans="000000" width="192" height="224"/>
- </tileset>
- <tileset firstgid="2933" name="trunk" tilewidth="32" tileheight="32" tilecount="18" columns="6">
-  <image source="tileset/trunk.png" trans="000000" width="192" height="96"/>
- </tileset>
- <tileset firstgid="2951" name="tuto-slick2d-037-tuile-logic" tilewidth="32" tileheight="32" tilecount="25" columns="5">
+ <tileset firstgid="1703" name="tuto-slick2d-037-tuile-logic" tilewidth="32" tileheight="32" tilecount="25" columns="5">
   <image source="tileset/tuto-slick2d-037-tuile-logic.png" trans="000000" width="160" height="160"/>
  </tileset>
- <tileset firstgid="2976" name="victoria" tilewidth="32" tileheight="32" tilecount="55" columns="11">
-  <image source="tileset/victoria.png" trans="000000" width="352" height="160"/>
- </tileset>
- <tileset firstgid="3031" name="test" tilewidth="32" tileheight="32" tilecount="100" columns="10">
-  <image source="tileset/test.png" trans="000000" width="320" height="320"/>
- </tileset>
- <tileset firstgid="3131" name="portail stargate" tilewidth="32" tileheight="32" tilecount="1369" columns="37">
+ <tileset firstgid="1728" name="portail stargate" tilewidth="32" tileheight="32" tilecount="1369" columns="37">
   <image source="tileset/portail stargate.png" trans="000000" width="1200" height="1200"/>
  </tileset>
- <tileset firstgid="4500" name="persos" tilewidth="32" tileheight="32" tilecount="63" columns="9">
-  <image source="tileset/sprite10.png" trans="000000" width="288" height="255"/>
- </tileset>
- <tileset firstgid="4563" name="52775193tilee10-png" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+ <tileset firstgid="3097" name="52775193tilee10-png" tilewidth="32" tileheight="32" tilecount="256" columns="16">
   <image source="tileset/52775193tilee10-png.png" trans="000000" width="512" height="512"/>
  </tileset>
- <tileset firstgid="4819" name="d0620ff37b7b45fa2069f3558f4ab404" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+ <tileset firstgid="3353" name="d0620ff37b7b45fa2069f3558f4ab404" tilewidth="32" tileheight="32" tilecount="256" columns="16">
   <image source="tileset/d0620ff37b7b45fa2069f3558f4ab404.png" trans="000000" width="512" height="512"/>
  </tileset>
- <tileset firstgid="5075" name="tilesets_fsm_rm2k3_para_vx_ace__set_escritorio_by_milkian-darwtlj" tilewidth="32" tileheight="32" tilecount="256" columns="16">
+ <tileset firstgid="3609" name="tilesets_fsm_rm2k3_para_vx_ace__set_escritorio_by_milkian-darwtlj" tilewidth="32" tileheight="32" tilecount="256" columns="16">
   <image source="tileset/tilesets_fsm_rm2k3_para_vx_ace__set_escritorio_by_milkian-darwtlj.png" trans="000000" width="512" height="512"/>
  </tileset>
  <layer name="Solid" width="100" height="100" opacity="0.37">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3WQQqDMBAFUPc9eHd12962dFEYSswoScDU90CKpor8L6PLAgAAAAAAAAAAAAAA7HG/9d1o880wZhmzXQsZl84p7XNc6dmOx377iP/VR3+1DD9rz7D+qvRmXvWR9fEI62uSuT7aZfluvVeOXuvf9P4OGjFjRt7jlbqG2c0wB8yrdr37oI0+zkUf51Kb09kcv+qMHynLu/S7dZ4+2vkGAgAAAAAAAAAAAAAAAAAAAAAAAAAAZvAGaLqfq0CcAAA=
+   H4sIAAAAAAAAC+3WQQqDMBAFUFe9/y26q9v2dqWLwlBiRkkCpr4HUjRV5H8ZXRYAAAAAAAAAAAAAAGCP+63vRptvhjHLmO1ayLh0Tmmf40rPdjz220f8rz76q2X4WXuG9VelN/Oqj6yPR1hfk8z10S7Ld+u9cvRa/6b3d9CIGTPyHq/UNcxuhjlgXrXr3Qdt9HEu+jiX2pzO5vhVZ/xIWd6l363z9NHONxAAAAAAAAAAAAAAAAAAAAAAAAAAADCDN/kISm9AnAAA
   </data>
  </layer>
  <layer name="sol" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3TgQmAMBAEwWDv9m0NwUg2OAPfwC0/BgAAAAAAAAAAAAAAwJnua93x3sy+enzPf7To0aJHix7zVm526pXs3qJwJbu3KNwf2KxHjxY9WvRo0aNFDwAAAAAAAAAAAAAAAAAAAAAAAAAAoO4BaH2OsECcAAA=
+   H4sIAAAAAAAAC+3TgQnAIBAEQfuvMcWkBonBFWfgG7jlxwAAAAAAAAAAAAAAADjTs/D4bmZfPf7nP1r0aNGjRY95Kzc79Up2b1G4kt1bFO4GNuvRo0WPFj1a9GjRAwAAAAAAAAAAAAAAAAAAAAAAAAAAqHsByw6yZECcAAA=
   </data>
  </layer>
  <layer name="devant" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3WN04DQRQG4LELoKCxLcIFCBchXIDQkw5AOgChIpZwA7gIlEg0lrgHUPJWYIFW2ASvMeDvk35Z1s5Y4/cXsykBAAAAAAAAAAAAAACfcVNK6bag3JW6/W/+vsFySmfVlM6rz9/Xqq/PDiKHuRy92bsUa5cjK5HVyEj5p079f2V9XMQsL1962P5CH+uxdiOyGdnSRyEGW8zwoz52ooPdyF5kXx+FaKePPH20r1Ufx5GTXE5b/FYv9VEvdSbXBc7wqty5c9a9uzV1X0npIfJY6fZJyPTF3d0fGah+vJbOG87epSKj+ihcq/u8mfHoYSIymeujl+7zTvlOH83oo336+F2yPqZqKU1HZiKztddnQ7X305Dfp4/2ZX3MxSznIwuRxTfzHqu9/9mQ36cPAAAAAAAAAAAAAAAAAAAAAAAAAACA3vAEt2TyB0CcAAA=
+   H4sIAAAAAAAAC+3XSUrDYBgG4HSrjd5Al4Kbgmv1BOoFHDZdOlzE4QIOe6cDOB3A4Q56Az2CX9DSEto4JC2lfR54KT9/Ah//C0maJAAAAAAAAAAAAAAAwG/MReYrysKAZx9FzchrPUne6l/r63p7byIymUvHdnIei4vIZeQqsjegmUdZ1sd7nOXH90E//KGPm1jcRu4i9/qoRLNg76c+HmPxFHmOvOijEmX6yNNHeUV9pJGpXKYLrh+nPhp9ymytuhlnav2bs1HdmCNnMR5aS5HloocXA7MSPaxG1vQxFDaih83Ilj4qV/Q+72UnetjNvm9zfYzT+7xf/tNHL/ooTx/DJetjP/5oHEQOI0dpe2897Z6W/H36KC/r4zjO8iRyGjnrOO/ttPtvS/4+fQAAAAAAAAAAAAAAAAAAAAAAAAAAAIyHTxhk1QpAnAAA
   </data>
  </layer>
  <layer name="devant1" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3TwQmAMAwF0MygYxUnECfQc0fo3HqsJTehXt6DQMgpJPwIAAAAAAAAAAAAAADgi7r+vQG99vyjLBHXUFvXM9eR3DybMcee5OOUDwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4uQGiZt4VQJwAAA==
+   H4sIAAAAAAAAC+3TwQmAMAwF0AygwxcnECfQc0foUHqsJTehXt6DQMgpJPwIAAAAAAAAAAAAAADgi7r+vQG99vyjLBHXUFvXM9eR3DybMcee5OOUDwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4uQHtHDZnQJwAAA==
   </data>
  </layer>
  <layer name="devant2" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3RuQkCURiF0YnVRLETQ7dW3Fpxa8WtFbdWBA29YGqoPMFz4GMmfNy/qgAAAAAAAAAAAAAAgE/oNqqql/ppkIaN0i/6b6PsP06TNE0z9yhqnv0XaZlWae0eRW2y/zbt0j4d3KOoY/Y/pXO6pKt7FHXL/s3aq3v+H+4BAAB8Qb31/svv6bRLvwAAAAAAAAAAAAAAAAAAAAAAAAAAAIBSntqWaxJAnAAA
+   H4sIAAAAAAAAC+3RxwkCQBCG0b2oYGrFVIlgasICBO3N1IqpC3/w6lFZwffgY/c4zJQCAAAAAAAAAAAAAAB8wr5ZyiEd0ymdm7Un+m+X7P+abumeHu5RVbtVSid1Uy/1W7Un+m+D7H+YRmmcJu5R1Sz7n6dFWqaVe1S1yf7XjVfb/HfuAQAAfMG0+/7l92z6tScAAAAAAAAAAAAAAAAAAAAAAAAAAACgliePoKGxQJwAAA==
   </data>
  </layer>
  <layer name="devant3" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3RwQ0AEBAAwetBs3RAB0pQJh8/fyIzFWyyEQAAAAAAAAAAAAAAAH9qKaKk2xVsY72ofjyjrxfZDwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4mtqNvb5AnAAA
+   H4sIAAAAAAAAC+3RQREAEBRAwV9A/zY0oIEIMnBxc2fMboI38yIAAAAAAAAAAAAAAAD+1FJESbcr2MZ6Uf14Rl8vsh8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcDQBGaRre0CcAAA=
   </data>
  </layer>
  <layer name="dérriére" width="100" height="100">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3WMQqAMAwF0NAbSM+ipxEcFDyg3s7FDoqL4NIOwnvwyZSQ8UcAAAAAAAAAAAAAAAAAAAD835LaZE/1ftzKrflKi18B+hwx5Gfeju59fu0BtDCW3jJVyqoDAQAAAAAAAAAAAAAAAAAAAAAAAAAAjZyl1PJsQJwAAA==
+   H4sIAAAAAAAAC+3OuwmAQBAE0DX1U5R1aVeCgYK1eSBiIpjcCeJ7MEy0y0QAAAAAAAAAAAAAAAAAAAB831ooTZVvY51+LXGkxFaAoYsYu6tPfXvfT3cAJUwpc6ZsL28HAAAAAAAAAAAAAAAAAAAAAAAAAAD+YwdOIN4yQJwAAA==
   </data>
  </layer>
- <objectgroup name="trigger" width="65" height="117">
-  <object id="6" name="test" type="teleport" x="1744" y="1184" width="65" height="117"/>
+ <objectgroup name="trigger" width="100" height="100">
+  <object id="6" name="portail" type="portail" x="1556" y="989" width="151" height="137"/>
  </objectgroup>
 </map>

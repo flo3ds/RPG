@@ -18,8 +18,6 @@ public class Tronc extends MondeObj {
 		fa = new Feuillage_arbre(gid, width, height);
 		this.setParsemé(3);
 		setColisable();
-		this.getLayer().defData();
-		this.getCol().mergerLayer(this.getLayer());
 
 	}
 

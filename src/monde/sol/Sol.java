@@ -18,7 +18,7 @@ public class Sol extends MondeObj {
 		this.name = Type.values()[rand].toString();
 
 		setTexture(Type.values()[rand].getId());
-		this.getLayer().defData();
+		
 	}
 
 	public String getDescription() {

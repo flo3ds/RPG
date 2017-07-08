@@ -16,31 +16,22 @@ import monde.MondeObj;
 
 public class GenWorldMap {
 
-	public static void genWorldMap(Monde monde) {
+	public static void genWorldMap(Monde monde, int width, int height) {
 		String name = "test";
 		
 		File dir = new File ("world/" + name);
 		dir.mkdirs();
 		
 		// créér le dossier
-		XMLMap xml = new XMLMap("world/" + name + "/test.tmx");
-
-		
+		XMLMap xml = new XMLMap("world/" + name + "/test.tmx", width, height);
 		
 		//=================================
 		// COLLISION
 		Layer col = monde.col.getLayer();
-		
 		processCol(monde.pierre, col);
 		//processCol(monde.tronc, col);
-		
-		col.reabiliteLayer();
-		col.defData();
-		xml.setLayer(col.getXml(xml.getDoc()));
-		monde.col.pngProcess("world/" + name + "/");
-		xml.setTileset(((Tileset) col.getTileset()).getXml(xml.getDoc()));
+		initCol(col, xml, monde, name);
 		//===================================================================
-
 		
 		process(xml, name, monde.sol, col);
 		process(xml, name, monde.pierre, col);
@@ -73,12 +64,17 @@ public class GenWorldMap {
 	}
 	
 	private static void processCol(MondeObj obj, Layer col) {
-
-			if (obj.colisable())
-				col.mergerLayer(obj.getCol());
+		if (obj.colisable())
+			col.mergerLayer(obj.getCol());
 		}
-	
-	
 
-
+	private static void initCol(Layer col, XMLMap xml, Monde monde, String name) {
+		col.reabiliteLayer();
+		col.setMode(Layer.Mode.none);
+		col.defData();
+		xml.setLayer(col.getXml(xml.getDoc()));
+		monde.col.pngProcess("world/" + name + "/");
+		xml.setTileset(((Tileset) col.getTileset()).getXml(xml.getDoc()));
+	}
+	
 }
