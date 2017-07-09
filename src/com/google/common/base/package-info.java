@@ -15,8 +15,9 @@
 /**
  * Basic utility libraries and interfaces.
  *
- * <p>This package is a part of the open-source <a href="http://github.com/google/guava">Guava</a>
- * library.
+ * <p>
+ * This package is a part of the open-source
+ * <a href="http://github.com/google/guava">Guava</a> library.
  *
  * <h2>Contents</h2>
  *
@@ -35,11 +36,14 @@
  * <h3>Function types</h3>
  *
  * <ul>
- * <li>{@link com.google.common.base.Function}, {@link com.google.common.base.Functions}
- * <li>{@link com.google.common.base.Predicate}, {@link com.google.common.base.Predicates}
+ * <li>{@link com.google.common.base.Function},
+ * {@link com.google.common.base.Functions}
+ * <li>{@link com.google.common.base.Predicate},
+ * {@link com.google.common.base.Predicates}
  * <li>{@link com.google.common.base.Equivalence}
  * <li>{@link com.google.common.base.Converter}
- * <li>{@link com.google.common.base.Supplier}, {@link com.google.common.base.Suppliers}
+ * <li>{@link com.google.common.base.Supplier},
+ * {@link com.google.common.base.Suppliers}
  * </ul>
  *
  * <h3>Other</h3>

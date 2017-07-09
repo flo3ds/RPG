@@ -7,8 +7,6 @@ public class Biome {
 
 	public static final GameData REGISTRY = GameData.getMain();
 
-	
-
 	public static void registerBiomes() {
 		registerBiome(1, new Foret());
 	}
@@ -18,7 +16,7 @@ public class Biome {
 	}
 
 	public void decorate(Chunk chunk) {
-		
+
 	}
 
 }

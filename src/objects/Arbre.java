@@ -15,25 +15,15 @@ public class Arbre extends Object {
 	public Arbre() {
 		super("arbre");
 		
-		try {
-			Texture tex;
-			tex = new Texture(Util.getResource("res/"+getName()+".png"));
-			TextureManager.getInstance().register(getName(), tex);
-			tex = new Texture(Util.getResource("res/"+getName()+"_1.png"));
-			TextureManager.getInstance().register(getName()+"_1", tex);
-		} catch (IOException e) {
-			Sys.alert("Error", "Texture object not load : " + getName());
-			e.printStackTrace();
-			System.exit(0);
-		}
+		addState("coupé");
 		
-		setDx(-32);
-		setDy(-96);
+		setDecalageSpriteX(-32);
+		setDecalageSpriteY(-96);
 		
 	}
 	
 	public void click(Personnage perso) {
-		setState(1);
+		setState("coupé");
 	}
 	
 	

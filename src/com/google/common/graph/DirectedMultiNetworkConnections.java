@@ -33,116 +33,116 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 /**
- * An implementation of {@link NetworkConnections} for directed networks with parallel edges.
+ * An implementation of {@link NetworkConnections} for directed networks with
+ * parallel edges.
  *
  * @author James Sexton
- * @param <N> Node parameter type
- * @param <E> Edge parameter type
+ * @param <N>
+ *            Node parameter type
+ * @param <E>
+ *            Edge parameter type
  */
 final class DirectedMultiNetworkConnections<N, E> extends AbstractDirectedNetworkConnections<N, E> {
 
-  private DirectedMultiNetworkConnections(
-      Map<E, N> inEdges, Map<E, N> outEdges, int selfLoopCount) {
-    super(inEdges, outEdges, selfLoopCount);
-  }
+	private DirectedMultiNetworkConnections(Map<E, N> inEdges, Map<E, N> outEdges, int selfLoopCount) {
+		super(inEdges, outEdges, selfLoopCount);
+	}
 
-  static <N, E> DirectedMultiNetworkConnections<N, E> of() {
-    return new DirectedMultiNetworkConnections<N, E>(
-        new HashMap<E, N>(INNER_CAPACITY, INNER_LOAD_FACTOR),
-        new HashMap<E, N>(INNER_CAPACITY, INNER_LOAD_FACTOR),
-        0);
-  }
+	static <N, E> DirectedMultiNetworkConnections<N, E> of() {
+		return new DirectedMultiNetworkConnections<N, E>(new HashMap<E, N>(INNER_CAPACITY, INNER_LOAD_FACTOR),
+				new HashMap<E, N>(INNER_CAPACITY, INNER_LOAD_FACTOR), 0);
+	}
 
-  static <N, E> DirectedMultiNetworkConnections<N, E> ofImmutable(
-      Map<E, N> inEdges, Map<E, N> outEdges, int selfLoopCount) {
-    return new DirectedMultiNetworkConnections<N, E>(
-        ImmutableMap.copyOf(inEdges), ImmutableMap.copyOf(outEdges), selfLoopCount);
-  }
+	static <N, E> DirectedMultiNetworkConnections<N, E> ofImmutable(Map<E, N> inEdges, Map<E, N> outEdges,
+			int selfLoopCount) {
+		return new DirectedMultiNetworkConnections<N, E>(ImmutableMap.copyOf(inEdges), ImmutableMap.copyOf(outEdges),
+				selfLoopCount);
+	}
 
-  @LazyInit
-  private transient Reference<Multiset<N>> predecessorsReference;
+	@LazyInit
+	private transient Reference<Multiset<N>> predecessorsReference;
 
-  @Override
-  public Set<N> predecessors() {
-    return Collections.unmodifiableSet(predecessorsMultiset().elementSet());
-  }
+	@Override
+	public Set<N> predecessors() {
+		return Collections.unmodifiableSet(predecessorsMultiset().elementSet());
+	}
 
-  private Multiset<N> predecessorsMultiset() {
-    Multiset<N> predecessors = getReference(predecessorsReference);
-    if (predecessors == null) {
-      predecessors = HashMultiset.create(inEdgeMap.values());
-      predecessorsReference = new SoftReference<Multiset<N>>(predecessors);
-    }
-    return predecessors;
-  }
+	private Multiset<N> predecessorsMultiset() {
+		Multiset<N> predecessors = getReference(predecessorsReference);
+		if (predecessors == null) {
+			predecessors = HashMultiset.create(inEdgeMap.values());
+			predecessorsReference = new SoftReference<Multiset<N>>(predecessors);
+		}
+		return predecessors;
+	}
 
-  @LazyInit
-  private transient Reference<Multiset<N>> successorsReference;
+	@LazyInit
+	private transient Reference<Multiset<N>> successorsReference;
 
-  @Override
-  public Set<N> successors() {
-    return Collections.unmodifiableSet(successorsMultiset().elementSet());
-  }
+	@Override
+	public Set<N> successors() {
+		return Collections.unmodifiableSet(successorsMultiset().elementSet());
+	}
 
-  private Multiset<N> successorsMultiset() {
-    Multiset<N> successors = getReference(successorsReference);
-    if (successors == null) {
-      successors = HashMultiset.create(outEdgeMap.values());
-      successorsReference = new SoftReference<Multiset<N>>(successors);
-    }
-    return successors;
-  }
+	private Multiset<N> successorsMultiset() {
+		Multiset<N> successors = getReference(successorsReference);
+		if (successors == null) {
+			successors = HashMultiset.create(outEdgeMap.values());
+			successorsReference = new SoftReference<Multiset<N>>(successors);
+		}
+		return successors;
+	}
 
-  @Override
-  public Set<E> edgesConnecting(final N node) {
-    return new MultiEdgesConnecting<E>(outEdgeMap, node) {
-      @Override
-      public int size() {
-        return successorsMultiset().count(node);
-      }
-    };
-  }
+	@Override
+	public Set<E> edgesConnecting(final N node) {
+		return new MultiEdgesConnecting<E>(outEdgeMap, node) {
+			@Override
+			public int size() {
+				return successorsMultiset().count(node);
+			}
+		};
+	}
 
-  @Override
-  public N removeInEdge(E edge, boolean isSelfLoop) {
-    N node = super.removeInEdge(edge, isSelfLoop);
-    Multiset<N> predecessors = getReference(predecessorsReference);
-    if (predecessors != null) {
-      checkState(predecessors.remove(node));
-    }
-    return node;
-  }
+	@Override
+	public N removeInEdge(E edge, boolean isSelfLoop) {
+		N node = super.removeInEdge(edge, isSelfLoop);
+		Multiset<N> predecessors = getReference(predecessorsReference);
+		if (predecessors != null) {
+			checkState(predecessors.remove(node));
+		}
+		return node;
+	}
 
-  @Override
-  public N removeOutEdge(E edge) {
-    N node = super.removeOutEdge(edge);
-    Multiset<N> successors = getReference(successorsReference);
-    if (successors != null) {
-      checkState(successors.remove(node));
-    }
-    return node;
-  }
+	@Override
+	public N removeOutEdge(E edge) {
+		N node = super.removeOutEdge(edge);
+		Multiset<N> successors = getReference(successorsReference);
+		if (successors != null) {
+			checkState(successors.remove(node));
+		}
+		return node;
+	}
 
-  @Override
-  public void addInEdge(E edge, N node, boolean isSelfLoop) {
-    super.addInEdge(edge, node, isSelfLoop);
-    Multiset<N> predecessors = getReference(predecessorsReference);
-    if (predecessors != null) {
-      checkState(predecessors.add(node));
-    }
-  }
+	@Override
+	public void addInEdge(E edge, N node, boolean isSelfLoop) {
+		super.addInEdge(edge, node, isSelfLoop);
+		Multiset<N> predecessors = getReference(predecessorsReference);
+		if (predecessors != null) {
+			checkState(predecessors.add(node));
+		}
+	}
 
-  @Override
-  public void addOutEdge(E edge, N node) {
-    super.addOutEdge(edge, node);
-    Multiset<N> successors = getReference(successorsReference);
-    if (successors != null) {
-      checkState(successors.add(node));
-    }
-  }
+	@Override
+	public void addOutEdge(E edge, N node) {
+		super.addOutEdge(edge, node);
+		Multiset<N> successors = getReference(successorsReference);
+		if (successors != null) {
+			checkState(successors.add(node));
+		}
+	}
 
-  @Nullable
-  private static <T> T getReference(@Nullable Reference<T> reference) {
-    return (reference == null) ? null : reference.get();
-  }
+	@Nullable
+	private static <T> T getReference(@Nullable Reference<T> reference) {
+		return (reference == null) ? null : reference.get();
+	}
 }

@@ -19,67 +19,68 @@ package com.google.common.graph;
 import java.util.Set;
 
 /**
- * A class to allow {@link Graph} implementations to be backed by a {@link BaseGraph}. This is not
- * currently planned to be released as a general-purpose forwarding class.
+ * A class to allow {@link Graph} implementations to be backed by a
+ * {@link BaseGraph}. This is not currently planned to be released as a
+ * general-purpose forwarding class.
  *
  * @author James Sexton
  */
 abstract class ForwardingGraph<N> extends AbstractGraph<N> {
 
-  protected abstract BaseGraph<N> delegate();
+	protected abstract BaseGraph<N> delegate();
 
-  @Override
-  public Set<N> nodes() {
-    return delegate().nodes();
-  }
+	@Override
+	public Set<N> nodes() {
+		return delegate().nodes();
+	}
 
-  @Override
-  public Set<EndpointPair<N>> edges() {
-    return delegate().edges();
-  }
+	@Override
+	public Set<EndpointPair<N>> edges() {
+		return delegate().edges();
+	}
 
-  @Override
-  public boolean isDirected() {
-    return delegate().isDirected();
-  }
+	@Override
+	public boolean isDirected() {
+		return delegate().isDirected();
+	}
 
-  @Override
-  public boolean allowsSelfLoops() {
-    return delegate().allowsSelfLoops();
-  }
+	@Override
+	public boolean allowsSelfLoops() {
+		return delegate().allowsSelfLoops();
+	}
 
-  @Override
-  public ElementOrder<N> nodeOrder() {
-    return delegate().nodeOrder();
-  }
+	@Override
+	public ElementOrder<N> nodeOrder() {
+		return delegate().nodeOrder();
+	}
 
-  @Override
-  public Set<N> adjacentNodes(N node) {
-    return delegate().adjacentNodes(node);
-  }
+	@Override
+	public Set<N> adjacentNodes(N node) {
+		return delegate().adjacentNodes(node);
+	}
 
-  @Override
-  public Set<N> predecessors(N node) {
-    return delegate().predecessors(node);
-  }
+	@Override
+	public Set<N> predecessors(N node) {
+		return delegate().predecessors(node);
+	}
 
-  @Override
-  public Set<N> successors(N node) {
-    return delegate().successors(node);
-  }
+	@Override
+	public Set<N> successors(N node) {
+		return delegate().successors(node);
+	}
 
-  @Override
-  public int degree(N node) {
-    return delegate().degree(node);
-  }
+	@Override
+	public int degree(N node) {
+		return delegate().degree(node);
+	}
 
-  @Override
-  public int inDegree(N node) {
-    return delegate().inDegree(node);
-  }
+	@Override
+	public int inDegree(N node) {
+		return delegate().inDegree(node);
+	}
 
-  @Override
-  public int outDegree(N node) {
-    return delegate().outDegree(node);
-  }
+	@Override
+	public int outDegree(N node) {
+		return delegate().outDegree(node);
+	}
 }

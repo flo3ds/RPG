@@ -36,97 +36,99 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible(emulated = true)
 abstract class ImmutableMapEntrySet<K, V> extends ImmutableSet<Entry<K, V>> {
-  static final class RegularEntrySet<K, V> extends ImmutableMapEntrySet<K, V> {
-    @Weak private final transient ImmutableMap<K, V> map;
-    private final transient Entry<K, V>[] entries;
+	static final class RegularEntrySet<K, V> extends ImmutableMapEntrySet<K, V> {
+		@Weak
+		private final transient ImmutableMap<K, V> map;
+		private final transient Entry<K, V>[] entries;
 
-    RegularEntrySet(ImmutableMap<K, V> map, Entry<K, V>[] entries) {
-      this.map = map;
-      this.entries = entries;
-    }
+		RegularEntrySet(ImmutableMap<K, V> map, Entry<K, V>[] entries) {
+			this.map = map;
+			this.entries = entries;
+		}
 
-    @Override
-    ImmutableMap<K, V> map() {
-      return map;
-    }
+		@Override
+		ImmutableMap<K, V> map() {
+			return map;
+		}
 
-    @Override
-    public UnmodifiableIterator<Entry<K, V>> iterator() {
-      return Iterators.forArray(entries);
-    }
+		@Override
+		public UnmodifiableIterator<Entry<K, V>> iterator() {
+			return Iterators.forArray(entries);
+		}
 
-    @Override
-    public Spliterator<Entry<K, V>> spliterator() {
-      return Spliterators.spliterator(entries, ImmutableSet.SPLITERATOR_CHARACTERISTICS);
-    }
+		@Override
+		public Spliterator<Entry<K, V>> spliterator() {
+			return Spliterators.spliterator(entries, ImmutableSet.SPLITERATOR_CHARACTERISTICS);
+		}
 
-    @Override
-    public void forEach(Consumer<? super Entry<K, V>> action) {
-      checkNotNull(action);
-      for (Entry<K, V> entry : entries) {
-        action.accept(entry);
-      }
-    }
+		@Override
+		public void forEach(Consumer<? super Entry<K, V>> action) {
+			checkNotNull(action);
+			for (Entry<K, V> entry : entries) {
+				action.accept(entry);
+			}
+		}
 
-    @Override
-    ImmutableList<Entry<K, V>> createAsList() {
-      return new RegularImmutableAsList<Entry<K, V>>(this, entries);
-    }
-  }
+		@Override
+		ImmutableList<Entry<K, V>> createAsList() {
+			return new RegularImmutableAsList<Entry<K, V>>(this, entries);
+		}
+	}
 
-  ImmutableMapEntrySet() {}
+	ImmutableMapEntrySet() {
+	}
 
-  abstract ImmutableMap<K, V> map();
+	abstract ImmutableMap<K, V> map();
 
-  @Override
-  public int size() {
-    return map().size();
-  }
+	@Override
+	public int size() {
+		return map().size();
+	}
 
-  @Override
-  public boolean contains(@Nullable Object object) {
-    if (object instanceof Entry) {
-      Entry<?, ?> entry = (Entry<?, ?>) object;
-      V value = map().get(entry.getKey());
-      return value != null && value.equals(entry.getValue());
-    }
-    return false;
-  }
+	@Override
+	public boolean contains(@Nullable Object object) {
+		if (object instanceof Entry) {
+			Entry<?, ?> entry = (Entry<?, ?>) object;
+			V value = map().get(entry.getKey());
+			return value != null && value.equals(entry.getValue());
+		}
+		return false;
+	}
 
-  @Override
-  boolean isPartialView() {
-    return map().isPartialView();
-  }
+	@Override
+	boolean isPartialView() {
+		return map().isPartialView();
+	}
 
-  @Override
-  @GwtIncompatible // not used in GWT
-  boolean isHashCodeFast() {
-    return map().isHashCodeFast();
-  }
+	@Override
+	@GwtIncompatible // not used in GWT
+	boolean isHashCodeFast() {
+		return map().isHashCodeFast();
+	}
 
-  @Override
-  public int hashCode() {
-    return map().hashCode();
-  }
+	@Override
+	public int hashCode() {
+		return map().hashCode();
+	}
 
-  @GwtIncompatible // serialization
-  @Override
-  Object writeReplace() {
-    return new EntrySetSerializedForm<K, V>(map());
-  }
+	@GwtIncompatible // serialization
+	@Override
+	Object writeReplace() {
+		return new EntrySetSerializedForm<K, V>(map());
+	}
 
-  @GwtIncompatible // serialization
-  private static class EntrySetSerializedForm<K, V> implements Serializable {
-    final ImmutableMap<K, V> map;
+	@GwtIncompatible // serialization
+	private static class EntrySetSerializedForm<K, V> implements Serializable {
+		final ImmutableMap<K, V> map;
 
-    EntrySetSerializedForm(ImmutableMap<K, V> map) {
-      this.map = map;
-    }
+		EntrySetSerializedForm(ImmutableMap<K, V> map) {
+			this.map = map;
+		}
 
-    Object readResolve() {
-      return map.entrySet();
-    }
+		Object readResolve() {
+			return map.entrySet();
+		}
 
-    private static final long serialVersionUID = 0;
-  }
+		private static final long serialVersionUID = 0;
+	}
 }

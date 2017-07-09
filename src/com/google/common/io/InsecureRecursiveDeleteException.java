@@ -24,13 +24,15 @@ import java.nio.file.SecureDirectoryStream;
 import javax.annotation.Nullable;
 
 /**
- * Exception indicating that a recursive delete can't be performed because the file system does not
- * have the support necessary to guarantee that it is not vulnerable to race conditions that would
- * allow it to delete files and directories outside of the directory being deleted (i.e.,
+ * Exception indicating that a recursive delete can't be performed because the
+ * file system does not have the support necessary to guarantee that it is not
+ * vulnerable to race conditions that would allow it to delete files and
+ * directories outside of the directory being deleted (i.e.,
  * {@link SecureDirectoryStream} is not supported).
  *
- * <p>{@link RecursiveDeleteOption#ALLOW_INSECURE} can be used to force the recursive delete method
- * to proceed anyway.
+ * <p>
+ * {@link RecursiveDeleteOption#ALLOW_INSECURE} can be used to force the
+ * recursive delete method to proceed anyway.
  *
  * @since 21.0
  * @author Colin Decker
@@ -40,7 +42,7 @@ import javax.annotation.Nullable;
 @J2ObjCIncompatible // java.nio.file
 public final class InsecureRecursiveDeleteException extends FileSystemException {
 
-  public InsecureRecursiveDeleteException(@Nullable String file) {
-    super(file, null, "unable to guarantee security of recursive delete");
-  }
+	public InsecureRecursiveDeleteException(@Nullable String file) {
+		super(file, null, "unable to guarantee security of recursive delete");
+	}
 }

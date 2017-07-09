@@ -38,243 +38,243 @@ import javax.annotation.Nullable;
  */
 @GwtCompatible(serializable = true, emulated = true)
 final class RegularImmutableMap<K, V> extends ImmutableMap<K, V> {
-  @SuppressWarnings("unchecked")
-  static final ImmutableMap<Object, Object> EMPTY =
-      new RegularImmutableMap<Object, Object>(
-          (Entry<Object, Object>[]) ImmutableMap.EMPTY_ENTRY_ARRAY, null, 0);
-  
-  // entries in insertion order
-  private final transient Entry<K, V>[] entries;
-  // array of linked lists of entries
-  private final transient ImmutableMapEntry<K, V>[] table;
-  // 'and' with an int to get a table index
-  private final transient int mask;
+	@SuppressWarnings("unchecked")
+	static final ImmutableMap<Object, Object> EMPTY = new RegularImmutableMap<Object, Object>(
+			(Entry<Object, Object>[]) ImmutableMap.EMPTY_ENTRY_ARRAY, null, 0);
 
-  static <K, V> RegularImmutableMap<K, V> fromEntries(Entry<K, V>... entries) {
-    return fromEntryArray(entries.length, entries);
-  }
+	// entries in insertion order
+	private final transient Entry<K, V>[] entries;
+	// array of linked lists of entries
+	private final transient ImmutableMapEntry<K, V>[] table;
+	// 'and' with an int to get a table index
+	private final transient int mask;
 
-  /**
-   * Creates a RegularImmutableMap from the first n entries in entryArray.  This implementation
-   * may replace the entries in entryArray with its own entry objects (though they will have the
-   * same key/value contents), and may take ownership of entryArray.
-   */
-  static <K, V> RegularImmutableMap<K, V> fromEntryArray(int n, Entry<K, V>[] entryArray) {
-    checkPositionIndex(n, entryArray.length);
-    if (n == 0) {
-      return (RegularImmutableMap<K, V>) EMPTY;
-    }
-    Entry<K, V>[] entries;
-    if (n == entryArray.length) {
-      entries = entryArray;
-    } else {
-      entries = createEntryArray(n);
-    }
-    int tableSize = Hashing.closedTableSize(n, MAX_LOAD_FACTOR);
-    ImmutableMapEntry<K, V>[] table = createEntryArray(tableSize);
-    int mask = tableSize - 1;
-    for (int entryIndex = 0; entryIndex < n; entryIndex++) {
-      Entry<K, V> entry = entryArray[entryIndex];
-      K key = entry.getKey();
-      V value = entry.getValue();
-      checkEntryNotNull(key, value);
-      int tableIndex = Hashing.smear(key.hashCode()) & mask;
-      @Nullable ImmutableMapEntry<K, V> existing = table[tableIndex];
-      // prepend, not append, so the entries can be immutable
-      ImmutableMapEntry<K, V> newEntry;
-      if (existing == null) {
-        boolean reusable =
-            entry instanceof ImmutableMapEntry && ((ImmutableMapEntry<K, V>) entry).isReusable();
-        newEntry =
-            reusable ? (ImmutableMapEntry<K, V>) entry : new ImmutableMapEntry<K, V>(key, value);
-      } else {
-        newEntry = new NonTerminalImmutableMapEntry<K, V>(key, value, existing);
-      }
-      table[tableIndex] = newEntry;
-      entries[entryIndex] = newEntry;
-      checkNoConflictInKeyBucket(key, newEntry, existing);
-    }
-    return new RegularImmutableMap<K, V>(entries, table, mask);
-  }
+	static <K, V> RegularImmutableMap<K, V> fromEntries(Entry<K, V>... entries) {
+		return fromEntryArray(entries.length, entries);
+	}
 
-  private RegularImmutableMap(Entry<K, V>[] entries, ImmutableMapEntry<K, V>[] table, int mask) {
-    this.entries = entries;
-    this.table = table;
-    this.mask = mask;
-  }
+	/**
+	 * Creates a RegularImmutableMap from the first n entries in entryArray.
+	 * This implementation may replace the entries in entryArray with its own
+	 * entry objects (though they will have the same key/value contents), and
+	 * may take ownership of entryArray.
+	 */
+	static <K, V> RegularImmutableMap<K, V> fromEntryArray(int n, Entry<K, V>[] entryArray) {
+		checkPositionIndex(n, entryArray.length);
+		if (n == 0) {
+			return (RegularImmutableMap<K, V>) EMPTY;
+		}
+		Entry<K, V>[] entries;
+		if (n == entryArray.length) {
+			entries = entryArray;
+		} else {
+			entries = createEntryArray(n);
+		}
+		int tableSize = Hashing.closedTableSize(n, MAX_LOAD_FACTOR);
+		ImmutableMapEntry<K, V>[] table = createEntryArray(tableSize);
+		int mask = tableSize - 1;
+		for (int entryIndex = 0; entryIndex < n; entryIndex++) {
+			Entry<K, V> entry = entryArray[entryIndex];
+			K key = entry.getKey();
+			V value = entry.getValue();
+			checkEntryNotNull(key, value);
+			int tableIndex = Hashing.smear(key.hashCode()) & mask;
+			@Nullable
+			ImmutableMapEntry<K, V> existing = table[tableIndex];
+			// prepend, not append, so the entries can be immutable
+			ImmutableMapEntry<K, V> newEntry;
+			if (existing == null) {
+				boolean reusable = entry instanceof ImmutableMapEntry && ((ImmutableMapEntry<K, V>) entry).isReusable();
+				newEntry = reusable ? (ImmutableMapEntry<K, V>) entry : new ImmutableMapEntry<K, V>(key, value);
+			} else {
+				newEntry = new NonTerminalImmutableMapEntry<K, V>(key, value, existing);
+			}
+			table[tableIndex] = newEntry;
+			entries[entryIndex] = newEntry;
+			checkNoConflictInKeyBucket(key, newEntry, existing);
+		}
+		return new RegularImmutableMap<K, V>(entries, table, mask);
+	}
 
-  static void checkNoConflictInKeyBucket(
-      Object key, Entry<?, ?> entry, @Nullable ImmutableMapEntry<?, ?> keyBucketHead) {
-    for (; keyBucketHead != null; keyBucketHead = keyBucketHead.getNextInKeyBucket()) {
-      checkNoConflict(!key.equals(keyBucketHead.getKey()), "key", entry, keyBucketHead);
-    }
-  }
+	private RegularImmutableMap(Entry<K, V>[] entries, ImmutableMapEntry<K, V>[] table, int mask) {
+		this.entries = entries;
+		this.table = table;
+		this.mask = mask;
+	}
 
-  /**
-   * Closed addressing tends to perform well even with high load factors.
-   * Being conservative here ensures that the table is still likely to be
-   * relatively sparse (hence it misses fast) while saving space.
-   */
-  private static final double MAX_LOAD_FACTOR = 1.2;
+	static void checkNoConflictInKeyBucket(Object key, Entry<?, ?> entry,
+			@Nullable ImmutableMapEntry<?, ?> keyBucketHead) {
+		for (; keyBucketHead != null; keyBucketHead = keyBucketHead.getNextInKeyBucket()) {
+			checkNoConflict(!key.equals(keyBucketHead.getKey()), "key", entry, keyBucketHead);
+		}
+	}
 
-  @Override
-  public V get(@Nullable Object key) {
-    return get(key, table, mask);
-  }
+	/**
+	 * Closed addressing tends to perform well even with high load factors.
+	 * Being conservative here ensures that the table is still likely to be
+	 * relatively sparse (hence it misses fast) while saving space.
+	 */
+	private static final double MAX_LOAD_FACTOR = 1.2;
 
-  @Nullable
-  static <V> V get(@Nullable Object key, @Nullable ImmutableMapEntry<?, V>[] keyTable, int mask) {
-    if (key == null || keyTable == null) {
-      return null;
-    }
-    int index = Hashing.smear(key.hashCode()) & mask;
-    for (ImmutableMapEntry<?, V> entry = keyTable[index];
-        entry != null;
-        entry = entry.getNextInKeyBucket()) {
-      Object candidateKey = entry.getKey();
+	@Override
+	public V get(@Nullable Object key) {
+		return get(key, table, mask);
+	}
 
-      /*
-       * Assume that equals uses the == optimization when appropriate, and that
-       * it would check hash codes as an optimization when appropriate. If we
-       * did these things, it would just make things worse for the most
-       * performance-conscious users.
-       */
-      if (key.equals(candidateKey)) {
-        return entry.getValue();
-      }
-    }
-    return null;
-  }
+	@Nullable
+	static <V> V get(@Nullable Object key, @Nullable ImmutableMapEntry<?, V>[] keyTable, int mask) {
+		if (key == null || keyTable == null) {
+			return null;
+		}
+		int index = Hashing.smear(key.hashCode()) & mask;
+		for (ImmutableMapEntry<?, V> entry = keyTable[index]; entry != null; entry = entry.getNextInKeyBucket()) {
+			Object candidateKey = entry.getKey();
 
-  @Override
-  public void forEach(BiConsumer<? super K, ? super V> action) {
-    checkNotNull(action);
-    for (Entry<K, V> entry : entries) {
-      action.accept(entry.getKey(), entry.getValue());
-    }
-  }
+			/*
+			 * Assume that equals uses the == optimization when appropriate, and
+			 * that it would check hash codes as an optimization when
+			 * appropriate. If we did these things, it would just make things
+			 * worse for the most performance-conscious users.
+			 */
+			if (key.equals(candidateKey)) {
+				return entry.getValue();
+			}
+		}
+		return null;
+	}
 
-  @Override
-  public int size() {
-    return entries.length;
-  }
+	@Override
+	public void forEach(BiConsumer<? super K, ? super V> action) {
+		checkNotNull(action);
+		for (Entry<K, V> entry : entries) {
+			action.accept(entry.getKey(), entry.getValue());
+		}
+	}
 
-  @Override
-  boolean isPartialView() {
-    return false;
-  }
+	@Override
+	public int size() {
+		return entries.length;
+	}
 
-  @Override
-  ImmutableSet<Entry<K, V>> createEntrySet() {
-    return new ImmutableMapEntrySet.RegularEntrySet<K, V>(this, entries);
-  }
+	@Override
+	boolean isPartialView() {
+		return false;
+	}
 
-  @Override
-  ImmutableSet<K> createKeySet() {
-    return new KeySet<K, V>(this);
-  }
+	@Override
+	ImmutableSet<Entry<K, V>> createEntrySet() {
+		return new ImmutableMapEntrySet.RegularEntrySet<K, V>(this, entries);
+	}
 
-  @GwtCompatible(emulated = true)
-  private static final class KeySet<K, V> extends ImmutableSet.Indexed<K> {
-    @Weak private final RegularImmutableMap<K, V> map;
+	@Override
+	ImmutableSet<K> createKeySet() {
+		return new KeySet<K, V>(this);
+	}
 
-    KeySet(RegularImmutableMap<K, V> map) {
-      this.map = map;
-    }
+	@GwtCompatible(emulated = true)
+	private static final class KeySet<K, V> extends ImmutableSet.Indexed<K> {
+		@Weak
+		private final RegularImmutableMap<K, V> map;
 
-    @Override
-    K get(int index) {
-      return map.entries[index].getKey();
-    }
+		KeySet(RegularImmutableMap<K, V> map) {
+			this.map = map;
+		}
 
-    @Override
-    public boolean contains(Object object) {
-      return map.containsKey(object);
-    }
+		@Override
+		K get(int index) {
+			return map.entries[index].getKey();
+		}
 
-    @Override
-    boolean isPartialView() {
-      return true;
-    }
+		@Override
+		public boolean contains(Object object) {
+			return map.containsKey(object);
+		}
 
-    @Override
-    public int size() {
-      return map.size();
-    }
+		@Override
+		boolean isPartialView() {
+			return true;
+		}
 
-    @GwtIncompatible // serialization
-    @Override
-    Object writeReplace() {
-      return new SerializedForm<K>(map);
-    }
+		@Override
+		public int size() {
+			return map.size();
+		}
 
-    @GwtIncompatible // serialization
-    private static class SerializedForm<K> implements Serializable {
-      final ImmutableMap<K, ?> map;
+		@GwtIncompatible // serialization
+		@Override
+		Object writeReplace() {
+			return new SerializedForm<K>(map);
+		}
 
-      SerializedForm(ImmutableMap<K, ?> map) {
-        this.map = map;
-      }
+		@GwtIncompatible // serialization
+		private static class SerializedForm<K> implements Serializable {
+			final ImmutableMap<K, ?> map;
 
-      Object readResolve() {
-        return map.keySet();
-      }
+			SerializedForm(ImmutableMap<K, ?> map) {
+				this.map = map;
+			}
 
-      private static final long serialVersionUID = 0;
-    }
-  }
+			Object readResolve() {
+				return map.keySet();
+			}
 
-  @Override
-  ImmutableCollection<V> createValues() {
-    return new Values<K, V>(this);
-  }
+			private static final long serialVersionUID = 0;
+		}
+	}
 
-  @GwtCompatible(emulated = true)
-  private static final class Values<K, V> extends ImmutableList<V> {
-    @Weak final RegularImmutableMap<K, V> map;
+	@Override
+	ImmutableCollection<V> createValues() {
+		return new Values<K, V>(this);
+	}
 
-    Values(RegularImmutableMap<K, V> map) {
-      this.map = map;
-    }
+	@GwtCompatible(emulated = true)
+	private static final class Values<K, V> extends ImmutableList<V> {
+		@Weak
+		final RegularImmutableMap<K, V> map;
 
-    @Override
-    public V get(int index) {
-      return map.entries[index].getValue();
-    }
+		Values(RegularImmutableMap<K, V> map) {
+			this.map = map;
+		}
 
-    @Override
-    public int size() {
-      return map.size();
-    }
+		@Override
+		public V get(int index) {
+			return map.entries[index].getValue();
+		}
 
-    @Override
-    boolean isPartialView() {
-      return true;
-    }
+		@Override
+		public int size() {
+			return map.size();
+		}
 
-    @GwtIncompatible // serialization
-    @Override
-    Object writeReplace() {
-      return new SerializedForm<V>(map);
-    }
+		@Override
+		boolean isPartialView() {
+			return true;
+		}
 
-    @GwtIncompatible // serialization
-    private static class SerializedForm<V> implements Serializable {
-      final ImmutableMap<?, V> map;
+		@GwtIncompatible // serialization
+		@Override
+		Object writeReplace() {
+			return new SerializedForm<V>(map);
+		}
 
-      SerializedForm(ImmutableMap<?, V> map) {
-        this.map = map;
-      }
+		@GwtIncompatible // serialization
+		private static class SerializedForm<V> implements Serializable {
+			final ImmutableMap<?, V> map;
 
-      Object readResolve() {
-        return map.values();
-      }
+			SerializedForm(ImmutableMap<?, V> map) {
+				this.map = map;
+			}
 
-      private static final long serialVersionUID = 0;
-    }
-  }
+			Object readResolve() {
+				return map.values();
+			}
 
-  // This class is never actually serialized directly, but we have to make the
-  // warning go away (and suppressing would suppress for all nested classes too)
-  private static final long serialVersionUID = 0;
+			private static final long serialVersionUID = 0;
+		}
+	}
+
+	// This class is never actually serialized directly, but we have to make the
+	// warning go away (and suppressing would suppress for all nested classes
+	// too)
+	private static final long serialVersionUID = 0;
 }

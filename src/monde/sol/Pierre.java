@@ -14,7 +14,7 @@ public class Pierre extends MondeObj {
 		int rand = Rand.entier(0, Type.values().length);
 		this.type = Type.values()[rand];
 		setTexture(type.getId());
-		
+
 		setParsemé(2);
 		setColisable();
 	}

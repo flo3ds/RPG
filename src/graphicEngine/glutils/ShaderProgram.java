@@ -78,7 +78,6 @@ import java.nio.IntBuffer;
 import java.util.HashMap;
 import java.util.List;
 
-
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.ContextCapabilities;
@@ -90,14 +89,16 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-/** A complete ShaderProgram utility wrapper.
+/**
+ * A complete ShaderProgram utility wrapper.
  * 
- * @author davedes */
+ * @author davedes
+ */
 public class ShaderProgram {
 
 	private static FloatBuffer fbuf16;
 	private static IntBuffer ibuf4;
-	
+
 	// a simple struct for attrib data; ideally we should find the
 	// component count to utilize our VertexAttrib class
 	protected static class Attrib {
@@ -113,17 +114,20 @@ public class ShaderProgram {
 	public static final int FRAGMENT_SHADER = GL_FRAGMENT_SHADER;
 	private static boolean strict = false;
 
-	/** Returns true if the extensions GL_ARB_shader_objects,
+	/**
+	 * Returns true if the extensions GL_ARB_shader_objects,
 	 * GL_ARB_vertex_shader, and GL_ARB_fragment shader are present.
 	 * 
-	 * @return true if shaders are supported */
+	 * @return true if shaders are supported
+	 */
 	public static boolean isSupported() {
 		ContextCapabilities c = GLContext.getCapabilities();
 		return c.GL_ARB_shader_objects && c.GL_ARB_vertex_shader && c.GL_ARB_fragment_shader;
 		// return c.OpenGL20;
 	}
 
-	/** Whether shader programs are to use "strict" uniform/attribute name
+	/**
+	 * Whether shader programs are to use "strict" uniform/attribute name
 	 * checking (default: disabled). That is, when strict mode is enabled,
 	 * trying to modify or retrieve uniform/attribute data by name will fail and
 	 * throw an IllegalArgumentException if there exists no 'active'
@@ -132,12 +136,15 @@ public class ShaderProgram {
 	 * getting/setting uniform/attribute data will fail silently if the name is
 	 * not found.
 	 * 
-	 * @param enabled true to enable strict mode */
+	 * @param enabled
+	 *            true to enable strict mode
+	 */
 	public static void setStrictMode(boolean enabled) {
 		strict = enabled;
 	}
 
-	/** Returns <tt>true</tt> if shader programs are to use "strict"
+	/**
+	 * Returns <tt>true</tt> if shader programs are to use "strict"
 	 * uniform/attribute name checking (default: disabled). That is, when strict
 	 * mode is enabled, trying to modify or retrieve uniform/attribute data by
 	 * name will fail and throw an IllegalArgumentException if there exists no
@@ -146,7 +153,8 @@ public class ShaderProgram {
 	 * is disabled, getting/setting uniform/attribute data will fail silently if
 	 * the name is not found.
 	 * 
-	 * @return true if strict mode is enabled */
+	 * @return true if strict mode is enabled
+	 */
 	public static boolean isStrictMode() {
 		return strict;
 	}
@@ -169,8 +177,8 @@ public class ShaderProgram {
 	/** The OpenGL handle for this program's fragment shader object. */
 	protected int frag;
 
-
-	/** Creates a new shader program with the given vertex and fragment shader
+	/**
+	 * Creates a new shader program with the given vertex and fragment shader
 	 * source code. The given source code is compiled, then the shaders attached
 	 * and linked.
 	 * 
@@ -186,13 +194,19 @@ public class ShaderProgram {
 	 * Before linking, the specified attribLocations will be bound using
 	 * glBindAttribLocation.
 	 * 
-	 * @param vertexShaderSource the shader code to compile, attach and link
-	 * @param fragShaderSource the frag code to compile, attach and link
-	 * @param attribLocations the attribute locations to bind
-	 * @throws LWJGLException if there was an issue
-	 * @throws IllegalArgumentException if there was an issue */
-	public ShaderProgram(String vertexShaderSource, String fragShaderSource,
-			List<VertexAttrib> attribLocations) throws LWJGLException {
+	 * @param vertexShaderSource
+	 *            the shader code to compile, attach and link
+	 * @param fragShaderSource
+	 *            the frag code to compile, attach and link
+	 * @param attribLocations
+	 *            the attribute locations to bind
+	 * @throws LWJGLException
+	 *             if there was an issue
+	 * @throws IllegalArgumentException
+	 *             if there was an issue
+	 */
+	public ShaderProgram(String vertexShaderSource, String fragShaderSource, List<VertexAttrib> attribLocations)
+			throws LWJGLException {
 		if (vertexShaderSource == null || fragShaderSource == null)
 			throw new IllegalArgumentException("shader source must be non-null");
 		if (!isSupported())
@@ -208,13 +222,15 @@ public class ShaderProgram {
 			dispose();
 			throw e;
 		}
-		//TODO: for convenience it might be nice to warn non-critical errors in a log
-		//but ideally the user should do that himself
-//		if (log != null && log.length() != 0)
-//			Util.warn(log);
+		// TODO: for convenience it might be nice to warn non-critical errors in
+		// a log
+		// but ideally the user should do that himself
+		// if (log != null && log.length() != 0)
+		// Util.warn(log);
 	}
 
-	/** Creates a new shader program with the given vertex and fragment shader
+	/**
+	 * Creates a new shader program with the given vertex and fragment shader
 	 * source code. The given source code is compiled, then the shaders attached
 	 * and linked.
 	 * 
@@ -227,27 +243,37 @@ public class ShaderProgram {
 	 * If there was a problem in linking the shaders to the program, a
 	 * LWJGLException will be thrown and the program will be deleted.
 	 * 
-	 * @param vertexShaderSource the shader code to compile, attach and link
-	 * @param fragShaderSource the frag code to compile, attach and link
-	 * @throws LWJGLException if there was an issue
-	 * @throws IllegalArgumentException if there was an issue */
+	 * @param vertexShaderSource
+	 *            the shader code to compile, attach and link
+	 * @param fragShaderSource
+	 *            the frag code to compile, attach and link
+	 * @throws LWJGLException
+	 *             if there was an issue
+	 * @throws IllegalArgumentException
+	 *             if there was an issue
+	 */
 	public ShaderProgram(String vertexShaderSource, String fragShaderSource) throws LWJGLException {
 		this(vertexShaderSource, fragShaderSource, null);
 	}
 
-	/** Subclasses may wish to implement this to manually handle program/shader
+	/**
+	 * Subclasses may wish to implement this to manually handle program/shader
 	 * creation, compiling, and linking. This constructor does nothing; users
 	 * will need to call compileShader, createProgram and linkProgram manually.
 	 * 
-	 * @throws SlimException */
+	 * @throws SlimException
+	 */
 	protected ShaderProgram() {
 	}
 
-	/** Creates a shader program and returns its OpenGL handle. If the result is
+	/**
+	 * Creates a shader program and returns its OpenGL handle. If the result is
 	 * zero, an exception will be thrown.
 	 * 
 	 * @return the OpenGL handle for the newly created shader program
-	 * @throws SlimException if the result is zero */
+	 * @throws SlimException
+	 *             if the result is zero
+	 */
 	protected int createProgram() throws LWJGLException {
 		int program = glCreateProgram();
 		if (program == 0)
@@ -267,19 +293,23 @@ public class ShaderProgram {
 			return "shader";
 	}
 
-	/** Compiles a shader from source and returns its handle. If the compilation
+	/**
+	 * Compiles a shader from source and returns its handle. If the compilation
 	 * failed, a SlimException will be thrown. If the compilation had error,
 	 * info or warnings messages, they will be appended to this program's log.
 	 * 
-	 * @param type the type to use in compilation
-	 * @param source the source code to compile
+	 * @param type
+	 *            the type to use in compilation
+	 * @param source
+	 *            the source code to compile
 	 * @return the resulting ID
-	 * @throws SlimException if compilation was unsuccessful */
+	 * @throws SlimException
+	 *             if compilation was unsuccessful
+	 */
 	protected int compileShader(int type, String source) throws LWJGLException {
 		int shader = glCreateShader(type);
 		if (shader == 0)
-			throw new LWJGLException(
-					"could not create shader object; check ShaderProgram.isSupported()");
+			throw new LWJGLException("could not create shader object; check ShaderProgram.isSupported()");
 		glShaderSource(shader, source);
 		glCompileShader(shader);
 
@@ -290,24 +320,30 @@ public class ShaderProgram {
 		if (err != null && err.length() != 0)
 			log += t + " compile log:\n" + err + "\n";
 		if (comp == GL11.GL_FALSE)
-			throw new LWJGLException(log.length()!=0 ? log : "Could not compile "+shaderTypeString(type));
+			throw new LWJGLException(log.length() != 0 ? log : "Could not compile " + shaderTypeString(type));
 		return shader;
 	}
 
-	/** Called to attach vertex and fragment; users may override this for more
-	 * specific purposes. */
+	/**
+	 * Called to attach vertex and fragment; users may override this for more
+	 * specific purposes.
+	 */
 	protected void attachShaders() {
 		glAttachShader(getID(), vert);
 		glAttachShader(getID(), frag);
 	}
 
-	/** Tries to bind the given attributes by location, then calls
+	/**
+	 * Tries to bind the given attributes by location, then calls
 	 * attachShaders() and links the program.
 	 * 
-	 * @param attribs tries to bind the given attributes in their order of
-	 * appearance
-	 * @throws SlimException if this program is invalid (released) or if the
-	 * link was unsuccessful */
+	 * @param attribs
+	 *            tries to bind the given attributes in their order of
+	 *            appearance
+	 * @throws SlimException
+	 *             if this program is invalid (released) or if the link was
+	 *             unsuccessful
+	 */
 	protected void linkProgram(List<VertexAttrib> attribLocations) throws LWJGLException {
 		if (!valid())
 			throw new LWJGLException("trying to link an invalid (i.e. released) program");
@@ -332,36 +368,41 @@ public class ShaderProgram {
 		if (log != null)
 			log = log.trim();
 		if (comp == GL11.GL_FALSE)
-			throw new LWJGLException(log.length()!=0 ? log : "Could not link program");
+			throw new LWJGLException(log.length() != 0 ? log : "Could not link program");
 
 		fetchUniforms();
 		fetchAttributes();
 	}
 
-	/** Returns the full log of compiling/linking errors, info, warnings, etc.
+	/**
+	 * Returns the full log of compiling/linking errors, info, warnings, etc.
 	 * 
-	 * @return the full log of this ShaderProgram */
+	 * @return the full log of this ShaderProgram
+	 */
 	public String getLog() {
 		return log;
 	}
 
-	/** Enables this shader for use -- only one shader can be bound at a time.
+	/**
+	 * Enables this shader for use -- only one shader can be bound at a time.
 	 * Calling bind() when another program is bound will simply make this object
 	 * the active program.
 	 * 
-	 * @throw IllegalStateException if this program is invalid */
+	 * @throw IllegalStateException if this program is invalid
+	 */
 	public void use() {
 		if (!valid())
 			throw new IllegalStateException("trying to enable a program that is not valid");
 		glUseProgram(program);
 	}
 
-	/** Detaches and releases the shaders
-	 * associated with this program. This can be called after linking a program
-	 * in order to free up memory (as the shaders are no longer needed),
-	 * however, since it is not a commonly used feature and thus not well tested
-	 * on all drivers, it should be used with caution. Shaders shouldn't be used
-	 * after being released. */
+	/**
+	 * Detaches and releases the shaders associated with this program. This can
+	 * be called after linking a program in order to free up memory (as the
+	 * shaders are no longer needed), however, since it is not a commonly used
+	 * feature and thus not well tested on all drivers, it should be used with
+	 * caution. Shaders shouldn't be used after being released.
+	 */
 	public void disposeShaders() {
 		if (vert != 0) {
 			glDetachShader(getID(), vert);
@@ -375,10 +416,12 @@ public class ShaderProgram {
 		}
 	}
 
-	/** If this program has not yet been released, this will releases 
-	 * this program and its shaders. To only release the
-	 * shaders (not the program itself), call disposeShaders(). Programs will be
-	 * considered "invalid" after being released, and should no longer be used. */
+	/**
+	 * If this program has not yet been released, this will releases this
+	 * program and its shaders. To only release the shaders (not the program
+	 * itself), call disposeShaders(). Programs will be considered "invalid"
+	 * after being released, and should no longer be used.
+	 */
 	public void dispose() {
 		if (program != 0) {
 			disposeShaders();
@@ -387,45 +430,57 @@ public class ShaderProgram {
 		}
 	}
 
-	/** Returns the OpenGL handle for this program's vertex shader.
+	/**
+	 * Returns the OpenGL handle for this program's vertex shader.
 	 * 
-	 * @return the vertex ID */
+	 * @return the vertex ID
+	 */
 	public int getVertexShaderID() {
 		return vert;
 	}
 
-	/** Returns the OpenGL handle for this program's fragment shader.
+	/**
+	 * Returns the OpenGL handle for this program's fragment shader.
 	 * 
-	 * @return the fragment ID */
+	 * @return the fragment ID
+	 */
 	public int getFragmentShaderID() {
 		return frag;
 	}
 
-	/** Returns the source code for the vertex shader.
+	/**
+	 * Returns the source code for the vertex shader.
 	 * 
-	 * @return the source code */
+	 * @return the source code
+	 */
 	public String getVertexShaderSource() {
 		return vertShaderSource;
 	}
 
-	/** Returns the source code for the fragment shader.
+	/**
+	 * Returns the source code for the fragment shader.
 	 * 
-	 * @return the source code */
+	 * @return the source code
+	 */
 	public String getFragmentShaderSource() {
 		return fragShaderSource;
 	}
 
-	/** Returns the OpenGL handle for this shader program
+	/**
+	 * Returns the OpenGL handle for this shader program
 	 * 
-	 * @return the program ID */
+	 * @return the program ID
+	 */
 	public int getID() {
 		return program;
 	}
 
-	/** A shader program is "valid" if it's ID is not zero. Upon releasing a
+	/**
+	 * A shader program is "valid" if it's ID is not zero. Upon releasing a
 	 * program, the ID will be set to zero.
 	 * 
-	 * @return whether this program is valid */
+	 * @return whether this program is valid
+	 */
 	public boolean valid() {
 		return program != 0;
 	}
@@ -460,12 +515,15 @@ public class ShaderProgram {
 		}
 	}
 
-	/** Returns the location of the uniform by name. If the uniform is not found
+	/**
+	 * Returns the location of the uniform by name. If the uniform is not found
 	 * and we are in strict mode, an IllegalArgumentException will be thrown,
 	 * otherwise -1 will be returned if no active uniform by that name exists.
 	 * 
-	 * @param name the uniform name
-	 * @return the ID (location) in the shader program */
+	 * @param name
+	 *            the uniform name
+	 * @return the ID (location) in the shader program
+	 */
 	public int getUniformLocation(String name) {
 		int location = -1;
 		Integer locI = uniforms.get(name);
@@ -476,8 +534,8 @@ public class ShaderProgram {
 			location = locI.intValue();
 		// throw an exception if not found...
 		if (location == -1 && strict)
-			throw new IllegalArgumentException("no active uniform by name '" + name + "' "
-					+ "(disable strict compiling to suppress warnings)");
+			throw new IllegalArgumentException(
+					"no active uniform by name '" + name + "' " + "(disable strict compiling to suppress warnings)");
 		return location;
 	}
 
@@ -488,50 +546,61 @@ public class ShaderProgram {
 		}
 		// throw an exception if not found...
 		if (strict)
-			throw new IllegalArgumentException("no active attribute by name '" + name + "' "
-					+ "(disable strict compiling to suppress warnings)");
+			throw new IllegalArgumentException(
+					"no active attribute by name '" + name + "' " + "(disable strict compiling to suppress warnings)");
 		return null;
 	}
 
-	/** Returns the location of the attribute by name. If the attribute is not
+	/**
+	 * Returns the location of the attribute by name. If the attribute is not
 	 * found and we are in strict mode, an IllegalArgumentException will be
 	 * thrown, otherwise -1 will be returned if no active attribute by that name
 	 * exists.
 	 * 
-	 * @param name the attribute name
-	 * @return the ID (location) in the shader program */
+	 * @param name
+	 *            the attribute name
+	 * @return the ID (location) in the shader program
+	 */
 	public int getAttributeLocation(String name) {
 		Attrib a = attrib(name);
 		return a != null ? a.location : -1;
 	}
 
-	/** Returns the type of the attribute by name. If the attribute is not found
+	/**
+	 * Returns the type of the attribute by name. If the attribute is not found
 	 * and we are in strict mode, an IllegalArgumentException will be thrown,
 	 * otherwise -1 will be returned if no active attribute by that name exists.
 	 * 
-	 * @param name the attribute name
-	 * @return the ID (location) in the shader program */
+	 * @param name
+	 *            the attribute name
+	 * @return the ID (location) in the shader program
+	 */
 	public int getAttributeType(String name) {
 		Attrib a = attrib(name);
 		return a != null ? a.type : -1;
 	}
 
-	/** Returns the size of the attribute by name (i.e. for arrays). If the
+	/**
+	 * Returns the size of the attribute by name (i.e. for arrays). If the
 	 * attribute is not found and we are in strict mode, an
 	 * IllegalArgumentException will be thrown, otherwise -1 will be returned if
 	 * no active attribute by that name exists.
 	 * 
-	 * @param name the attribute name
-	 * @return the ID (location) in the shader program */
+	 * @param name
+	 *            the attribute name
+	 * @return the ID (location) in the shader program
+	 */
 	public int getAttributeSize(String name) {
 		Attrib a = attrib(name);
 		return a != null ? a.size : -1;
 	}
 
-	/** Creates and returns an array for all active attributes that were found
+	/**
+	 * Creates and returns an array for all active attributes that were found
 	 * when linking the program.
 	 * 
-	 * @return an array list of active uniform names */
+	 * @return an array list of active uniform names
+	 */
 	public String[] getAttributeNames() {
 		String[] s = new String[attributes.length];
 		for (int i = 0; i < attributes.length; i++) {
@@ -540,28 +609,36 @@ public class ShaderProgram {
 		return s;
 	}
 
-	/** Creates and returns an array for all active uniforms that were found when
+	/**
+	 * Creates and returns an array for all active uniforms that were found when
 	 * linking the program.
 	 * 
-	 * @return an array list of active uniform names */
+	 * @return an array list of active uniform names
+	 */
 	public String[] getUniformNames() {
 		return uniforms.keySet().toArray(new String[uniforms.size()]);
 	}
 
-	/** Returns true if an active uniform by the given name was found when
+	/**
+	 * Returns true if an active uniform by the given name was found when
 	 * linking.
 	 * 
-	 * @param name the active uniform name
-	 * @return true if the uniform was found */
+	 * @param name
+	 *            the active uniform name
+	 * @return true if the uniform was found
+	 */
 	public boolean hasUniform(String name) {
 		return uniforms.containsKey(name);
 	}
 
-	/** Returns true if an active attribute by the given name was found when
+	/**
+	 * Returns true if an active attribute by the given name was found when
 	 * linking.
 	 * 
-	 * @param name the active attribute name
-	 * @return true if the attribute was found */
+	 * @param name
+	 *            the active attribute name
+	 * @return true if the attribute was found
+	 */
 	public boolean hasAttribute(String name) {
 		for (int i = 0; i < attributes.length; i++)
 			if (name.equals(attributes[i].name))
@@ -591,34 +668,45 @@ public class ShaderProgram {
 		return ibuf4;
 	}
 
-
-	/** Retrieves data from a uniform and places it in the given buffer.
+	/**
+	 * Retrieves data from a uniform and places it in the given buffer.
 	 * 
-	 * @param loc the location of the uniform
-	 * @param buf the buffer to place the data */
+	 * @param loc
+	 *            the location of the uniform
+	 * @param buf
+	 *            the buffer to place the data
+	 */
 	public void getUniform(int loc, FloatBuffer buf) {
 		glGetUniform(program, loc, buf);
 	}
 
-	/** Retrieves data from a uniform and places it in the given buffer.
+	/**
+	 * Retrieves data from a uniform and places it in the given buffer.
 	 * 
-	 * @param loc the location of the uniform
-	 * @param buf the buffer to place the data */
+	 * @param loc
+	 *            the location of the uniform
+	 * @param buf
+	 *            the buffer to place the data
+	 */
 	public void getUniform(int loc, IntBuffer buf) {
 		glGetUniform(program, loc, buf);
 	}
 
-	/** Retrieves data from a uniform and places it in the given buffer. If
+	/**
+	 * Retrieves data from a uniform and places it in the given buffer. If
 	 * strict mode is enabled, this will throw an IllegalArgumentException if
 	 * the given uniform is not 'active' -- i.e. if GLSL determined that the
 	 * shader isn't using it. If strict mode is disabled, this method will
 	 * return <tt>true</tt> if the uniform was found, and <tt>false</tt>
 	 * otherwise.
 	 * 
-	 * @param name the name of the uniform
-	 * @param buf the buffer to place the data
+	 * @param name
+	 *            the name of the uniform
+	 * @param buf
+	 *            the buffer to place the data
 	 * @return true if the uniform was found, false if there is no active
-	 * uniform by that name */
+	 *         uniform by that name
+	 */
 	public boolean getUniform(String name, FloatBuffer buf) {
 		int id = getUniformLocation(name);
 		if (id == -1)
@@ -627,17 +715,21 @@ public class ShaderProgram {
 		return true;
 	}
 
-	/** Retrieves data from a uniform and places it in the given buffer. If
+	/**
+	 * Retrieves data from a uniform and places it in the given buffer. If
 	 * strict mode is enabled, this will throw an IllegalArgumentException if
 	 * the given uniform is not 'active' -- i.e. if GLSL determined that the
 	 * shader isn't using it. If strict mode is disabled, this method will
 	 * return <tt>true</tt> if the uniform was found, and <tt>false</tt>
 	 * otherwise.
 	 * 
-	 * @param name the name of the uniform
-	 * @param buf the buffer to place the data
+	 * @param name
+	 *            the name of the uniform
+	 * @param buf
+	 *            the buffer to place the data
 	 * @return true if the uniform was found, false if there is no active
-	 * uniform by that name */
+	 *         uniform by that name
+	 */
 	public boolean getUniform(String name, IntBuffer buf) {
 		int id = getUniformLocation(name);
 		if (id == -1)
@@ -646,295 +738,398 @@ public class ShaderProgram {
 		return true;
 	}
 
-	/** A convenience method to retrieve an integer/sampler2D uniform. The return
+	/**
+	 * A convenience method to retrieve an integer/sampler2D uniform. The return
 	 * values are undefined if the uniform is not found.
 	 * 
-	 * @param loc the uniform location
-	 * @return the value */
+	 * @param loc
+	 *            the uniform location
+	 * @return the value
+	 */
 	public int getUniform1i(int loc) {
 		return uniformi(loc).get(0);
 	}
 
-	/** A convenience method to retrieve an integer/sampler2D uniform. The return
+	/**
+	 * A convenience method to retrieve an integer/sampler2D uniform. The return
 	 * values are undefined if the uniform is not found.
 	 * 
-	 * @param name the uniform location
-	 * @return the value */
+	 * @param name
+	 *            the uniform location
+	 * @return the value
+	 */
 	public int getUniform1i(String name) {
 		return getUniform1i(getUniformLocation(name));
 	}
 
-	/** A convenience method to retrieve an ivec2 uniform; for maximum
+	/**
+	 * A convenience method to retrieve an ivec2 uniform; for maximum
 	 * performance and memory efficiency you should use getUniform(int,
 	 * IntBuffer) with a shared buffer.
 	 * 
-	 * @param loc the uniform location
-	 * @return a newly created int[] array with 2 elements; e.g. (x, y) */
+	 * @param loc
+	 *            the uniform location
+	 * @return a newly created int[] array with 2 elements; e.g. (x, y)
+	 */
 	public int[] getUniform2i(int loc) {
 		IntBuffer buf = uniformi(loc);
 		return new int[] { buf.get(0), buf.get(1) };
 	}
 
-	/** A convenience method to retrieve an ivec2 uniform; for maximum
+	/**
+	 * A convenience method to retrieve an ivec2 uniform; for maximum
 	 * performance and memory efficiency you should use getUniform(int,
 	 * IntBuffer) with a shared buffer. The return values are undefined if the
 	 * uniform is not found.
 	 * 
-	 * @param name the uniform name
-	 * @return a newly created int[] array with 2 elements; e.g. (x, y) */
+	 * @param name
+	 *            the uniform name
+	 * @return a newly created int[] array with 2 elements; e.g. (x, y)
+	 */
 	public int[] getUniform2i(String name) {
 		return getUniform2i(getUniformLocation(name));
 	}
 
-	/** A convenience method to retrieve an ivec3 uniform; for maximum
+	/**
+	 * A convenience method to retrieve an ivec3 uniform; for maximum
 	 * performance and memory efficiency you should use getUniform(String,
 	 * IntBuffer) with a shared buffer.
 	 * 
-	 * @param loc the name of the uniform
-	 * @return a newly created int[] array with 3 elements; e.g. (x, y, z) */
+	 * @param loc
+	 *            the name of the uniform
+	 * @return a newly created int[] array with 3 elements; e.g. (x, y, z)
+	 */
 	public int[] getUniform3i(int loc) {
 		IntBuffer buf = uniformi(loc);
 		return new int[] { buf.get(0), buf.get(1), buf.get(2) };
 	}
 
-	/** A convenience method to retrieve an ivec3 uniform; for maximum
+	/**
+	 * A convenience method to retrieve an ivec3 uniform; for maximum
 	 * performance and memory efficiency you should use getUniform(String,
 	 * IntBuffer) with a shared buffer. The return values are undefined if the
 	 * uniform is not found.
 	 * 
-	 * @param name the name of the uniform
-	 * @return a newly created int[] array with 3 elements; e.g. (x, y, z) */
+	 * @param name
+	 *            the name of the uniform
+	 * @return a newly created int[] array with 3 elements; e.g. (x, y, z)
+	 */
 	public int[] getUniform3i(String name) {
 		return getUniform3i(getUniformLocation(name));
 	}
 
-	/** A convenience method to retrieve an ivec4 uniform; for maximum
+	/**
+	 * A convenience method to retrieve an ivec4 uniform; for maximum
 	 * performance and memory efficiency you should use getUniform(String,
 	 * IntBuffer) with a shared buffer.
 	 * 
-	 * @param loc the location of the uniform
-	 * @return a newly created int[] array with 2 elements; e.g. (r, g, b, a) */
+	 * @param loc
+	 *            the location of the uniform
+	 * @return a newly created int[] array with 2 elements; e.g. (r, g, b, a)
+	 */
 	public int[] getUniform4i(int loc) {
 		IntBuffer buf = uniformi(loc);
 		return new int[] { buf.get(0), buf.get(1), buf.get(2), buf.get(3) };
 	}
-	
-	/** A convenience method to retrieve an ivec4 uniform; for maximum
+
+	/**
+	 * A convenience method to retrieve an ivec4 uniform; for maximum
 	 * performance and memory efficiency you should use getUniform(String,
 	 * IntBuffer) with a shared buffer. The return values are undefined if the
 	 * uniform is not found.
 	 * 
-	 * @param name the name of the uniform
-	 * @return a newly created int[] array with 2 elements; e.g. (r, g, b, a) */
+	 * @param name
+	 *            the name of the uniform
+	 * @return a newly created int[] array with 2 elements; e.g. (r, g, b, a)
+	 */
 	public int[] getUniform4i(String name) {
 		return getUniform4i(getUniformLocation(name));
 	}
-	
-	/** A convenience method to retrieve a float uniform. 
+
+	/**
+	 * A convenience method to retrieve a float uniform.
 	 * 
-	 * @param location the location of the uniform
-	 * @return the value */
+	 * @param location
+	 *            the location of the uniform
+	 * @return the value
+	 */
 	public float getUniform1f(int loc) {
 		return uniformf(loc).get(0);
 	}
 
-	/** A convenience method to retrieve a float uniform. The return values are undefined if the
-	 * uniform is not found.
+	/**
+	 * A convenience method to retrieve a float uniform. The return values are
+	 * undefined if the uniform is not found.
 	 * 
-	 * @param name the uniform name
-	 * @return the value */
+	 * @param name
+	 *            the uniform name
+	 * @return the value
+	 */
 	public float getUniform1f(String name) {
 		return getUniform1f(getUniformLocation(name));
 	}
 
-	/** A convenience method to retrieve a vec2 uniform; for maximum performance
+	/**
+	 * A convenience method to retrieve a vec2 uniform; for maximum performance
 	 * and memory efficiency you should use getUniform(String, FloatBuffer) with
 	 * a shared buffer.
 	 * 
-	 * @param location the location of the uniform
-	 * @return a newly created float[] array with 2 elements; e.g. (x, y) */
+	 * @param location
+	 *            the location of the uniform
+	 * @return a newly created float[] array with 2 elements; e.g. (x, y)
+	 */
 	public float[] getUniform2f(int loc) {
 		FloatBuffer buf = uniformf(loc);
 		return new float[] { buf.get(0), buf.get(1) };
 	}
 
-	/** A convenience method to retrieve a vec2 uniform; for maximum performance
+	/**
+	 * A convenience method to retrieve a vec2 uniform; for maximum performance
 	 * and memory efficiency you should use getUniform(String, FloatBuffer) with
-	 * a shared buffer. The return values are undefined if the
-	 * uniform is not found.
+	 * a shared buffer. The return values are undefined if the uniform is not
+	 * found.
 	 * 
-	 * @param name the name of the uniform
-	 * @return a newly created float[] array with 2 elements; e.g. (x, y) */
+	 * @param name
+	 *            the name of the uniform
+	 * @return a newly created float[] array with 2 elements; e.g. (x, y)
+	 */
 	public float[] getUniform2f(String name) {
 		return getUniform2f(getUniformLocation(name));
 	}
 
-	/** A convenience method to retrieve a vec3 uniform; for maximum performance
+	/**
+	 * A convenience method to retrieve a vec3 uniform; for maximum performance
 	 * and memory efficiency you should use getUniform(String, FloatBuffer) with
 	 * a shared buffer.
 	 * 
-	 * @param location the location of the uniform
-	 * @return a newly created float[] array with 3 elements; e.g. (x, y, z) */
+	 * @param location
+	 *            the location of the uniform
+	 * @return a newly created float[] array with 3 elements; e.g. (x, y, z)
+	 */
 	public float[] getUniform3f(int loc) {
 		FloatBuffer buf = uniformf(loc);
 		return new float[] { buf.get(0), buf.get(1), buf.get(2) };
 	}
-	
-	/** A convenience method to retrieve a vec3 uniform; for maximum performance
+
+	/**
+	 * A convenience method to retrieve a vec3 uniform; for maximum performance
 	 * and memory efficiency you should use getUniform(String, FloatBuffer) with
-	 * a shared buffer. The return values are undefined if the
-	 * uniform is not found.
+	 * a shared buffer. The return values are undefined if the uniform is not
+	 * found.
 	 * 
-	 * @param name the name of the uniform
-	 * @return a newly created float[] array with 3 elements; e.g. (x, y, z) */
+	 * @param name
+	 *            the name of the uniform
+	 * @return a newly created float[] array with 3 elements; e.g. (x, y, z)
+	 */
 	public float[] getUniform3f(String name) {
 		return getUniform3f(getUniformLocation(name));
 	}
 
-	/** A convenience method to retrieve a vec4 uniform; for maximum performance
+	/**
+	 * A convenience method to retrieve a vec4 uniform; for maximum performance
 	 * and memory efficiency you should use getUniform(String, FloatBuffer) with
 	 * a shared buffer.
 	 * 
-	 * @param location the location of the uniform
-	 * @return a newly created float[] array with 4 elements; e.g. (r, g, b, a) */
+	 * @param location
+	 *            the location of the uniform
+	 * @return a newly created float[] array with 4 elements; e.g. (r, g, b, a)
+	 */
 	public float[] getUniform4f(int loc) {
 		FloatBuffer buf = uniformf(loc);
 		return new float[] { buf.get(0), buf.get(1), buf.get(2), buf.get(3) };
 	}
-	
-	/** A convenience method to retrieve a vec4 uniform; for maximum performance
+
+	/**
+	 * A convenience method to retrieve a vec4 uniform; for maximum performance
 	 * and memory efficiency you should use getUniform(String, FloatBuffer) with
-	 * a shared buffer. The return values are undefined if the
-	 * uniform is not found.
+	 * a shared buffer. The return values are undefined if the uniform is not
+	 * found.
 	 * 
-	 * @param name the name of the uniform
-	 * @return a newly created float[] array with 4 elements; e.g. (r, g, b, a) */
+	 * @param name
+	 *            the name of the uniform
+	 * @return a newly created float[] array with 4 elements; e.g. (r, g, b, a)
+	 */
 	public float[] getUniform4f(String name) {
 		return getUniform4f(getUniformLocation(name));
 	}
 
 	/** ----- UNIFORM LOCATION SETTERS ----- */
-	
+
 	/**
 	 * Sets the value of a float uniform.
-	 * @param loc the location of the uniform
-	 * @param f the float value
+	 * 
+	 * @param loc
+	 *            the location of the uniform
+	 * @param f
+	 *            the float value
 	 */
 	public void setUniformf(int loc, float f) {
-		if (loc==-1) return;
+		if (loc == -1)
+			return;
 		glUniform1f(loc, f);
 	}
-	
+
 	/**
 	 * Sets the value of a vec2 uniform.
-	 * @param loc the location of the uniform
-	 * @param a vec.x / tex.s
-	 * @param b vec.y / tex.t
+	 * 
+	 * @param loc
+	 *            the location of the uniform
+	 * @param a
+	 *            vec.x / tex.s
+	 * @param b
+	 *            vec.y / tex.t
 	 */
 	public void setUniformf(int loc, float a, float b) {
-		if (loc==-1) return;
+		if (loc == -1)
+			return;
 		glUniform2f(loc, a, b);
 	}
-	
+
 	/**
 	 * Sets the value of a vec3 uniform.
-	 * @param loc the location of the uniform
-	 * @param a vec.x / color.r / tex.s
-	 * @param b vec.y / color.g / tex.t
-	 * @param c vec.z / color.b / tex.p
+	 * 
+	 * @param loc
+	 *            the location of the uniform
+	 * @param a
+	 *            vec.x / color.r / tex.s
+	 * @param b
+	 *            vec.y / color.g / tex.t
+	 * @param c
+	 *            vec.z / color.b / tex.p
 	 */
 	public void setUniformf(int loc, float a, float b, float c) {
-		if (loc==-1) return;
+		if (loc == -1)
+			return;
 		glUniform3f(loc, a, b, c);
 	}
 
 	/**
 	 * Sets the value of a vec4 uniform.
-	 * @param loc the location of the uniform
-	 * @param a vec.x / color.r
-	 * @param b vec.y / color.g
-	 * @param c vec.z / color.b 
-	 * @param d vec.w / color.a 
+	 * 
+	 * @param loc
+	 *            the location of the uniform
+	 * @param a
+	 *            vec.x / color.r
+	 * @param b
+	 *            vec.y / color.g
+	 * @param c
+	 *            vec.z / color.b
+	 * @param d
+	 *            vec.w / color.a
 	 */
 	public void setUniformf(int loc, float a, float b, float c, float d) {
-		if (loc==-1) return;
+		if (loc == -1)
+			return;
 		glUniform4f(loc, a, b, c, d);
 	}
 
 	/**
 	 * Sets the value of an int or sampler2D uniform.
-	 * @param loc the location of the uniform
-	 * @param i the integer / active texture (e.g. 0 for TEXTURE0)
+	 * 
+	 * @param loc
+	 *            the location of the uniform
+	 * @param i
+	 *            the integer / active texture (e.g. 0 for TEXTURE0)
 	 */
 	public void setUniformi(int loc, int i) {
-		if (loc==-1) return;
+		if (loc == -1)
+			return;
 		glUniform1i(loc, i);
 	}
-	
+
 	/**
 	 * Sets the value of a ivec2 uniform.
-	 * @param loc the location of the uniform
-	 * @param a vec.x / tex.s
-	 * @param b vec.y / tex.t
+	 * 
+	 * @param loc
+	 *            the location of the uniform
+	 * @param a
+	 *            vec.x / tex.s
+	 * @param b
+	 *            vec.y / tex.t
 	 */
 	public void setUniformi(int loc, int a, int b) {
-		if (loc==-1) return;
+		if (loc == -1)
+			return;
 		glUniform2i(loc, a, b);
 	}
 
 	/**
 	 * Sets the value of a ivec3 uniform.
-	 * @param loc the location of the uniform
-	 * @param a vec.x / color.r
-	 * @param b vec.y / color.g
-	 * @param c vec.z / color.b 
+	 * 
+	 * @param loc
+	 *            the location of the uniform
+	 * @param a
+	 *            vec.x / color.r
+	 * @param b
+	 *            vec.y / color.g
+	 * @param c
+	 *            vec.z / color.b
 	 */
 	public void setUniformi(int loc, int a, int b, int c) {
-		if (loc==-1) return;
+		if (loc == -1)
+			return;
 		glUniform3i(loc, a, b, c);
 	}
-	
+
 	/**
 	 * Sets the value of a ivec4 uniform.
-	 * @param loc the location of the uniform
-	 * @param a vec.x / color.r
-	 * @param b vec.y / color.g
-	 * @param c vec.z / color.b 
-	 * @param d vec.w / color.a 
+	 * 
+	 * @param loc
+	 *            the location of the uniform
+	 * @param a
+	 *            vec.x / color.r
+	 * @param b
+	 *            vec.y / color.g
+	 * @param c
+	 *            vec.z / color.b
+	 * @param d
+	 *            vec.w / color.a
 	 */
 	public void setUniformi(int loc, int a, int b, int c, int d) {
-		if (loc==-1) return;
+		if (loc == -1)
+			return;
 		glUniform4i(loc, a, b, c, d);
 	}
-	
-	
+
 	/** ----- UNIFORM STRING SETTERS ----- */
 
 	/**
 	 * Sets the value of a float uniform.
-	 * @param name the name of the uniform
-	 * @param f the float value
+	 * 
+	 * @param name
+	 *            the name of the uniform
+	 * @param f
+	 *            the float value
 	 */
 	public void setUniformf(String name, float f) {
 		setUniformf(getUniformLocation(name), f);
 	}
-	
+
 	/**
 	 * Sets the value of a vec2 uniform.
-	 * @param name the name of the uniform
-	 * @param a vec.x / tex.s
-	 * @param b vec.y / tex.t
+	 * 
+	 * @param name
+	 *            the name of the uniform
+	 * @param a
+	 *            vec.x / tex.s
+	 * @param b
+	 *            vec.y / tex.t
 	 */
 	public void setUniformf(String name, float a, float b) {
 		setUniformf(getUniformLocation(name), a, b);
 	}
-	
+
 	/**
 	 * Sets the value of a vec3 uniform.
-	 * @param name the name of the uniform
-	 * @param a vec.x / color.r / tex.s
-	 * @param b vec.y / color.g / tex.t
-	 * @param c vec.z / color.b / tex.p
+	 * 
+	 * @param name
+	 *            the name of the uniform
+	 * @param a
+	 *            vec.x / color.r / tex.s
+	 * @param b
+	 *            vec.y / color.g / tex.t
+	 * @param c
+	 *            vec.z / color.b / tex.p
 	 */
 	public void setUniformf(String name, float a, float b, float c) {
 		setUniformf(getUniformLocation(name), a, b, c);
@@ -942,11 +1137,17 @@ public class ShaderProgram {
 
 	/**
 	 * Sets the value of a vec4 uniform.
-	 * @param name the name of the uniform
-	 * @param a vec.x / color.r
-	 * @param b vec.y / color.g
-	 * @param c vec.z / color.b 
-	 * @param d vec.w / color.a 
+	 * 
+	 * @param name
+	 *            the name of the uniform
+	 * @param a
+	 *            vec.x / color.r
+	 * @param b
+	 *            vec.y / color.g
+	 * @param c
+	 *            vec.z / color.b
+	 * @param d
+	 *            vec.w / color.a
 	 */
 	public void setUniformf(String name, float a, float b, float c, float d) {
 		setUniformf(getUniformLocation(name), a, b, c, d);
@@ -954,18 +1155,25 @@ public class ShaderProgram {
 
 	/**
 	 * Sets the value of an int or sampler2D uniform.
-	 * @param name the name of the uniform
-	 * @param i the integer / active texture (e.g. 0 for TEXTURE0)
+	 * 
+	 * @param name
+	 *            the name of the uniform
+	 * @param i
+	 *            the integer / active texture (e.g. 0 for TEXTURE0)
 	 */
 	public void setUniformi(String name, int i) {
 		setUniformi(getUniformLocation(name), i);
 	}
-	
+
 	/**
 	 * Sets the value of a ivec2 uniform.
-	 * @param name the name of the uniform
-	 * @param a vec.x / tex.s
-	 * @param b vec.y / tex.t
+	 * 
+	 * @param name
+	 *            the name of the uniform
+	 * @param a
+	 *            vec.x / tex.s
+	 * @param b
+	 *            vec.y / tex.t
 	 */
 	public void setUniformi(String name, int a, int b) {
 		setUniformi(getUniformLocation(name), a, b);
@@ -973,85 +1181,99 @@ public class ShaderProgram {
 
 	/**
 	 * Sets the value of a ivec3 uniform.
-	 * @param name the name of the uniform
-	 * @param a vec.x / color.r
-	 * @param b vec.y / color.g
-	 * @param c vec.z / color.b 
+	 * 
+	 * @param name
+	 *            the name of the uniform
+	 * @param a
+	 *            vec.x / color.r
+	 * @param b
+	 *            vec.y / color.g
+	 * @param c
+	 *            vec.z / color.b
 	 */
 	public void setUniformi(String name, int a, int b, int c) {
 		setUniformi(getUniformLocation(name), a, b, c);
 	}
-	
+
 	/**
 	 * Sets the value of a ivec4 uniform.
-	 * @param name the name of the uniform
-	 * @param a vec.x / color.r
-	 * @param b vec.y / color.g
-	 * @param c vec.z / color.b 
-	 * @param d vec.w / color.a 
+	 * 
+	 * @param name
+	 *            the name of the uniform
+	 * @param a
+	 *            vec.x / color.r
+	 * @param b
+	 *            vec.y / color.g
+	 * @param c
+	 *            vec.z / color.b
+	 * @param d
+	 *            vec.w / color.a
 	 */
 	public void setUniformi(String name, int a, int b, int c, int d) {
 		setUniformi(getUniformLocation(name), a, b, c, d);
 	}
-	
 
 	/** ----- MATRIX SETTERS ----- */
-	
+
 	public void setUniformMatrix(String name, boolean transpose, Matrix3f m) {
 		setUniformMatrix(getUniformLocation(name), transpose, m);
 	}
-	
+
 	public void setUniformMatrix(String name, boolean transpose, Matrix4f m) {
 		setUniformMatrix(getUniformLocation(name), transpose, m);
 	}
-	
+
 	public void setUniformMatrix(int loc, boolean transpose, Matrix3f m) {
-		if (loc==-1) return;
-		if (fbuf16==null)
+		if (loc == -1)
+			return;
+		if (fbuf16 == null)
 			fbuf16 = BufferUtils.createFloatBuffer(16);
 		fbuf16.clear();
 		m.store(fbuf16);
 		fbuf16.flip();
 		glUniformMatrix3(loc, transpose, fbuf16);
 	}
-	
+
 	public void setUniformMatrix(int loc, boolean transpose, Matrix4f m) {
-		if (loc==-1) return;
-		if (fbuf16==null)
+		if (loc == -1)
+			return;
+		if (fbuf16 == null)
 			fbuf16 = BufferUtils.createFloatBuffer(16);
 		fbuf16.clear();
 		m.store(fbuf16);
 		fbuf16.flip();
 		glUniformMatrix4(loc, transpose, fbuf16);
 	}
-	
-	
+
 	/** ----- VECTOR SETTERS ----- */
-		
+
 	public void setUniformf(String name, Vector2f v) {
 		setUniformf(getUniformLocation(name), v);
 	}
-	
+
 	public void setUniformf(String name, Vector3f v) {
 		setUniformf(getUniformLocation(name), v);
 	}
-	
+
 	public void setUniformf(String name, Vector4f v) {
 		setUniformf(getUniformLocation(name), v);
 	}
-	
+
 	public void setUniformf(int loc, Vector2f v) {
-		if (loc==-1) return;
+		if (loc == -1)
+			return;
 		setUniformf(loc, v.x, v.y);
 	}
-	
+
 	public void setUniformf(int loc, Vector3f v) {
-		if (loc==-1) return;
+		if (loc == -1)
+			return;
 		setUniformf(loc, v.x, v.y, v.z);
 	}
-	
+
 	public void setUniformf(int loc, Vector4f v) {
-		if (loc==-1) return;
+		if (loc == -1)
+			return;
 		setUniformf(loc, v.x, v.y, v.z, v.w);
 	}
 }

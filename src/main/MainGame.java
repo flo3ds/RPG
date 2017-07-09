@@ -2,7 +2,6 @@ package main;
 
 import java.io.IOException;
 
-
 public class MainGame {
 
 	public static void main(String[] args) throws IOException {
@@ -12,13 +11,10 @@ public class MainGame {
 		 */
 		// GameGUI window = new GameGUI();
 		/*
-		try {
-			new AppGameContainer(new GameSlick(), 600, 600, false).start();
-		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
+		 * try { new AppGameContainer(new GameSlick(), 600, 600, false).start();
+		 * } catch (SlickException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
 		new GameLWJGL();
 
 	}

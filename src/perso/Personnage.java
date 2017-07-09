@@ -17,7 +17,7 @@ public class Personnage {
 
 	private Armor armor = null;
 	private Weapon weapon = null;
-	
+
 	private PlayerGui playerGui;
 
 	public Inventaire inv = new Inventaire();
@@ -151,7 +151,7 @@ public class Personnage {
 		this.playerGui.setX(400);
 		this.playerGui.setY(200);
 		this.map = map;
-	
+
 	}
 
 }

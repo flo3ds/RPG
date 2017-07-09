@@ -64,62 +64,71 @@ import org.apache.commons.lang3.Validate;
  *
  *
  * @since 3.0
- * @param <T> the type of the object managed by this initializer class
+ * @param <T>
+ *            the type of the object managed by this initializer class
  */
 public class CallableBackgroundInitializer<T> extends BackgroundInitializer<T> {
-    /** The Callable to be executed. */
-    private final Callable<T> callable;
+	/** The Callable to be executed. */
+	private final Callable<T> callable;
 
-    /**
-     * Creates a new instance of {@code CallableBackgroundInitializer} and sets
-     * the {@code Callable} to be executed in a background thread.
-     *
-     * @param call the {@code Callable} (must not be <b>null</b>)
-     * @throws IllegalArgumentException if the {@code Callable} is <b>null</b>
-     */
-    public CallableBackgroundInitializer(final Callable<T> call) {
-        checkCallable(call);
-        callable = call;
-    }
+	/**
+	 * Creates a new instance of {@code CallableBackgroundInitializer} and sets
+	 * the {@code Callable} to be executed in a background thread.
+	 *
+	 * @param call
+	 *            the {@code Callable} (must not be <b>null</b>)
+	 * @throws IllegalArgumentException
+	 *             if the {@code Callable} is <b>null</b>
+	 */
+	public CallableBackgroundInitializer(final Callable<T> call) {
+		checkCallable(call);
+		callable = call;
+	}
 
-    /**
-     * Creates a new instance of {@code CallableBackgroundInitializer} and
-     * initializes it with the {@code Callable} to be executed in a background
-     * thread and the {@code ExecutorService} for managing the background
-     * execution.
-     *
-     * @param call the {@code Callable} (must not be <b>null</b>)
-     * @param exec an external {@code ExecutorService} to be used for task
-     * execution
-     * @throws IllegalArgumentException if the {@code Callable} is <b>null</b>
-     */
-    public CallableBackgroundInitializer(final Callable<T> call, final ExecutorService exec) {
-        super(exec);
-        checkCallable(call);
-        callable = call;
-    }
+	/**
+	 * Creates a new instance of {@code CallableBackgroundInitializer} and
+	 * initializes it with the {@code Callable} to be executed in a background
+	 * thread and the {@code ExecutorService} for managing the background
+	 * execution.
+	 *
+	 * @param call
+	 *            the {@code Callable} (must not be <b>null</b>)
+	 * @param exec
+	 *            an external {@code ExecutorService} to be used for task
+	 *            execution
+	 * @throws IllegalArgumentException
+	 *             if the {@code Callable} is <b>null</b>
+	 */
+	public CallableBackgroundInitializer(final Callable<T> call, final ExecutorService exec) {
+		super(exec);
+		checkCallable(call);
+		callable = call;
+	}
 
-    /**
-     * Performs initialization in a background thread. This implementation
-     * delegates to the {@code Callable} passed at construction time of this
-     * object.
-     *
-     * @return the result of the initialization
-     * @throws Exception if an error occurs
-     */
-    @Override
-    protected T initialize() throws Exception {
-        return callable.call();
-    }
+	/**
+	 * Performs initialization in a background thread. This implementation
+	 * delegates to the {@code Callable} passed at construction time of this
+	 * object.
+	 *
+	 * @return the result of the initialization
+	 * @throws Exception
+	 *             if an error occurs
+	 */
+	@Override
+	protected T initialize() throws Exception {
+		return callable.call();
+	}
 
-    /**
-     * Tests the passed in {@code Callable} and throws an exception if it is
-     * undefined.
-     *
-     * @param call the object to check
-     * @throws IllegalArgumentException if the {@code Callable} is <b>null</b>
-     */
-    private void checkCallable(final Callable<T> call) {
-        Validate.isTrue(call != null, "Callable must not be null!");
-    }
+	/**
+	 * Tests the passed in {@code Callable} and throws an exception if it is
+	 * undefined.
+	 *
+	 * @param call
+	 *            the object to check
+	 * @throws IllegalArgumentException
+	 *             if the {@code Callable} is <b>null</b>
+	 */
+	private void checkCallable(final Callable<T> call) {
+		Validate.isTrue(call != null, "Callable must not be null!");
+	}
 }

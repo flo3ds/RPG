@@ -1,5 +1,13 @@
 package graphicEngine.world;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import objects.Object;
 import java.util.Map;
@@ -12,11 +20,35 @@ public class World {
 	public static final short RANGELOADING = 1;
 	
 	public Vector2D[] mesh;
+	public boolean wait = false;
 
 	private Map<Integer, Chunk> chunkMap = new HashMap<Integer, Chunk>();
 	
 	public World(Vector2D pos, world.World world) {
 		mesh = new Vector2D[(RANGELOADING*2+1)*(RANGELOADING*2+1)];
+		File f = new File("world.ser");
+		if(f.exists() && !f.isDirectory()) {
+			FileInputStream fin = null;
+			try {
+				fin = new FileInputStream("world.ser");
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			ObjectInputStream ios = null;
+			try {
+				ios = new ObjectInputStream(fin);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				chunkMap = (HashMap<Integer, Chunk>)ios.readObject();
+			} catch (ClassNotFoundException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public void update (Vector2D pos, world.World world) {
@@ -36,24 +68,49 @@ public class World {
 			xo = 31 - x/32%(Chunk.SIZE);
 		}
 		if(y > 0){
-			
-			
 			yc *= -1;
 		}else{
 			yc--;
 			yo *= -1;
 			yo = 31 - (-1*y)/32%(Chunk.SIZE);
-			
 		}
 		//================================================
 		Chunk chunk = getChunk(new Vector2D(xc, yc).hashCode());
 		return chunk.getObject(xo, yo);
 	}
 		
+
+	
+	public void placeObject(int x, int y, Object obj){
+		//TRaitement de la souris (negatif, world, chunk)
+		//================================================
+		int xc = (int) (x / (Chunk.SIZE*32));
+		int yc = (int) (y / (Chunk.SIZE*32));
+		int xo = x/32%(Chunk.SIZE);
+		int yo = y/32%(Chunk.SIZE);
+		if(x < 0){
+			xc--;
+			x = x * -1;
+			xo = 31 - x/32%(Chunk.SIZE);
+		}
+		if(y > 0){
+			yc *= -1;
+		}else{
+			yc--;
+			yo *= -1;
+			yo = 31 - (-1*y)/32%(Chunk.SIZE);
+		}
+		//================================================
+		Chunk chunk = getChunk(new Vector2D(xc, yc).hashCode());
+		chunk.placeAt((short)xo, (short)yo, obj);
+	}
 	
 	
 	private void updateChunk (Vector2D pos, world.World world) {
+		Thread t = new Thread(){
+			public void run(){
 		Vector2D posChunk = getChunkPos(pos);
+		wait = true;
 		int index = 0;
 		for (int i=1; i<RANGELOADING+1; i++) {
 			mesh[index++] = new Vector2D(posChunk.x -i, posChunk.y -i);
@@ -72,6 +129,14 @@ public class World {
 				Biomes.FORET.decorate(chunkMap.get(mesh[i].hashCode()));
 			}
 		}
+		wait = false;
+		}
+		};
+		t.start();
+	}
+	
+	public boolean waiting(){
+		return wait;
 	}
 	
 	public Vector2D getChunkPos (Vector2D pos){
@@ -97,6 +162,33 @@ public class World {
 	
 	public Chunk getChunk(int vector) {
 		return chunkMap.get(vector);
+	}
+
+	public void save() {
+		
+		
+		FileOutputStream fout = null;
+		try {
+			fout = new FileOutputStream("world.ser");
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		ObjectOutputStream oos = null;
+		try {
+			oos = new ObjectOutputStream(fout);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			oos.writeObject(this.chunkMap);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.exit(0);
+		
 	}
 	
 }

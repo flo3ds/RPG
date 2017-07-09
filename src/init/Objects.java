@@ -7,8 +7,6 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
-import net.minecraft.block.Block;
-
 
 
 public class Objects {
@@ -16,6 +14,8 @@ public class Objects {
 	private static final Set<Object> CACHE;
     public static final Object PIERRE;
     public static final Object ARBRE;
+    public static final Object CHEST;
+
   
     private static Object getRegisteredBlock(int id)
     {
@@ -35,6 +35,7 @@ public class Objects {
     	CACHE = Sets.<Object>newHashSet();
         PIERRE = getRegisteredBlock(1);
         ARBRE = getRegisteredBlock(2);
+        CHEST = getRegisteredBlock(3);
         CACHE.clear();
     }
 	

@@ -25,9 +25,9 @@ package org.apache.commons.lang3.builder;
  * </p>
  *
  * <p>
- * The builder interface defines a single method, {@link #build()}, that
- * classes must implement. The result of this method should be the final
- * configured object or result after all building operations are performed.
+ * The builder interface defines a single method, {@link #build()}, that classes
+ * must implement. The result of this method should be the final configured
+ * object or result after all building operations are performed.
  * </p>
  *
  * <p>
@@ -38,7 +38,9 @@ package org.apache.commons.lang3.builder;
  *
  * <p>
  * Example Builder:
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  * class FontBuilder implements Builder&lt;Font&gt; {
  *     private Font font;
  *
@@ -62,27 +64,32 @@ package org.apache.commons.lang3.builder;
  *         return this.font;
  *     }
  * }
- * </code></pre>
+ * </code>
+ * </pre>
  *
  * Example Builder Usage:
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  * Font bold14ptSansSerifFont = new FontBuilder(Font.SANS_SERIF).bold()
  *                                                              .size(14.0f)
  *                                                              .build();
- * </code></pre>
+ * </code>
+ * </pre>
  *
  *
- * @param <T> the type of object that the builder will construct or compute.
+ * @param <T>
+ *            the type of object that the builder will construct or compute.
  *
  * @since 3.0
  */
 public interface Builder<T> {
 
-    /**
-     * Returns a reference to the object being constructed or result being
-     * calculated by the builder.
-     *
-     * @return the object constructed or result calculated by the builder.
-     */
-    T build();
+	/**
+	 * Returns a reference to the object being constructed or result being
+	 * calculated by the builder.
+	 *
+	 * @return the object constructed or result calculated by the builder.
+	 */
+	T build();
 }

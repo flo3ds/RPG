@@ -17,21 +17,21 @@ package com.google.common.base;
 import com.google.common.annotations.GwtCompatible;
 
 /**
- * The subset of the {@link java.util.regex.Matcher} API which is used by this package, and also
- * shared with the {@code re2j} library. For internal use only. Please refer to the {@code Matcher}
- * javadoc for details.
+ * The subset of the {@link java.util.regex.Matcher} API which is used by this
+ * package, and also shared with the {@code re2j} library. For internal use
+ * only. Please refer to the {@code Matcher} javadoc for details.
  */
 @GwtCompatible
 abstract class CommonMatcher {
-  abstract boolean matches();
+	abstract boolean matches();
 
-  abstract boolean find();
+	abstract boolean find();
 
-  abstract boolean find(int index);
+	abstract boolean find(int index);
 
-  abstract String replaceAll(String replacement);
+	abstract String replaceAll(String replacement);
 
-  abstract int end();
+	abstract int end();
 
-  abstract int start();
+	abstract int start();
 }

@@ -20,14 +20,16 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * <p>
- * A simple implementation of the <a
- * href="http://martinfowler.com/bliki/CircuitBreaker.html">Circuit Breaker</a> pattern
- * that opens if the requested increment amount is greater than a given threshold.
+ * A simple implementation of the
+ * <a href="http://martinfowler.com/bliki/CircuitBreaker.html">Circuit
+ * Breaker</a> pattern that opens if the requested increment amount is greater
+ * than a given threshold.
  * </p>
  *
  * <p>
- * It contains an internal counter that starts in zero, and each call increments the counter by a given amount.
- * If the threshold is zero, the circuit breaker will be in a permanent <em>open</em> state.
+ * It contains an internal counter that starts in zero, and each call increments
+ * the counter by a given amount. If the threshold is zero, the circuit breaker
+ * will be in a permanent <em>open</em> state.
  * </p>
  *
  * <p>
@@ -48,81 +50,93 @@ import java.util.concurrent.atomic.AtomicLong;
  * }
  * </pre>
  *
- * <p>#Thread safe#</p>
+ * <p>
+ * #Thread safe#
+ * </p>
+ * 
  * @since 3.5
  */
 public class ThresholdCircuitBreaker extends AbstractCircuitBreaker<Long> {
-    /**
-     * The initial value of the internal counter.
-     */
-    private static final long INITIAL_COUNT = 0L;
+	/**
+	 * The initial value of the internal counter.
+	 */
+	private static final long INITIAL_COUNT = 0L;
 
-    /**
-     * The threshold.
-     */
-    private final long threshold;
+	/**
+	 * The threshold.
+	 */
+	private final long threshold;
 
-    /**
-     * Controls the amount used.
-     */
-    private final AtomicLong used;
+	/**
+	 * Controls the amount used.
+	 */
+	private final AtomicLong used;
 
-    /**
-     * <p>Creates a new instance of {@code ThresholdCircuitBreaker} and initializes the threshold.</p>
-     *
-     * @param threshold the threshold.
-     */
-    public ThresholdCircuitBreaker(final long threshold) {
-        super();
-        this.used = new AtomicLong(INITIAL_COUNT);
-        this.threshold = threshold;
-    }
+	/**
+	 * <p>
+	 * Creates a new instance of {@code ThresholdCircuitBreaker} and initializes
+	 * the threshold.
+	 * </p>
+	 *
+	 * @param threshold
+	 *            the threshold.
+	 */
+	public ThresholdCircuitBreaker(final long threshold) {
+		super();
+		this.used = new AtomicLong(INITIAL_COUNT);
+		this.threshold = threshold;
+	}
 
-    /**
-     * Gets the threshold.
-     *
-     * @return the threshold
-     */
-    public long getThreshold() {
-        return threshold;
-    }
+	/**
+	 * Gets the threshold.
+	 *
+	 * @return the threshold
+	 */
+	public long getThreshold() {
+		return threshold;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean checkState() throws CircuitBreakingException {
-        return isOpen();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean checkState() throws CircuitBreakingException {
+		return isOpen();
+	}
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>Resets the internal counter back to its initial value (zero).</p>
-     */
-    @Override
-    public void close() {
-        super.close();
-        this.used.set(INITIAL_COUNT);
-    }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * Resets the internal counter back to its initial value (zero).
+	 * </p>
+	 */
+	@Override
+	public void close() {
+		super.close();
+		this.used.set(INITIAL_COUNT);
+	}
 
-    /**
-     * {@inheritDoc}
-     *
-     * <p>If the threshold is zero, the circuit breaker will be in a permanent <em>open</em> state.</p>
-     */
-    @Override
-    public boolean incrementAndCheckState(final Long increment) throws CircuitBreakingException {
-        if (threshold == 0) {
-            open();
-        }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>
+	 * If the threshold is zero, the circuit breaker will be in a permanent
+	 * <em>open</em> state.
+	 * </p>
+	 */
+	@Override
+	public boolean incrementAndCheckState(final Long increment) throws CircuitBreakingException {
+		if (threshold == 0) {
+			open();
+		}
 
-        final long used = this.used.addAndGet(increment);
-        if (used > threshold) {
-            open();
-        }
+		final long used = this.used.addAndGet(increment);
+		if (used > threshold) {
+			open();
+		}
 
-        return checkState();
-    }
+		return checkState();
+	}
 
 }

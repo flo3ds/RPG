@@ -28,7 +28,7 @@ public class XMLMap {
 	private ArrayList<Element> layer = new ArrayList<Element>();
 	private int width;
 	private int height;
-	
+
 	public XMLMap(String path, int width, int height) {
 		try {
 			docBuilder = docFactory.newDocumentBuilder();
@@ -58,8 +58,8 @@ public class XMLMap {
 		map.setAttribute("version", "1.0");
 		map.setAttribute("orientation", "orthogonal");
 		map.setAttribute("renderorder", "right-down");
-		map.setAttribute("width",""+width);
-		map.setAttribute("height", ""+height);
+		map.setAttribute("width", "" + width);
+		map.setAttribute("height", "" + height);
 		map.setAttribute("tilewidth", "32");
 		map.setAttribute("tileheight", "32");
 		map.setAttribute("nextobjectid", "1");

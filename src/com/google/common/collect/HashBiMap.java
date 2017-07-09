@@ -24,9 +24,7 @@ import com.google.common.annotations.GwtCompatible;
 import com.google.common.annotations.GwtIncompatible;
 import com.google.common.base.Objects;
 import com.google.common.collect.Maps.IteratorBasedAbstractMap;
-import com.google.errorprone.annotations.CanIgnoreReturnValue;
-import com.google.j2objc.annotations.RetainedWith;
-import com.google.j2objc.annotations.WeakOuter;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -39,7 +37,6 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
-import javax.annotation.Nullable;
 
 /**
  * A {@link BiMap} backed by two hash tables. This implementation allows null keys and values. A
@@ -89,11 +86,11 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
     final int keyHash;
     final int valueHash;
 
-    @Nullable BiEntry<K, V> nextInKToVBucket;
-    @Nullable BiEntry<K, V> nextInVToKBucket;
+     BiEntry<K, V> nextInKToVBucket;
+     BiEntry<K, V> nextInVToKBucket;
 
-    @Nullable BiEntry<K, V> nextInKeyInsertionOrder;
-    @Nullable BiEntry<K, V> prevInKeyInsertionOrder;
+     BiEntry<K, V> nextInKeyInsertionOrder;
+     BiEntry<K, V> prevInKeyInsertionOrder;
 
     BiEntry(K key, int keyHash, V value, int valueHash) {
       super(key, value);
@@ -181,7 +178,7 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
     modCount++;
   }
 
-  private void insert(BiEntry<K, V> entry, @Nullable BiEntry<K, V> oldEntryForKey) {
+  private void insert(BiEntry<K, V> entry,  BiEntry<K, V> oldEntryForKey) {
     int keyBucket = entry.keyHash & mask;
     entry.nextInKToVBucket = hashTableKToV[keyBucket];
     hashTableKToV[keyBucket] = entry;
@@ -218,7 +215,7 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
     modCount++;
   }
 
-  private BiEntry<K, V> seekByKey(@Nullable Object key, int keyHash) {
+  private BiEntry<K, V> seekByKey( Object key, int keyHash) {
     for (BiEntry<K, V> entry = hashTableKToV[keyHash & mask];
         entry != null;
         entry = entry.nextInKToVBucket) {
@@ -229,7 +226,7 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
     return null;
   }
 
-  private BiEntry<K, V> seekByValue(@Nullable Object value, int valueHash) {
+  private BiEntry<K, V> seekByValue( Object value, int valueHash) {
     for (BiEntry<K, V> entry = hashTableVToK[valueHash & mask];
         entry != null;
         entry = entry.nextInVToKBucket) {
@@ -241,34 +238,32 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
   }
 
   @Override
-  public boolean containsKey(@Nullable Object key) {
+  public boolean containsKey( Object key) {
     return seekByKey(key, smearedHash(key)) != null;
   }
 
   @Override
-  public boolean containsValue(@Nullable Object value) {
+  public boolean containsValue( Object value) {
     return seekByValue(value, smearedHash(value)) != null;
   }
 
-  @Nullable
+  
   @Override
-  public V get(@Nullable Object key) {
+  public V get( Object key) {
     return Maps.valueOrNull(seekByKey(key, smearedHash(key)));
   }
 
-  @CanIgnoreReturnValue
   @Override
-  public V put(@Nullable K key, @Nullable V value) {
+  public V put( K key,  V value) {
     return put(key, value, false);
   }
 
-  @CanIgnoreReturnValue
   @Override
-  public V forcePut(@Nullable K key, @Nullable V value) {
+  public V forcePut( K key,  V value) {
     return put(key, value, true);
   }
 
-  private V put(@Nullable K key, @Nullable V value, boolean force) {
+  private V put( K key,  V value, boolean force) {
     int keyHash = smearedHash(key);
     int valueHash = smearedHash(value);
 
@@ -303,8 +298,8 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
     }
   }
 
-  @Nullable
-  private K putInverse(@Nullable V value, @Nullable K key, boolean force) {
+  
+  private K putInverse( V value,  K key, boolean force) {
     int valueHash = smearedHash(value);
     int keyHash = smearedHash(key);
 
@@ -361,9 +356,8 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
     return new BiEntry[length];
   }
 
-  @CanIgnoreReturnValue
   @Override
-  public V remove(@Nullable Object key) {
+  public V remove( Object key) {
     BiEntry<K, V> entry = seekByKey(key, smearedHash(key));
     if (entry == null) {
       return null;
@@ -434,7 +428,7 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
     return new KeySet();
   }
 
-  @WeakOuter
+  
   private final class KeySet extends Maps.KeySet<K, V> {
     KeySet() {
       super(HashBiMap.this);
@@ -451,7 +445,7 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
     }
 
     @Override
-    public boolean remove(@Nullable Object o) {
+    public boolean remove( Object o) {
       BiEntry<K, V> entry = seekByKey(o, smearedHash(o));
       if (entry == null) {
         return false;
@@ -539,7 +533,7 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
     }
   }
 
-  @RetainedWith
+  
   private transient BiMap<V, K> inverse;
 
   @Override
@@ -564,28 +558,27 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
     }
 
     @Override
-    public boolean containsKey(@Nullable Object value) {
+    public boolean containsKey( Object value) {
       return forward().containsValue(value);
     }
 
     @Override
-    public K get(@Nullable Object value) {
+    public K get( Object value) {
       return Maps.keyOrNull(seekByValue(value, smearedHash(value)));
     }
 
-    @CanIgnoreReturnValue
     @Override
-    public K put(@Nullable V value, @Nullable K key) {
+    public K put( V value,  K key) {
       return putInverse(value, key, false);
     }
 
     @Override
-    public K forcePut(@Nullable V value, @Nullable K key) {
+    public K forcePut( V value,  K key) {
       return putInverse(value, key, true);
     }
 
     @Override
-    public K remove(@Nullable Object value) {
+    public K remove( Object value) {
       BiEntry<K, V> entry = seekByValue(value, smearedHash(value));
       if (entry == null) {
         return null;
@@ -607,14 +600,14 @@ public final class HashBiMap<K, V> extends IteratorBasedAbstractMap<K, V>
       return new InverseKeySet();
     }
 
-    @WeakOuter
+    
     private final class InverseKeySet extends Maps.KeySet<V, K> {
       InverseKeySet() {
         super(Inverse.this);
       }
 
       @Override
-      public boolean remove(@Nullable Object o) {
+      public boolean remove( Object o) {
         BiEntry<K, V> entry = seekByValue(o, smearedHash(o));
         if (entry == null) {
           return false;

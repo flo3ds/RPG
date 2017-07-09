@@ -418,4 +418,6 @@ public class SpriteBatch {
 		data.unbind();
 		renderCalls++;
 	}
+	
+	
 }

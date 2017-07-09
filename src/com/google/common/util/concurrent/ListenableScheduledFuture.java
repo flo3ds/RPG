@@ -19,7 +19,8 @@ import com.google.common.annotations.GwtIncompatible;
 import java.util.concurrent.ScheduledFuture;
 
 /**
- * Helper interface to implement both {@link ListenableFuture} and {@link ScheduledFuture}.
+ * Helper interface to implement both {@link ListenableFuture} and
+ * {@link ScheduledFuture}.
  *
  * @author Anthony Zana
  *
@@ -27,4 +28,5 @@ import java.util.concurrent.ScheduledFuture;
  */
 @Beta
 @GwtIncompatible
-public interface ListenableScheduledFuture<V> extends ScheduledFuture<V>, ListenableFuture<V> {}
+public interface ListenableScheduledFuture<V> extends ScheduledFuture<V>, ListenableFuture<V> {
+}
