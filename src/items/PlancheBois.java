@@ -1,17 +1,11 @@
 package items;
 
-import core.Item;
-
 public class PlancheBois extends Item {
 
-	private String id = "Planche de bois";
+	
 
 	public PlancheBois() {
-		this.setId(this.id);
+		super("planche");
 	}
 
-	public PlancheBois(int nb) {
-		this.setNombre((short) nb);
-		this.setId(this.id);
-	}
 }

@@ -4,10 +4,10 @@ import core.Armor;
 
 public class Armure_Fer extends Armor {
 
-	private String id = "armure de fer";
+	private static final String id = "armure de fer";
 
 	public Armure_Fer() {
+		super(id);
 		this.setArmor((short) 10);
-		this.setId(this.id);
 	}
 }

@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import biome.Biome;
+import items.Item;
 import layout.Layout;
 import objects.Object;
+import tool.Tool;
 
 public class GameData {
 
@@ -14,7 +16,9 @@ public class GameData {
 	private Map<Integer, Object> objects = new HashMap<Integer, Object>();
 	private Map<Integer, Biome> biomes = new HashMap<Integer, Biome>();
 	private Map<Integer, Layout> layout = new HashMap<Integer, Layout>();
-	
+	private Map<Integer, Item> item = new HashMap<Integer, Item>();
+	private Map<Integer, Tool> tool = new HashMap<Integer, Tool>();
+
 	private GameData(){
 		
 	}
@@ -49,6 +53,20 @@ public class GameData {
 		return getMain().layout.get(id);
 	}
 	
+	public void registerItem(int id, Item layout){
+		 getMain().item.put(id, layout);
+	}
 	
+	public Item getItem (int id) {
+		return getMain().item.get(id);
+	}
+	
+	public void registerTool(int id, Tool layout){
+		 getMain().tool.put(id, layout);
+	}
+	
+	public Tool getTool (int id) {
+		return getMain().tool.get(id);
+	}
 	
 }

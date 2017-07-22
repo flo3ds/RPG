@@ -31,6 +31,7 @@
 package main;
 
 import objects.Object;
+import objects.Placable;
 import perso.Personnage;
 
 import static org.lwjgl.opengl.GL11.glClearColor;
@@ -50,6 +51,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import biome.Biome;
+import core.Inventable;
 import core.Time;
 import graphicEngine.BitmapFont;
 import graphicEngine.Color;
@@ -64,7 +66,9 @@ import graphicEngine.Util;
 import graphicEngine.Vector2D;
 import graphicEngine.world.Chunk;
 import graphicEngine.world.World;
+import init.Items;
 import init.Objects;
+import items.Item;
 import layout.Layout;
 
 public class GameLWJGL extends SimpleGame {
@@ -96,6 +100,7 @@ public class GameLWJGL extends SimpleGame {
 	final float ROT_SPEED = 0.05f;
 
 	boolean holdGMouse = false;
+	boolean holdDMouse = false;
 
 	protected void create() throws LWJGLException {
 		super.create();
@@ -105,17 +110,23 @@ public class GameLWJGL extends SimpleGame {
 
 			tex = new Texture(Util.getResource("res/sol.png"));
 			tile = new TextureRegion(tex, 0, 0, 32, 32);
-
+			
+			player = new Player();
 			time = new Time();
-			perso = new Personnage(time);
+			perso = new Personnage(time, player);
+			
+			
 			Object.registerBlocks();
 			Biome.registerBiomes();
-			Layout.registerLayouts();
+			Item.registerItems();
 
-			player = new Player();
+			
 			wworld = new world.World();
 
 			world = new World(player.getPos(), wworld);
+			
+			player.postInit();
+
 
 		} catch (IOException e) {
 			// ... do something here ...
@@ -170,6 +181,8 @@ public class GameLWJGL extends SimpleGame {
 			for (int i = 0; i < world.mesh.length; i++) {
 				renderChunk(world.getChunk(world.mesh[i].hashCode()), world.mesh[i]);
 			}
+		
+		player.renderLayout(batch, perso);
 
 		// reset color
 		// batch.setColor(Color.WHITE);
@@ -195,7 +208,7 @@ public class GameLWJGL extends SimpleGame {
 		Object[][] data = chunk.getGrid();
 		for (int j = 0; j < Chunk.SIZE; j++) {
 			if (j == py && world.getChunkPos(new Vector2D(player.getPos().x, player.getPos().y)).compare(pos))
-				player.render(batch);
+				player.render(batch, perso);
 			for (int i = Chunk.SIZE - 1; i >= 0; i--) {
 				if (data[i][j] != null)
 					drawObject(data[i][j], 32 * i + x, 32 * j + y);
@@ -241,16 +254,41 @@ public class GameLWJGL extends SimpleGame {
 			int x_m = (int) (Mouse.getX() - panX);
 			int y_m = (int) (Mouse.getY() - (SCREEN_H - panY));
 			y_m *= -1;
-			Object obj = world.getObject(x_m, y_m);
-			if (obj != null)
-				obj.click(perso);
+			if(player.getLayoutState()) {
+				player.getLayout().click(x_m, y_m, perso);
+			}else{
+				Object obj = world.getObject(x_m, y_m);
+				if (obj != null)
+					obj.click(perso, world, new Vector2D(x_m/32, y_m/32));
+			}
 			holdGMouse = true;
 		}
-		if (Mouse.isButtonDown(0) == false && holdGMouse == true)
+		if (Mouse.isButtonDown(1) == false && holdGMouse == true)
 			holdGMouse = false;
+		if (Mouse.isButtonDown(1) && holdDMouse == false) {
+			int x_m = (int) (Mouse.getX() - panX);
+			int y_m = (int) (Mouse.getY() - (SCREEN_H - panY));
+			y_m *= -1;
+			if(player.getLayoutState()) {
+				player.getLayout().click(x_m, y_m, perso);
+			}else{
+				Object obj = world.getObject(x_m, y_m);
+				if (obj == null)
+					//if(player.getCurrentItem() instanceof Objects){
+						System.out.println("o");
+						world.placeObject(x_m,  y_m, (Object)player.getCurrentItem().getItem());
+					//}
+			}
+			holdDMouse = true;
+		}
+		if (Mouse.isButtonDown(1) == false && holdDMouse == true)
+			holdDMouse = false;
 
 		world.update(player.getPos(), wworld);
 		player.update(world, panX, panY);
+		
+		world.updateTileEntity();
+		player.layoutUpdate();
 
 		// System.out.println("x: " + player.getPos().x);
 

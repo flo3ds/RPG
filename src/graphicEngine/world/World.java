@@ -8,8 +8,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 import objects.Object;
+import tileEntity.ITileEntityProvider;
+import tileEntity.TileEntity;
+
 import java.util.Map;
 
 import graphicEngine.Vector2D;
@@ -23,6 +30,7 @@ public class World {
 	public boolean wait = false;
 
 	private Map<Integer, Chunk> chunkMap = new HashMap<Integer, Chunk>();
+	private Map<Integer, TileEntity> tileEntity = new HashMap<Integer, TileEntity>();
 	
 	public World(Vector2D pos, world.World world) {
 		mesh = new Vector2D[(RANGELOADING*2+1)*(RANGELOADING*2+1)];
@@ -51,8 +59,26 @@ public class World {
 		}
 	}
 	
+	public void addTileEntity(int key, TileEntity tileEntity) {
+		//System.out.println("entity = " + key); 
+
+		this.tileEntity.put(key, tileEntity);
+	}
+	
 	public void update (Vector2D pos, world.World world) {
 		updateChunk(pos, world);
+	}
+	
+	public void updateTileEntity () {
+		for (int key   : tileEntity.keySet()) {
+		     tileEntity.get(key).update();  //get() is less efficient 
+		}                     
+		
+	}
+	
+	public TileEntity getTileEntity(Vector2D pos) {
+		//System.out.println("getTile = " + pos.x +":"+pos.y+":"+pos.hashCode());
+		return tileEntity.get(pos.hashCode());
 	}
 	
 	public Object getObject(int x, int y){
@@ -88,6 +114,8 @@ public class World {
 		int yc = (int) (y / (Chunk.SIZE*32));
 		int xo = x/32%(Chunk.SIZE);
 		int yo = y/32%(Chunk.SIZE);
+		int yp = y / 32;
+		int xp = x / 32;
 		if(x < 0){
 			xc--;
 			x = x * -1;
@@ -101,6 +129,9 @@ public class World {
 			yo = 31 - (-1*y)/32%(Chunk.SIZE);
 		}
 		//================================================
+		if(obj instanceof ITileEntityProvider){
+			addTileEntity(new Vector2D(xp, yp).hashCode(), obj.createNewTileEntity());
+		}
 		Chunk chunk = getChunk(new Vector2D(xc, yc).hashCode());
 		chunk.placeAt((short)xo, (short)yo, obj);
 	}

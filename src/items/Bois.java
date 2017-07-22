@@ -1,17 +1,10 @@
 package items;
 
-import core.Item;
 
 public class Bois extends Item {
 
-	private String id = "Bois";
-
 	public Bois() {
-		this.setId(this.id);
+		super("bois");
 	}
 
-	public Bois(int nb) {
-		this.setNombre((short) nb);
-		this.setId(this.id);
-	}
 }

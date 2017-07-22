@@ -1,17 +1,10 @@
 package items;
 
-import core.Item;
 
 public class Fil extends Item {
 
-	private String id = "Fil";
-
 	public Fil() {
-		this.setId(this.id);
+		super("fil");
 	}
 
-	public Fil(int nb) {
-		this.setNombre((short) nb);
-		this.setId(this.id);
-	}
 }

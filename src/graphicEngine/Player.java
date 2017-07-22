@@ -6,12 +6,16 @@ import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import core.Inventable;
+import core.Stack;
 import graphicEngine.world.World;
 import init.Layouts;
 import init.Objects;
+import layout.Container;
 import layout.Layout;
 import layout.Layout_sac;
 import objects.Object;
+import perso.Personnage;
 
 public class Player {
 
@@ -26,9 +30,17 @@ public class Player {
 	private boolean layout_state = false;
 	private Layout layout = null;
 
+	private Container inv_bar[] = new Container[9];
+	private Stack item[] = new Stack[9];
+	private int selector = 0;
+	private Texture selector_tex;
+	
+	private boolean key_down = false;
+
 	public Player() {
 		try {
 			Texture tex = new Texture(Util.getResource("res/persos.png"), Texture.NEAREST);
+			selector_tex = new Texture(Util.getResource("res/selector.png"), Texture.NEAREST);
 
 			anim[0] = new Animation(tex, 64, 1, 0, 0);
 			anim[1] = new Animation(tex, 64, 1, 1, 0);
@@ -45,14 +57,33 @@ public class Player {
 			System.exit(0);
 		}
 		pos = new Vector2D(0, 0);
+		for(int i=0; i < 9; i++){
+			inv_bar[i] = new Container();
+			item[i] = null;
+		}
+		
+	}
+	
+	public void postInit(){
+		item[0] = new Stack(Objects.CHEST, 1);
+		item[1] = new Stack(Objects.SCIRIE, 1);
 	}
 
-	public void render(SpriteBatch batch) {
+	public void render(SpriteBatch batch, Personnage perso) {
 		batch.draw(anim[orientation + (moving ? 4 : 0)].getTexture(), pos.x - 32, pos.y - 55);
-		if (layout_state)
-			layout.draw(batch, (int) pos.x, (int) pos.y);
-
 	}
+	
+	public void renderLayout(SpriteBatch batch, Personnage perso) {
+		if (layout_state)
+			layout.draw(batch, (int) pos.x, (int) pos.y, perso.inv);
+		else
+			for(int i=0; i < 9; i++){
+				inv_bar[i].draw(batch, (int)pos.x +(i * 40) - 200, (int)pos.y+200, item[i]);
+				if (i == selector)
+					batch.draw(selector_tex, (int)pos.x +(i * 40) - 200, (int)pos.y+200);
+			}
+			}
+	
 
 	public Vector2D getPos() {
 		return pos;
@@ -60,6 +91,7 @@ public class Player {
 
 	public void update(World world, float panX, float panY) {
 		moving = false;
+		if( ! layout_state) {
 		if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
 			Object col = world.getObject((int) pos.x + (int) getSpeed() + 10, (int) pos.y);
 			if (col != null) {
@@ -100,30 +132,60 @@ public class Player {
 			orientation = 0;
 			moving = true;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
-			world.save();
-		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
 			int x_m = (int) (Mouse.getX() - panX);
 			int y_m = (int) (Mouse.getY() - (480 - panY));
 			y_m *= -1;
-			try {
-				world.placeObject(x_m, y_m, Objects.CHEST.getClass().newInstance());
-			} catch (InstantiationException | IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			selector = 0;
 		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
+			int x_m = (int) (Mouse.getX() - panX);
+			int y_m = (int) (Mouse.getY() - (480 - panY));
+			y_m *= -1;
+			selector = 1;
+		}
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+			world.save();
+		}
+		
 
-		if (Keyboard.isKeyDown(Keyboard.KEY_E)) {
-			if (!layout_state)
-				openLayout(Layouts.SAC);
+		if (Keyboard.isKeyDown(Keyboard.KEY_E) && key_down == false) {
+			key_down = true;
+			
 		}
+		if ( ! Keyboard.isKeyDown(Keyboard.KEY_E) && key_down == true) {
+			key_down = false;
+			if (!layout_state){
+				try {
+					openLayout(new Layout_sac());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else
+				closeLayout();
+			
+		}
+		
+	}
+	
+	public void closeLayout() {
+		layout_state = false;
+		layout = null;
+	}
+	
+	public Stack getCurrentItem() {
+		return item[selector];
 	}
 
 	public void openLayout(Layout layout) {
 		layout_state = true;
 		this.layout = layout;
+	}
+	
+	public Layout getLayout() {
+		return layout;
 	}
 
 	public void setPos(Vector2D pos) {
@@ -132,6 +194,15 @@ public class Player {
 
 	public float getSpeed() {
 		return this.speed;
+	}
+	
+	public boolean getLayoutState() {
+		return layout_state;
+	}
+	
+	public void layoutUpdate () {
+		if(layout_state)
+			layout.update();
 	}
 
 }

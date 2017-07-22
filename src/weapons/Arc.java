@@ -4,11 +4,23 @@ import core.Weapon;
 
 public class Arc extends Weapon {
 
-	private String id = "Arc";
+	private static final String id = "Arc";
 
 	public Arc() {
+		super(id);
 		this.setDegat((short) 5);
-		this.setId(this.id);
+	}
+
+	@Override
+	public String getTex() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -6,10 +6,22 @@ public class Hache extends Tool {
 
 	// Ici on met le nom de l'item.
 	// Il doit etre unique !
-	private String id = "hache";
+	private static final String id = "hache";
 
 	public Hache() {
-		this.setId(this.id);
+		super(id);
+	}
+
+	@Override
+	public String getTex() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

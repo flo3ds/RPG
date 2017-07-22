@@ -7,16 +7,22 @@ import java.util.Map;
 
 import org.lwjgl.Sys;
 
+import core.Inventable;
 import gameData.GameData;
 import graphicEngine.ITexture;
 import graphicEngine.Texture;
 import graphicEngine.TextureManager;
 import graphicEngine.Util;
+import graphicEngine.Vector2D;
+import graphicEngine.world.World;
 import perso.Personnage;
+import tileEntity.ITileEntityProvider;
+import tileEntity.TileEntity;
 
-public class Object extends ObjectState implements Serializable {
 
-	/**
+public class Object extends ObjectState implements Serializable, Inventable, Placable {
+
+	/** 
 	 * 
 	 */
 	private static final long serialVersionUID = -4894911588146667266L;
@@ -70,7 +76,7 @@ public class Object extends ObjectState implements Serializable {
 		return name + ((getActivStateId() == 0) ? "" : "_" + getActivStateName());
 	}
 
-	public void click(Personnage perso) {
+	public void click(Personnage perso, World world, Vector2D pos_click) {
 		System.out.println("click on " + name);
 	}
 
@@ -79,6 +85,7 @@ public class Object extends ObjectState implements Serializable {
 		registerBlock(1, new Pierre());
 		registerBlock(2, new Arbre());
 		registerBlock(3, new Chest());
+		registerBlock(4, new Scirie());
 	}
 
 	private static void registerBlock(int id, Object object_) {
@@ -107,6 +114,34 @@ public class Object extends ObjectState implements Serializable {
 
 	public void setColisable(boolean colisable) {
 		this.colisable = colisable;
+	}
+	
+	private boolean isTileProvider = this instanceof ITileEntityProvider;
+    /**
+     * Called throughout the code as a replacement for block instanceof BlockContainer
+     * Moving this to the Block base class allows for mods that wish to extend vanilla
+     * blocks, and also want to have a tile entity on that block, may.
+     *
+     * Return true from this function to specify this block has a tile entity.
+     *
+     * @param state State of the current block
+     * @return True if block has a tile entity, false otherwise
+     */
+    public boolean hasTileEntity()
+    {
+        return isTileProvider;
+    }
+
+	
+    public TileEntity createNewTileEntity()
+    {
+        return null;
+    }
+
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return name;
 	}
 
 }

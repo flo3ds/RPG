@@ -4,8 +4,8 @@ import action.Position;
 import core.Armor;
 import core.Time;
 import core.Weapon;
-import gui.PlayerGui;
-import gui.map.Map_I;
+import graphicEngine.Player;
+
 
 public class Personnage {
 
@@ -13,12 +13,11 @@ public class Personnage {
 	private int gold = 20;
 	private int vie = 100;
 	private short degat_base = 5;
-	private Map_I map;
 
 	private Armor armor = null;
 	private Weapon weapon = null;
 
-	private PlayerGui playerGui;
+	private Player player;
 
 	public Inventaire inv = new Inventaire();
 	public Position position = Position.base;
@@ -26,6 +25,11 @@ public class Personnage {
 
 	public short oxygen = 100;
 
+	public Personnage(Time time, Player player) {
+		this.time = time;
+		this.player = player;
+	}
+	
 	public Position getPosition() {
 		return this.position;
 	}
@@ -41,21 +45,6 @@ public class Personnage {
 
 	public void setOxygen(short oxygen) {
 		this.oxygen = oxygen;
-	}
-
-	public String listeStuff() {
-		String out = "";
-		out += "Armure : ";
-		if (this.armor != null)
-			out += this.armor.getId();
-		else
-			out += "vide";
-		out += " | Arme : ";
-		if (this.weapon != null)
-			out += this.weapon.getId();
-		else
-			out += "vide";
-		return out;
 	}
 
 	public short getDegat() {
@@ -83,10 +72,6 @@ public class Personnage {
 		this.vie -= dmg;
 	}
 
-	public Personnage(Time time) {
-		this.time = time;
-		this.playerGui = playerGui;
-	}
 
 	public void addTime(long jours) {
 		this.time.addTime(jours);
@@ -121,12 +106,12 @@ public class Personnage {
 	public void setEquipable(Object obj) {
 		if (obj instanceof Armor) {
 			if (this.armor != null)
-				this.inv.putItem(this.armor);
+				//this.inv.putItem(this.armor);
 			this.armor = (Armor) obj;
 
 		} else if (obj instanceof Weapon) {
 			if (this.weapon != null)
-				this.inv.putItem(this.weapon);
+				//this.inv.putItem(this.weapon);
 			this.weapon = (Weapon) obj;
 		}
 	}
@@ -139,19 +124,9 @@ public class Personnage {
 		return "";
 	}
 
-	public Map_I getMap() {
-		return map;
-	}
 
-	public void setMap(Map_I map) {
-		this.map = map;
-	}
-
-	public void teleport(Map_I map) {
-		this.playerGui.setX(400);
-		this.playerGui.setY(200);
-		this.map = map;
-
+	public Player getGUI() {
+		return player;
 	}
 
 }

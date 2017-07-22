@@ -1,8 +1,15 @@
 package core;
 
+import items.Item;
+
 //Un tool ne peut pas faire partit des composant d'une recette
 
-abstract public class Armor extends Inventable implements Equipable {
+abstract public class Armor extends Item implements Inventable, Equipable {
+
+	public Armor(String name) {
+		super(name);
+		// TODO Auto-generated constructor stub
+	}
 
 	private short armor = 1;
 

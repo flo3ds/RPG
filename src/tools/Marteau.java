@@ -6,10 +6,22 @@ public class Marteau extends Tool {
 
 	// Ici on met le nom de l'item.
 	// Il doit etre unique !
-	private String id = "marteau";
+	private static final String id = "marteau";
 
 	public Marteau() {
-		this.setId(this.id);
+		super(id);
+	}
+
+	@Override
+	public String getTex() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -15,6 +15,8 @@ public class Objects {
     public static final Object PIERRE;
     public static final Object ARBRE;
     public static final Object CHEST;
+    public static final Object SCIRIE;
+    
 
   
     private static Object getRegisteredBlock(int id)
@@ -36,6 +38,7 @@ public class Objects {
         PIERRE = getRegisteredBlock(1);
         ARBRE = getRegisteredBlock(2);
         CHEST = getRegisteredBlock(3);
+        SCIRIE = getRegisteredBlock(4);
         CACHE.clear();
     }
 	

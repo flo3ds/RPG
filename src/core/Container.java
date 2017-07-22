@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import gui.layout.StructRet;
+import items.Item;
 
-abstract public class Container {
+public class Container {
 
 	protected short cases = 10;
-	protected List<Object> inventaire = new ArrayList<Object>();
+	protected List<Stack> inventaire = new ArrayList<Stack>();
 	private short libre = 0;
 
 	public Container() {
@@ -21,51 +21,49 @@ abstract public class Container {
 		this.cases = (short) i;
 	}
 
-	public boolean putItem(Object object) {
+	public boolean putItem(Stack object) {
 		if (this.libre == this.cases - 1)
-			return true;
-
-		if (object instanceof Tool) {
-			this.inventaire.add(object);
 			return false;
+
+		if (object.getItem() instanceof Tool) {
+			this.inventaire.add(object);
+			return true;
 		}
 
 		for (int i = 0; i < this.cases; i++) {
 
 			if (!this.inventaire.isEmpty())
 				if (i < this.inventaire.size())
-					if (((Inventable) object).getId().equals(((Inventable) this.inventaire.get(i)).getId())) {
-						((Item) this.inventaire.get(i)).addNombre(((Item) object).getNombre());
-						return false;
+					if (object.getId().equals( this.inventaire.get(i).getId())) {
+						((Stack)this.inventaire.get(i)).addNombre(object.getNombre());
+						return true;
 					}
 		}
 
-		this.inventaire.add(((Inventable) object).clone());
-		return false;
+		try {
+			this.inventaire.add(object.getClass().newInstance());
+		} catch (InstantiationException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
 	}
 
-	public List<Object> getInventaire() {
+	public List<Stack> getInventaire() {
 		return this.inventaire;
 	}
 
-	public StructRet liste() {
-		StructRet out = new StructRet();
-		for (int i = 0; i < this.cases; i++) {
-			String buffer = " ";
-			if (!this.inventaire.isEmpty())
-				if (i < this.inventaire.size())
-					buffer += this.inventaire.get(i).toString();
-			out.add(buffer, i);
-		}
-		return out;
-	}
 
-	public Object getItem(int i) {
-		return this.inventaire.get(i);
+
+	public Stack getItem(int i) {
+		if(i < this.inventaire.size())
+			return this.inventaire.get(i);
+		else
+			return null;
 	}
 
 	public void removeItem(int index) {
-		ListIterator<Object> it = inventaire.listIterator();
+		ListIterator<Stack> it = inventaire.listIterator();
 		int i = 0;
 		while (it.hasNext()) {
 			it.next();
@@ -80,26 +78,26 @@ abstract public class Container {
 	}
 
 	public void subItem(int i, int j) {
-		((Item) this.inventaire.get(i)).subNombre(j);
-		if (((Item) this.inventaire.get(i)).getNombre() <= 0)
+		this.inventaire.get(i).subNombre(j);
+		if (this.inventaire.get(i).getNombre() <= 0)
 			this.removeItem(i);
 	}
 
-	public Boolean haveItem(Object obj) {
-		ListIterator<Object> it = inventaire.listIterator();
+	public Boolean haveItem(Inventable obj) {
+		ListIterator<Stack> it = inventaire.listIterator();
 		while (it.hasNext()) {
-			if (((Inventable) it.next()).getId().equals(((Inventable) obj).getId()))
+			if (it.next().getId().equals(obj.getId()))
 				return true;
 		}
 		return false;
 	}
 
-	public Boolean haveItem(Object obj, short nb) {
-		ListIterator<Object> it = inventaire.listIterator();
+	public Boolean haveItem(Stack obj, short nb) {
+		ListIterator<Stack> it = inventaire.listIterator();
 		while (it.hasNext()) {
-			Object objTest = it.next();
-			if (((Inventable) objTest).getId().equals(((Inventable) obj).getId()))
-				if (((Item) objTest).getNombre() >= (((Item) obj).getNombre()))
+			Stack objTest = it.next();
+			if (objTest.getId().equals(obj.getId()))
+				if (objTest.getNombre() >= (obj.getNombre()))
 					return true;
 		}
 		return false;
