@@ -258,13 +258,15 @@ public class GameLWJGL extends SimpleGame {
 				player.getLayout().click(x_m, y_m, perso);
 			}else{
 				Object obj = world.getObject(x_m, y_m);
-				if (obj != null)
+				if (obj != null){
 					obj.click(perso, world, new Vector2D(x_m/32, y_m/32));
+				}
 			}
 			holdGMouse = true;
 		}
-		if (Mouse.isButtonDown(1) == false && holdGMouse == true)
+		if (Mouse.isButtonDown(0) == false && holdGMouse == true)
 			holdGMouse = false;
+		
 		if (Mouse.isButtonDown(1) && holdDMouse == false) {
 			int x_m = (int) (Mouse.getX() - panX);
 			int y_m = (int) (Mouse.getY() - (SCREEN_H - panY));
@@ -274,9 +276,12 @@ public class GameLWJGL extends SimpleGame {
 			}else{
 				Object obj = world.getObject(x_m, y_m);
 				if (obj == null)
-					//if(player.getCurrentItem() instanceof Objects){
-						System.out.println("o");
-						world.placeObject(x_m,  y_m, (Object)player.getCurrentItem().getItem());
+					try {
+						world.placeObject(x_m,  y_m, (Object)player.getCurrentItem().getItem().getClass().newInstance());
+					} catch (InstantiationException | IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					//}
 			}
 			holdDMouse = true;

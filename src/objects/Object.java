@@ -42,7 +42,7 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 		try {
 			if (!TextureManager.getInstance().exist(name)) {
 				Texture tex;
-				tex = new Texture(Util.getResource("res/" + name + ".png"));
+				tex = new Texture(Util.getResource("res/object/" + name + ".png"));
 				TextureManager.getInstance().register(name, tex);
 			}
 		} catch (IOException e) {
@@ -58,7 +58,7 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 			addStateExtends(key);
 			if (!TextureManager.getInstance().exist(name + "_" + key)) {
 				Texture tex;
-				tex = new Texture(Util.getResource("res/" + name + "_" + key + ".png"));
+				tex = new Texture(Util.getResource("res/object/" + name + "_" + key + ".png"));
 				TextureManager.getInstance().register(name + "_" + key, tex);
 			}
 		} catch (IOException e) {
@@ -86,6 +86,9 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 		registerBlock(2, new Arbre());
 		registerBlock(3, new Chest());
 		registerBlock(4, new Scirie());
+		registerBlock(5, new Crafting_station());
+		registerBlock(6, new Mur_bois());
+		registerBlock(7, new Door());
 	}
 
 	private static void registerBlock(int id, Object object_) {

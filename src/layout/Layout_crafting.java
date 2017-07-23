@@ -1,25 +1,22 @@
 package layout;
 
-
-import core.Inventable;
 import core.Stack;
 import graphicEngine.SpriteBatch;
-import items.Item;
 import perso.Inventaire;
 import perso.Personnage;
-import tileEntity.TileEntity;
 import tileEntity.TileEntityChest;
+import tileEntity.TileEntityCrafting_station;
 
-public class Layout_chest extends Layout {
+public class Layout_crafting extends Layout {
 	
 	private Container[] con_chest;
 	private Container[] con_inv;
-	private TileEntityChest tileEntity;
+	private TileEntityCrafting_station tileEntity;
 	private int chest_size;
 	private int inv_size;
-
-	public Layout_chest(TileEntityChest tileEntity, Inventaire inv) {
-		super("chest");
+	
+	public Layout_crafting(TileEntityCrafting_station tileEntity, Inventaire inv) {
+		super("crafting");
 		this.tileEntity = tileEntity;
 		chest_size = this.tileEntity.getSize();
 		inv_size = inv.getSize();

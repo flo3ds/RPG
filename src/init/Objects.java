@@ -16,6 +16,9 @@ public class Objects {
     public static final Object ARBRE;
     public static final Object CHEST;
     public static final Object SCIRIE;
+    public static final Object CRAFTING_STATION;
+    public static final Object MUR_BOIS;
+    public static final Object DOOR;
     
 
   
@@ -39,6 +42,9 @@ public class Objects {
         ARBRE = getRegisteredBlock(2);
         CHEST = getRegisteredBlock(3);
         SCIRIE = getRegisteredBlock(4);
+        CRAFTING_STATION = getRegisteredBlock(5);
+        MUR_BOIS = getRegisteredBlock(6);
+        DOOR = getRegisteredBlock(7);
         CACHE.clear();
     }
 	

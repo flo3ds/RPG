@@ -67,6 +67,9 @@ public class Player {
 	public void postInit(){
 		item[0] = new Stack(Objects.CHEST, 1);
 		item[1] = new Stack(Objects.SCIRIE, 1);
+		item[2] = new Stack(Objects.CRAFTING_STATION, 1);
+		item[3] = new Stack(Objects.MUR_BOIS, 1);
+		item[4] = new Stack(Objects.DOOR, 1);
 	}
 
 	public void render(SpriteBatch batch, Personnage perso) {
@@ -143,6 +146,24 @@ public class Player {
 			int y_m = (int) (Mouse.getY() - (480 - panY));
 			y_m *= -1;
 			selector = 1;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_3)) {
+			int x_m = (int) (Mouse.getX() - panX);
+			int y_m = (int) (Mouse.getY() - (480 - panY));
+			y_m *= -1;
+			selector = 2;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
+			int x_m = (int) (Mouse.getX() - panX);
+			int y_m = (int) (Mouse.getY() - (480 - panY));
+			y_m *= -1;
+			selector = 3;
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_5)) {
+			int x_m = (int) (Mouse.getX() - panX);
+			int y_m = (int) (Mouse.getY() - (480 - panY));
+			y_m *= -1;
+			selector = 4;
 		}
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
