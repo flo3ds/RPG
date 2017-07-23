@@ -11,6 +11,7 @@ import core.Stack;
 import graphicEngine.world.World;
 import init.Layouts;
 import init.Objects;
+import init.Tools;
 import layout.Container;
 import layout.Layout;
 import layout.Layout_sac;
@@ -36,6 +37,7 @@ public class Player {
 	private Texture selector_tex;
 	
 	private boolean key_down = false;
+	private int wheel;
 
 	public Player() {
 		try {
@@ -61,6 +63,7 @@ public class Player {
 			inv_bar[i] = new Container();
 			item[i] = null;
 		}
+		wheel = Mouse.getDWheel();
 		
 	}
 	
@@ -70,6 +73,7 @@ public class Player {
 		item[2] = new Stack(Objects.CRAFTING_STATION, 1);
 		item[3] = new Stack(Objects.MUR_BOIS, 1);
 		item[4] = new Stack(Objects.DOOR, 1);
+		item[5] = new Stack(Tools.AXE, 1);
 	}
 
 	public void render(SpriteBatch batch, Personnage perso) {
@@ -93,6 +97,7 @@ public class Player {
 	}
 
 	public void update(World world, float panX, float panY) {
+		wheel = Mouse.getDWheel();
 		moving = false;
 		if( ! layout_state) {
 		if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
@@ -164,6 +169,16 @@ public class Player {
 			int y_m = (int) (Mouse.getY() - (480 - panY));
 			y_m *= -1;
 			selector = 4;
+		}
+		if (0 < wheel) {
+			selector ++;
+			if (selector > 8)
+				selector = 0;
+		}
+		if (0 > wheel) {
+			selector --;
+			if(selector < 0)
+				selector = 8;
 		}
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {

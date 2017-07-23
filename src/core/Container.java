@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import items.Item;
+import tool.Tool;
 
 public class Container {
 
@@ -40,12 +41,8 @@ public class Container {
 					}
 		}
 
-		try {
-			this.inventaire.add(object.getClass().newInstance());
-		} catch (InstantiationException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.inventaire.add(object);
+		
 		return true;
 	}
 

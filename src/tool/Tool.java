@@ -1,12 +1,20 @@
 package tool;
 
+import java.io.IOException;
+
+import org.lwjgl.Sys;
+
+import core.Inventable;
 import gameData.GameData;
+import graphicEngine.Texture;
+import graphicEngine.TextureManager;
+import graphicEngine.Util;
 import items.Bois;
 import items.Fil;
 import items.Item;
 import items.PlancheBois;
 
-public class Tool {
+public class Tool implements Inventable {
 
 	public static final GameData REGISTRY = GameData.getMain();
 
@@ -15,7 +23,17 @@ public class Tool {
 	public Tool(String name) {
 
 		this.name = name;
-
+		try {
+			if (!TextureManager.getInstance().exist(name)) {
+				Texture tex;
+				tex = new Texture(Util.getResource("res/tool/" + name + ".png"));
+				TextureManager.getInstance().register(name, tex);
+			}
+		} catch (IOException e) {
+			Sys.alert("Error", "Texture object not load : " + name);
+			e.printStackTrace();
+			System.exit(0);
+		}
 	}
 
 	
@@ -33,7 +51,7 @@ public class Tool {
 	
 	
 
-	public static void registerTool() {
+	public static void registerTools() {
 		registerTool(1, new Axe());
 
 	}

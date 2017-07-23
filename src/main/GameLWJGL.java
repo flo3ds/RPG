@@ -33,6 +33,7 @@ package main;
 import objects.Object;
 import objects.Placable;
 import perso.Personnage;
+import tool.Tool;
 
 import static org.lwjgl.opengl.GL11.glClearColor;
 
@@ -119,6 +120,8 @@ public class GameLWJGL extends SimpleGame {
 			Object.registerBlocks();
 			Biome.registerBiomes();
 			Item.registerItems();
+			Tool.registerTools();
+
 
 			
 			wworld = new world.World();

@@ -62,6 +62,14 @@ public class Layout_scirie extends Layout {
 					perso.inv.removeItem(i);
 			}}
 		}
+		if( con_out.clicked(x, y)) {
+			perso.inv.putItem(tileEntity.getStack_out());
+			tileEntity.removeStackOut();
+		}
+		else if( con_in.clicked(x, y)) {
+			perso.inv.putItem(tileEntity.getStack_in());
+			tileEntity.removeStackIn();
+		}
 		
 	}
 

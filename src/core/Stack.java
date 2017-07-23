@@ -8,9 +8,13 @@ public class Stack implements Inventable {
 	Inventable item;
 	int nb = 1;
 	
-	public Stack (Inventable chest, int nb) {
-		this.item = chest;
+	public Stack (Inventable obj, int nb) {
+		this.item = obj;
 		this.nb = nb;
+	}
+	
+	public Stack () {
+		
 	}
 	
 
@@ -48,6 +52,9 @@ public class Stack implements Inventable {
 	}
 	
 	public String getId() {
-		return item.getId();
+		if (item != null)
+			return item.getId();
+		else
+			return "";
 	}
 }

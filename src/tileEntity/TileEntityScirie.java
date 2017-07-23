@@ -62,4 +62,13 @@ public class TileEntityScirie extends TileEntity {
 		this.stack_out = stack_out;
 	}
 
+	public void removeStackOut() {
+		stack_out = null;	
+	}
+	
+	public void removeStackIn() {
+		stack_in = null;
+		delta_delay = delay;
+	}
+
 }

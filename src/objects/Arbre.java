@@ -12,6 +12,7 @@ import graphicEngine.Util;
 import graphicEngine.Vector2D;
 import graphicEngine.world.World;
 import init.Items;
+import init.Tools;
 import perso.Personnage;
 
 public class Arbre extends Object {
@@ -27,8 +28,10 @@ public class Arbre extends Object {
 	}
 	
 	public void click(Personnage perso, World world, Vector2D pos_click) {
-		setState("coupé");
-		perso.inv.putItem(new Stack(Items.BOIS, 2));
+		if(perso.getGUI().getCurrentItem().getItem().getId().equals(Tools.AXE.getId())) {
+			setState("coupé");
+			perso.inv.putItem(new Stack(Items.BOIS, 2));
+		}
 	}
 	
 	

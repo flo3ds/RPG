@@ -68,5 +68,6 @@ public class GameData {
 	public Tool getTool (int id) {
 		return getMain().tool.get(id);
 	}
+
 	
 }
