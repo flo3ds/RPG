@@ -1,14 +1,12 @@
 package monde.faune;
 
-import items.Steak;
-import items.genItems.GenSteak;
+
 
 public class Faune {
 
 	public short nb_type_animal;
 	private Animal[] animal;
 
-	public Steak steak = GenSteak.genSteak();
 
 	public Faune() {
 

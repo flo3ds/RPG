@@ -3,7 +3,6 @@ package tileEntity;
 import core.Inventable;
 import core.Stack;
 import init.Items;
-import items.Burnable;
 import items.Item;
 
 public class TileEntityScirie extends TileEntity {

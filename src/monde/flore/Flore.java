@@ -1,13 +1,11 @@
 package monde.flore;
 
-import items.genItems.GenPlante;
 
 public class Flore {
 
 	public Arbre arbres;
 	private Plante plantes;
 
-	public items.Plante plante = GenPlante.GenPlante();
 
 	public Flore() {
 

@@ -9,7 +9,7 @@ import core.Recipe;
 import craft.Craft_Category;
 import craft.RecipeArmors;
 import craft.RecipeItems;
-import craft.RecipeTools;
+import craft.RecipeCraft;
 import craft.RecipeWeapons;
 import gui.layout.StructRet;
 import perso.Personnage;
@@ -101,7 +101,7 @@ public class Action_CraftingTable implements Actionable {
 			return this.build(RecipeArmors.values()[(short) id].recipe);
 		} else if (this.cc == Craft_Category.tools) {
 
-			return this.build(RecipeTools.values()[(short) id].recipe);
+			return this.build(RecipeCraft.values()[(short) id].recipe);
 		}
 
 		return error();

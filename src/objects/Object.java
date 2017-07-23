@@ -146,5 +146,9 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 		// TODO Auto-generated method stub
 		return name;
 	}
+	
+	public void destroy() {
+		destroy = true;
+	}
 
 }

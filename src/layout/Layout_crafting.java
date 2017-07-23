@@ -18,7 +18,7 @@ public class Layout_crafting extends Layout {
 	public Layout_crafting(TileEntityCrafting_station tileEntity, Inventaire inv) {
 		super("crafting");
 		this.tileEntity = tileEntity;
-		chest_size = this.tileEntity.getSize();
+		
 		inv_size = inv.getSize();
 		con_chest = new Container[chest_size];
 		con_inv = new Container[inv_size];
@@ -38,9 +38,7 @@ public class Layout_crafting extends Layout {
 		for(int i=0; i<inv_size; i++) {
 			con_inv[i].draw(batch, (x+100)+(i*42), (y+150), inv.getItem(i));
 		}
-		for(int i=0; i<chest_size; i++) {
-			con_chest[i].draw(batch, (x+100)+(i*42), (y+280), tileEntity.getItem(i));
-		}
+		
 	}
 	
 	public void update () {
@@ -48,22 +46,7 @@ public class Layout_crafting extends Layout {
 	}
 	
 	public void click (int x, int y, Personnage perso) {
-		for(int i=0; i<inv_size; i++) {
-			if( con_inv[i].clicked(x, y)) {
-				Stack item = perso.inv.getItem(i);
-				if (item != null) {
-					tileEntity.putItem(item);
-					perso.inv.removeItem(i);
-			}}
-		}
-		for(int i=0; i<chest_size; i++) {
-			if( con_chest[i].clicked(x, y)) {
-				Stack item = tileEntity.getItem(i);
-				if (item != null) {
-					perso.inv.putItem(item);
-					tileEntity.removeItem(i);
-			}}
-		}
+		
 	}
 
 }

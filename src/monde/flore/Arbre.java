@@ -2,7 +2,6 @@ package monde.flore;
 
 import core.Rand;
 import items.Bois;
-import items.genItems.GenBois;
 
 public class Arbre extends Feuille {
 
@@ -11,7 +10,6 @@ public class Arbre extends Feuille {
 	private String tronc_taille;
 	private String tronc_largeur;
 
-	public Bois bois = GenBois.genBois();
 
 	public Arbre() {
 		this.tronc_couleur = Color.values()[Rand.entier(0, Color.values().length)].toString();

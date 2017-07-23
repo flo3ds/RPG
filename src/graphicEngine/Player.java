@@ -9,7 +9,6 @@ import org.lwjgl.input.Mouse;
 import core.Inventable;
 import core.Stack;
 import graphicEngine.world.World;
-import init.Layouts;
 import init.Objects;
 import init.Tools;
 import layout.Container;
