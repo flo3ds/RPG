@@ -1,7 +1,10 @@
+/action/
+/armor/
+/base/
+/biome/
 /com/
 /core/
 /craft/
-/event/
 /gameData/
 /graphicEngine/
 /init/
@@ -14,9 +17,5 @@
 /perso/
 /tileEntity/
 /tool/
-/tools/
 /weapons/
 /world/
-/action/
-/res/
-/base/
