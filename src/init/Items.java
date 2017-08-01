@@ -17,6 +17,8 @@ public class Items {
     public static final Item BOIS;
     public static final Item FIL;
     public static final Item PLANCHE;
+    public static final Item CAILLOU;
+    public static final Item HERBE;
 
   
     private static Item getRegisteredItem(int id)
@@ -38,6 +40,8 @@ public class Items {
         BOIS = getRegisteredItem(1);
         FIL = getRegisteredItem(2);
         PLANCHE = getRegisteredItem(3);
+        CAILLOU = getRegisteredItem(4);
+        HERBE = getRegisteredItem(5);
         CACHE.clear();
     }
 	

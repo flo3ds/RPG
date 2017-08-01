@@ -74,12 +74,12 @@ import layout.Layout;
 
 public class GameLWJGL extends SimpleGame {
 
-	final short SCREEN_W = 640;
-	final short SCREEN_H = 480;
+	final short SCREEN_W = 1920;
+	final short SCREEN_H = 1080;
 
 	public static void main(String[] args) throws LWJGLException {
 		Game game = new GameLWJGL();
-		game.setDisplayMode(640, 480, false);
+		game.setDisplayMode(1920, 1080, true);
 		game.start();
 	}
 

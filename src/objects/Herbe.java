@@ -12,20 +12,19 @@ import graphicEngine.Util;
 import graphicEngine.Vector2D;
 import graphicEngine.world.World;
 import init.Items;
-import init.Tools;
 import perso.Personnage;
 
-public class Pierre extends Object {
+public class Herbe extends Object {
 
-	public Pierre() {
-		super("pierre");
+	public Herbe() {
+		super("herbe");
 		
 	}
 	
 	public void click(Personnage perso, World world, Vector2D pos_click) {
 		
-			perso.inv.putItem(new Stack(Items.CAILLOU, 2));
-		
-	}
+		perso.inv.putItem(new Stack(Items.HERBE, 2));
+	
+}
 	
 }

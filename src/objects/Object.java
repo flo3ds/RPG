@@ -89,6 +89,7 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 		registerBlock(5, new Crafting_station());
 		registerBlock(6, new Mur_bois());
 		registerBlock(7, new Door());
+		registerBlock(8, new Herbe());
 	}
 
 	private static void registerBlock(int id, Object object_) {
@@ -147,8 +148,5 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 		return name;
 	}
 	
-	public void destroy() {
-		destroy = true;
-	}
 
 }
