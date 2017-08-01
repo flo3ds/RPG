@@ -20,7 +20,8 @@ public class Objects {
     public static final Object MUR_BOIS;
     public static final Object DOOR;
     public static final Object HERBE;
-
+    public static final Object FLOWER;
+    public static final Object BRANCHE;
     
 
   
@@ -48,6 +49,8 @@ public class Objects {
         MUR_BOIS = getRegisteredBlock(6);
         DOOR = getRegisteredBlock(7);
         HERBE = getRegisteredBlock(8);
+        FLOWER = getRegisteredBlock(9);
+        BRANCHE = getRegisteredBlock(10);
         CACHE.clear();
     }
 	

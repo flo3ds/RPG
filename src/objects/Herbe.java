@@ -18,13 +18,11 @@ public class Herbe extends Object {
 
 	public Herbe() {
 		super("herbe");
-		
+		setColisable(false);
 	}
 	
 	public void click(Personnage perso, World world, Vector2D pos_click) {
-		
 		perso.inv.putItem(new Stack(Items.HERBE, 2));
-	
-}
+	}
 	
 }

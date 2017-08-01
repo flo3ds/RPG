@@ -34,6 +34,8 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 	private String name;
 	private int dx = 0;
 	private int dy = 0;
+	
+	private boolean alive = true;
 
 	public Object(String name) {
 		this.name = name;
@@ -90,6 +92,8 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 		registerBlock(6, new Mur_bois());
 		registerBlock(7, new Door());
 		registerBlock(8, new Herbe());
+		registerBlock(9, new Flower());
+		registerBlock(10, new Branche());
 	}
 
 	private static void registerBlock(int id, Object object_) {
@@ -141,12 +145,17 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
     {
         return null;
     }
+    
+    public void destroy() {
+    	alive = false;
+    }
 
 	@Override
 	public String getId() {
 		// TODO Auto-generated method stub
 		return name;
 	}
+	
 	
 
 }

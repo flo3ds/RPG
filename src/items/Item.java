@@ -59,6 +59,8 @@ public class Item implements Inventable {
 		registerItem(3, new PlancheBois());
 		registerItem(4, new Caillou());
 		registerItem(5, new Herbe());
+		registerItem(6, new Flower());
+		registerItem(7, new Branche());
 	}
 
 	private static void registerItem(int id, Item item_) {

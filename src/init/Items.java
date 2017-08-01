@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 
+import core.Inventable;
 import items.Item;
 
 
@@ -19,6 +20,9 @@ public class Items {
     public static final Item PLANCHE;
     public static final Item CAILLOU;
     public static final Item HERBE;
+	public static final Item FLOWER;
+    public static final Item BRANCHE;
+
 
   
     private static Item getRegisteredItem(int id)
@@ -42,6 +46,8 @@ public class Items {
         PLANCHE = getRegisteredItem(3);
         CAILLOU = getRegisteredItem(4);
         HERBE = getRegisteredItem(5);
+        FLOWER = getRegisteredItem(6);
+        BRANCHE = getRegisteredItem(7);
         CACHE.clear();
     }
 	
