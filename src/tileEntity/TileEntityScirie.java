@@ -1,7 +1,9 @@
 package tileEntity;
 
 import core.Inventable;
+
 import core.Stack;
+import recipe.RecipeScirie;
 import init.Items;
 import items.Item;
 
@@ -13,21 +15,22 @@ public class TileEntityScirie extends TileEntity {
 	private Stack stack_out;
 
 	
-	
 	public void update() {
 		
 		if(stack_in != null ){
-			if(stack_in.getId().equals(Items.BOIS.getId()) && stack_in.getNombre() >= 2){
-				if(delta_delay < 0) {
-					if(stack_out == null)
-						stack_out = new Stack(Items.PLANCHE, 5);
-					else
-						stack_out.addItem(Items.PLANCHE, 5);
-					stack_in.subNombre(2);
-					delta_delay = delay;
-				}else{
-					delta_delay--;
-					
+			for (int i=0; i< RecipeScirie.values().length; i++) {
+				if(stack_in.getId().equals(RecipeScirie.values()[i].recipe.getObjectForRecipe().getId()) && stack_in.getNombre() >= RecipeScirie.values()[i].recipe.getObjectForRecipe().getNombre()){
+					if(delta_delay < 0) {
+						if(stack_out == null)
+							stack_out = RecipeScirie.values()[i].recipe.getResult();
+						else
+							stack_out.addItem(RecipeScirie.values()[i].recipe.getResult().getItem(), RecipeScirie.values()[i].recipe.getResult().getNombre());
+						stack_in.subNombre(RecipeScirie.values()[i].recipe.getObjectForRecipe().getNombre());
+						delta_delay = delay;
+					}else{
+						delta_delay--;
+						
+					}
 				}
 			}
 		}
@@ -52,7 +55,7 @@ public class TileEntityScirie extends TileEntity {
 		}
 		return false;
 	}
-
+	
 	public Stack getStack_out() {
 		return stack_out;
 	}

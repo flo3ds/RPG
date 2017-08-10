@@ -9,6 +9,7 @@ import org.lwjgl.input.Mouse;
 import core.Inventable;
 import core.Stack;
 import graphicEngine.world.World;
+import graphicEngine.world.Worldable;
 import init.Objects;
 import init.Tools;
 import layout.Container;
@@ -95,7 +96,7 @@ public class Player {
 		return pos;
 	}
 
-	public void update(World world, float panX, float panY) {
+	public void update(Worldable world, float panX, float panY) {
 		wheel = Mouse.getDWheel();
 		moving = false;
 		if( ! layout_state) {
@@ -139,35 +140,16 @@ public class Player {
 			orientation = 0;
 			moving = true;
 		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_1)) {
+		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE)) {
 			int x_m = (int) (Mouse.getX() - panX);
-			int y_m = (int) (Mouse.getY() - (480 - panY));
+			int y_m = (int) (Mouse.getY() - (600 - panY));
 			y_m *= -1;
-			selector = 0;
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_2)) {
-			int x_m = (int) (Mouse.getX() - panX);
-			int y_m = (int) (Mouse.getY() - (480 - panY));
-			y_m *= -1;
-			selector = 1;
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_3)) {
-			int x_m = (int) (Mouse.getX() - panX);
-			int y_m = (int) (Mouse.getY() - (480 - panY));
-			y_m *= -1;
-			selector = 2;
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_4)) {
-			int x_m = (int) (Mouse.getX() - panX);
-			int y_m = (int) (Mouse.getY() - (480 - panY));
-			y_m *= -1;
-			selector = 3;
-		}
-		if (Keyboard.isKeyDown(Keyboard.KEY_5)) {
-			int x_m = (int) (Mouse.getX() - panX);
-			int y_m = (int) (Mouse.getY() - (480 - panY));
-			y_m *= -1;
-			selector = 4;
+			if(y_m < 0)
+				y_m -= 32;
+			if(x_m < 0)
+				x_m -= 32;
+			System.out.print("pos = "+x_m/32+" : "+y_m/32+"\n");
+
 		}
 		if (0 < wheel) {
 			selector ++;

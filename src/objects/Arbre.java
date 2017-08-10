@@ -28,9 +28,10 @@ public class Arbre extends Object {
 	}
 	
 	public void click(Personnage perso, World world, Vector2D pos_click) {
+		System.out.print("click = "+pos_click.x+" : "+pos_click.y+"\n");
 		if(perso.getGUI().getCurrentItem().getItem().getId().equals(Tools.AXE.getId())) {
 			perso.inv.putItem(new Stack(Items.BOIS, 2));
-			destroy();
+			destroy(world, pos_click);
 		}else {
 			setState("coupé");
 			perso.inv.putItem(new Stack(Items.BRANCHE, 2));

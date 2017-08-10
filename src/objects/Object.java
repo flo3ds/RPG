@@ -15,6 +15,7 @@ import graphicEngine.TextureManager;
 import graphicEngine.Util;
 import graphicEngine.Vector2D;
 import graphicEngine.world.World;
+import graphicEngine.world.Worldable;
 import perso.Personnage;
 import tileEntity.ITileEntityProvider;
 import tileEntity.TileEntity;
@@ -35,8 +36,6 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 	private int dx = 0;
 	private int dy = 0;
 	
-	private boolean alive = true;
-
 	public Object(String name) {
 		this.name = name;
 		setState(0);
@@ -78,7 +77,7 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 		return name + ((getActivStateId() == 0) ? "" : "_" + getActivStateName());
 	}
 
-	public void click(Personnage perso, World world, Vector2D pos_click) {
+	public void click(Personnage perso, Worldable world, Vector2D pos_click) {
 		System.out.println("click on " + name);
 	}
 
@@ -146,8 +145,8 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
         return null;
     }
     
-    public void destroy() {
-    	alive = false;
+    public void destroy(World world, Vector2D click) {
+    	world.destroyAt(click);
     }
 
 	@Override

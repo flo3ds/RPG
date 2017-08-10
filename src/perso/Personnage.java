@@ -1,10 +1,15 @@
 package perso;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import action.Position;
 import core.Armor;
 import core.Time;
 import core.Weapon;
 import graphicEngine.Player;
+import graphicEngine.world.Worldable;
+import tool.Tool;
 
 
 public class Personnage {
@@ -18,6 +23,11 @@ public class Personnage {
 	private Weapon weapon = null;
 
 	private Player player;
+	
+	int world_id = 0;
+	
+	private Map<Integer, Worldable> world = new HashMap<Integer, Worldable>();
+
 
 	public Inventaire inv = new Inventaire();
 	public Position position = Position.base;
@@ -127,6 +137,18 @@ public class Personnage {
 
 	public Player getGUI() {
 		return player;
+	}
+
+	public Worldable getWorld(int id) {
+		return world.get(id);
+	}
+
+	public void addWorld(int id, Worldable world) {
+		this.world.put(id, world);
+	}
+
+	public Worldable getCurrentWorld() {
+		return world.get(world_id);
 	}
 
 }

@@ -5,14 +5,14 @@ import java.util.Arrays;
 import base.Base;
 import core.Inventable;
 import core.Item;
-import core.Recipe;
-import craft.Craft_Category;
-import craft.RecipeArmors;
-import craft.RecipeItems;
-import craft.RecipeCraft;
-import craft.RecipeWeapons;
 import gui.layout.StructRet;
 import perso.Personnage;
+import recipe.Craft_Category;
+import recipe.Recipe;
+import recipe.RecipeArmors;
+import recipe.RecipeCraft;
+import recipe.RecipeItems;
+import recipe.RecipeWeapons;
 
 public class Action_CraftingTable implements Actionable {
 

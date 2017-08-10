@@ -65,8 +65,10 @@ import graphicEngine.TextureManager;
 import graphicEngine.TextureRegion;
 import graphicEngine.Util;
 import graphicEngine.Vector2D;
+import graphicEngine.base.BaseGUI;
 import graphicEngine.world.Chunk;
 import graphicEngine.world.World;
+import graphicEngine.world.Worldable;
 import init.Items;
 import init.Objects;
 import items.Item;
@@ -74,12 +76,12 @@ import layout.Layout;
 
 public class GameLWJGL extends SimpleGame {
 
-	final short SCREEN_W = 1920;
-	final short SCREEN_H = 1080;
+	final static short SCREEN_W = 800;
+	final static short SCREEN_H = 600;
 
 	public static void main(String[] args) throws LWJGLException {
 		Game game = new GameLWJGL();
-		game.setDisplayMode(1920, 1080, true);
+		game.setDisplayMode(SCREEN_W, SCREEN_H, false);
 		game.start();
 	}
 
@@ -87,9 +89,11 @@ public class GameLWJGL extends SimpleGame {
 	TextureRegion tile;
 	SpriteBatch batch;
 
-	World world;
+	Worldable world;
 	Player player;
 	world.World wworld;
+	
+	BaseGUI baseGUI;
 
 	Personnage perso;
 	Time time;
@@ -125,8 +129,9 @@ public class GameLWJGL extends SimpleGame {
 
 			
 			wworld = new world.World();
-
-			world = new World(player.getPos(), wworld);
+			perso.addWorld(0, new World(player.getPos(), wworld));
+			
+			world = perso.getCurrentWorld();
 			
 			player.postInit();
 
@@ -177,12 +182,12 @@ public class GameLWJGL extends SimpleGame {
 		// start the sprite batch
 		batch.begin();
 
-		for (int i = 0; i < world.mesh.length; i++) {
-			renderSol(world.mesh[i]);
+		for (int i = 0; i < world.getChunkLoader().length; i++) {
+			renderSol(world.getChunkLoader()[i]);
 		}
 		if (!world.waiting())
-			for (int i = 0; i < world.mesh.length; i++) {
-				renderChunk(world.getChunk(world.mesh[i].hashCode()), world.mesh[i]);
+			for (int i = 0; i < world.getChunkLoader().length; i++) {
+				renderChunk(world.getChunk(world.getChunkLoader()[i]), world.getChunkLoader()[i]);
 			}
 		
 		player.renderLayout(batch, perso);
@@ -257,12 +262,20 @@ public class GameLWJGL extends SimpleGame {
 			int x_m = (int) (Mouse.getX() - panX);
 			int y_m = (int) (Mouse.getY() - (SCREEN_H - panY));
 			y_m *= -1;
+			
+			
 			if(player.getLayoutState()) {
 				player.getLayout().click(x_m, y_m, perso);
 			}else{
+				if(y_m < 0)
+					y_m -= 32;
+				if(x_m < 0)
+					x_m -= 32;
+				x_m /= 32;
+				y_m /= 32;
 				Object obj = world.getObject(x_m, y_m);
 				if (obj != null){
-					obj.click(perso, world, new Vector2D(x_m/32, y_m/32));
+					obj.click(perso, world, new Vector2D(x_m, y_m));
 				}
 			}
 			holdGMouse = true;
@@ -274,9 +287,16 @@ public class GameLWJGL extends SimpleGame {
 			int x_m = (int) (Mouse.getX() - panX);
 			int y_m = (int) (Mouse.getY() - (SCREEN_H - panY));
 			y_m *= -1;
+			
 			if(player.getLayoutState()) {
 				player.getLayout().click(x_m, y_m, perso);
 			}else{
+				if(y_m < 0)
+					y_m -= 32;
+				if(x_m < 0)
+					x_m -= 32;
+				x_m /= 32;
+				y_m /= 32;
 				Object obj = world.getObject(x_m, y_m);
 				if (obj == null)
 					try {

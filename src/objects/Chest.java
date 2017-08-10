@@ -18,6 +18,8 @@ public class Chest extends Object implements ITileEntityProvider {
 	}
 	
 	public void click(Personnage perso, World world, Vector2D pos_click) {
+		System.out.print("getclick = "+pos_click.x+" : "+pos_click.y+"\n");
+
 		if( getActivStateId() == 0){
 			setState("open");
 			perso.getGUI().openLayout(new Layout_chest((TileEntityChest)world.getTileEntity(pos_click), perso.inv));

@@ -67,6 +67,7 @@ public abstract class Game {
 	
 	public void setDisplayMode(int width, int height, boolean fullscreen) throws LWJGLException {
 		setDisplayMode(width, height);
+		if (fullscreen)
 		Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());
 	}
 		
