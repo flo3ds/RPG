@@ -28,6 +28,11 @@ public class Arbre extends Object {
 		
 	}
 	
+<<<<<<< Upstream, based on branch 'master' of https://github.com/flo3ds/RPG.git
+=======
+	
+	
+>>>>>>> a615030 merge
 	public void click(Personnage perso, Worldable world, Vector2D pos_click) {
 		System.out.print("click = "+pos_click.x+" : "+pos_click.y+"\n");
 		if(perso.getGUI().getCurrentItem().getItem().getId().equals(Tools.AXE.getId())) {

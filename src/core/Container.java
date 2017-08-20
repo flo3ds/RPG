@@ -42,7 +42,8 @@ public class Container {
 					}
 		}
 
-		this.inventaire.add(object);
+			this.inventaire.add(new Stack(object.getItem(), object.getNombre()));
+		
 		
 		return true;
 	}

@@ -97,7 +97,7 @@ public  short salle_number = 5;
 	
 	public void updateTileEntity () {
 		for (int key   : tileEntity.keySet()) {
-		     tileEntity.get(key).update();  //get() is less efficient 
+		     tileEntity.get(key).update(this);  //get() is less efficient 
 		}                     
 		
 	}
@@ -188,7 +188,7 @@ public  short salle_number = 5;
 	
 		//================================================
 		if(obj instanceof ITileEntityProvider){
-			addTileEntity(new Vector2D(x, y).hashCode(), obj.createNewTileEntity());
+			addTileEntity(new Vector2D(x, y).hashCode(), obj.createNewTileEntity(x, y));
 		}
 		Chunk chunk = getChunk(new Vector2D(ch_x, ch_y));
 		chunk.placeAt((short)obj_x, (short)obj_y, obj);

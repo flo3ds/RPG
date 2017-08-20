@@ -161,6 +161,11 @@ public class Player {
 			if(selector < 0)
 				selector = 8;
 		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_P)) {
+			selector ++;
+			if (selector > 8)
+				selector = 0;
+		}
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			world.save();

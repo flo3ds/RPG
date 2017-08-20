@@ -76,7 +76,7 @@ public static final short RANGELOADING = 1;
 	
 	public void updateTileEntity () {
 		for (int key   : tileEntity.keySet()) {
-		     tileEntity.get(key).update();  //get() is less efficient 
+		     tileEntity.get(key).update(this);  //get() is less efficient 
 		}                     
 		
 	}
@@ -84,6 +84,11 @@ public static final short RANGELOADING = 1;
 	public TileEntity getTileEntity(Vector2D pos) {
 		//System.out.println("getTile = " + pos.x +":"+pos.y+":"+pos.hashCode());
 		return tileEntity.get(pos.hashCode());
+	}
+	
+	public TileEntity getTileEntity(int x, int y) {
+		//System.out.println("getTile = " + pos.x +":"+pos.y+":"+pos.hashCode());
+		return tileEntity.get(new Vector2D(x, y).hashCode());
 	}
 	
 	public Object getObject(int x, int y){
@@ -108,6 +113,38 @@ public static final short RANGELOADING = 1;
 		Chunk chunk = getChunk(new Vector2D(ch_x, ch_y));
 		System.out.print("chunk = "+ch_x+" : "+ch_y+"\n");
 		System.out.print("obj = "+obj_x+" : "+obj_y+"\n");
+		return chunk.getObject(obj_x, obj_y);
+	}
+	
+	
+	public Object getObjectCol(int x, int y){
+		//TRaitement de la souris (negatif, world, chunk)
+		//================================================
+		if(y < 0)
+			y -= 32;
+		if(x < 0)
+			x -= 32;
+		x /= 32;
+		y /= 32;
+		int ch_x = (int) ((x) / Chunk.SIZE);
+		int ch_y = (int) ((y) / Chunk.SIZE);
+		
+		short obj_x = (short) ((x) % Chunk.SIZE);
+		short obj_y = (short) ((y) % Chunk.SIZE);
+		
+	
+		if(y < 0) {
+			obj_y += 32;
+			ch_y--;
+		}
+		if(x < 0) {
+			obj_x += 32;
+			ch_x--;
+		}
+		//================================================
+		Chunk chunk = getChunk(new Vector2D(ch_x, ch_y));
+		//System.out.print("chunk = "+ch_x+" : "+ch_y+"\n");
+		//System.out.print("obj = "+obj_x+" : "+obj_y+"\n");
 		return chunk.getObject(obj_x, obj_y);
 	}
 	
@@ -168,7 +205,7 @@ public static final short RANGELOADING = 1;
 	
 		//================================================
 		if(obj instanceof ITileEntityProvider){
-			addTileEntity(new Vector2D(x, y).hashCode(), obj.createNewTileEntity());
+			addTileEntity(new Vector2D(x, y).hashCode(), obj.createNewTileEntity(x, y));
 		}
 		Chunk chunk = getChunk(new Vector2D(ch_x, ch_y));
 		chunk.placeAt((short)obj_x, (short)obj_y, obj);

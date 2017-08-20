@@ -144,7 +144,7 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 
 	
     public TileEntity createNewTileEntity(int x, int y)
-    {
+    { 
         return null;
     }
     

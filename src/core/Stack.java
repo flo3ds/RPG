@@ -7,6 +7,8 @@ import objects.Object;
 
 public class Stack implements Inventable {
 	
+	public static final int MAXSIZE = 64;
+	
 	Inventable item;
 	int nb = 1;
 	
@@ -20,7 +22,11 @@ public class Stack implements Inventable {
 	}
 	
 
-
+	public void reset() {
+		item = null;
+		nb = 0;
+	}
+	
 	public int getNombre() {
 		return nb;
 	}

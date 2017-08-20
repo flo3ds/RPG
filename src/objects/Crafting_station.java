@@ -23,7 +23,7 @@ public class Crafting_station extends Object implements ITileEntityProvider {
 			perso.getGUI().openLayout(new Layout_crafting((TileEntityCrafting_station)world.getTileEntity(pos_click), perso.inv));
 	}
 
-    public TileEntity createNewTileEntity()
+    public TileEntity createNewTileEntity(int x, int y)
     {
         return new TileEntityCrafting_station();
     }

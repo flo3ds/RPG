@@ -28,7 +28,7 @@ public class Chest extends Object implements ITileEntityProvider {
 			setState(0);
 	}
 
-    public TileEntity createNewTileEntity()
+    public TileEntity createNewTileEntity(int x, int y)
     {
         return new TileEntityChest();
     }
