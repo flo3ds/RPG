@@ -1,6 +1,8 @@
 package tileEntity;
 
-public class TileEntity {
+import java.io.Serializable;
+
+public class TileEntity implements Serializable{
 
 	public void update() {
 		

@@ -11,6 +11,7 @@ import graphicEngine.TextureRegion;
 import graphicEngine.Util;
 import graphicEngine.Vector2D;
 import graphicEngine.world.World;
+import graphicEngine.world.Worldable;
 import init.Items;
 import perso.Personnage;
 
@@ -21,7 +22,7 @@ public class Herbe extends Object {
 		setColisable(false);
 	}
 	
-	public void click(Personnage perso, World world, Vector2D pos_click) {
+	public void click(Personnage perso, Worldable world, Vector2D pos_click) {
 		perso.inv.putItem(new Stack(Items.HERBE, 2));
 	}
 	

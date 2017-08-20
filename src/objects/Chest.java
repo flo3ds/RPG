@@ -3,6 +3,7 @@ package objects;
 
 import graphicEngine.Vector2D;
 import graphicEngine.world.World;
+import graphicEngine.world.Worldable;
 import layout.Layout_chest;
 import perso.Personnage;
 import tileEntity.ITileEntityProvider;
@@ -17,7 +18,7 @@ public class Chest extends Object implements ITileEntityProvider {
 		
 	}
 	
-	public void click(Personnage perso, World world, Vector2D pos_click) {
+	public void click(Personnage perso, Worldable world, Vector2D pos_click) {
 		System.out.print("getclick = "+pos_click.x+" : "+pos_click.y+"\n");
 
 		if( getActivStateId() == 0){

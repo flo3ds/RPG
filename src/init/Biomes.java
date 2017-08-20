@@ -16,6 +16,7 @@ public class Biomes {
 
 	private static final Set<Biome> CACHE;
     public static final Biome FORET;
+    public static final Biome BASE;
   
     private static Biome getRegisteredBiome(int id)
     {
@@ -33,7 +34,8 @@ public class Biomes {
     static
     {  
     	CACHE = Sets.<Biome>newHashSet();
-        FORET = getRegisteredBiome(1);
+        FORET = getRegisteredBiome(0);
+        BASE = getRegisteredBiome(1);
         CACHE.clear();
     }
 	

@@ -1,5 +1,7 @@
 package core;
 
+import java.io.Serializable;
+
 import items.Item;
 import objects.Object;
 

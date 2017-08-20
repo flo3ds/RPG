@@ -3,6 +3,8 @@ package graphicEngine.world;
 import java.io.Serializable;
 
 import biome.Biome;
+import biome.Sol;
+import biome.Sol_extends;
 import graphicEngine.Vector2D;
 import init.Objects;
 import objects.Object;
@@ -21,6 +23,8 @@ public class Chunk implements Serializable {
 	private Boolean define = false;
 
 	private Object[][] grid;
+	
+	private Sol_extends sol;
 
 	public Chunk(World world, Vector2D pos) {
 		grid = new Object[SIZE][SIZE];
@@ -29,14 +33,22 @@ public class Chunk implements Serializable {
 	public Chunk(World world) {
 		grid = new Object[SIZE][SIZE];
 	}
+	
+	public Chunk() {
+		grid = new Object[SIZE][SIZE];
+	}
 
-	public void generate() {
-		if (this.define == false) {
-			for (int i = 0; i < SIZE; i++)
-				for (int j = 0; j < SIZE; j++)
-					grid[i][j] = null;
-			this.define = true;
+	public void generate(Biome biome) {
+		
+		for(int x=0; x < SIZE; x++) {
+			for(int y=0; y < SIZE; y++) {
+				grid[x][y] = null;
+			}
 		}
+		
+		biome.decorate(this);
+		setSol(biome.getSol());
+		
 	}
 
 	public Object[][] getGrid() {
@@ -60,6 +72,16 @@ public class Chunk implements Serializable {
 
 	public Boolean isDefined() {
 		return define;
+	}
+
+
+	
+	public String getSolText() {
+		return sol.getTex();
+	}
+
+	public void setSol(Sol_extends sol) {
+		this.sol = sol;
 	}
 
 }

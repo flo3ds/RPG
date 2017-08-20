@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import biome.Biome;
+import biome.Sol_extends;
 import items.Item;
 import layout.Layout;
 import objects.Object;
@@ -18,6 +19,8 @@ public class GameData {
 	private Map<Integer, Layout> layout = new HashMap<Integer, Layout>();
 	private Map<Integer, Item> item = new HashMap<Integer, Item>();
 	private Map<Integer, Tool> tool = new HashMap<Integer, Tool>();
+	private Map<Integer, Sol_extends> sol = new HashMap<Integer, Sol_extends>();
+
 
 	private GameData(){
 		
@@ -67,6 +70,15 @@ public class GameData {
 	
 	public Tool getTool (int id) {
 		return getMain().tool.get(id);
+	}
+	
+	public void registerSol(int id, Sol_extends layout){
+		System.out.println("add Sol : " + id);
+		 getMain().sol.put(id, layout);
+	}
+	
+	public Sol_extends getSol (int id) {
+		return getMain().sol.get(id);
 	}
 
 	

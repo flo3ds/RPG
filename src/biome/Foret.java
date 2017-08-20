@@ -2,11 +2,12 @@ package biome;
 
 import graphicEngine.world.Chunk;
 import init.Objects;
+import init.Sols;
 
 public class Foret extends Biome {
 
 	public Foret() {
-		
+		super(Sols.HERBE);
 		
 		
 	}

@@ -2,11 +2,14 @@ package graphicEngine.world;
 
 import graphicEngine.Vector2D;
 import objects.Object;
+import tileEntity.TileEntity;
+import tileEntity.TileEntityChest;
 
 public interface Worldable {
 
 	
 	public Object getObject(int x, int y);
+	public Object getObjectCol(int x, int y);
 	public boolean waiting();
 	public Vector2D getChunkPos (Vector2D pos);
 	public void update (Vector2D pos, world.World world);
@@ -15,6 +18,8 @@ public interface Worldable {
 	public void save();
 	public Chunk getChunk(Vector2D vector2d);
 	public Vector2D[] getChunkLoader();
+	public TileEntity getTileEntity(Vector2D pos_click);
+	public void destroyAt(Vector2D click);
 	
 	
 }

@@ -22,7 +22,7 @@ import world.World;
 
 public class BaseGUI  implements Worldable {
 
-public static final short RANGELOADING = 1;
+public  short salle_number = 5;
 	
 	private Vector2D[] mesh;
 	public boolean wait = false;
@@ -32,29 +32,51 @@ public static final short RANGELOADING = 1;
 	private Map<Integer, TileEntity> tileEntity = new HashMap<Integer, TileEntity>();
 	
 	public BaseGUI(String name, Vector2D pos) {
-		mesh = new Vector2D[(RANGELOADING*2+1)*(RANGELOADING*2+1)];
+		mesh = new Vector2D[salle_number];
 		this.name = name;
-		File f = new File(name + "world.ser");
+		File f = new File("world/base/"+name + ".ser");
 		if(f.exists() && !f.isDirectory()) {
 			FileInputStream fin = null;
+			FileInputStream fin2 = null;
 			try {
-				fin = new FileInputStream(name +"world.ser");
+				fin = new FileInputStream("world/base/"+name +".ser");
+				fin2 = new FileInputStream("world/base/"+name +"_entity.ser");
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			ObjectInputStream ios = null;
+			ObjectInputStream ios2 = null;
 			try {
 				ios = new ObjectInputStream(fin);
+				ios2 = new ObjectInputStream(fin2);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			try {
 				chunkMap = (HashMap<Integer, Chunk>)ios.readObject();
+				tileEntity = (HashMap<Integer, TileEntity>)ios2.readObject();
 			} catch (ClassNotFoundException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		}
+			initChunkBase();
+		
+	}
+	
+	public void initChunkBase() {
+		int index = 0;
+		mesh[index++] = new Vector2D(0, -1);
+		mesh[index++] = new Vector2D(0, 0);
+		mesh[index++] = new Vector2D(0, 1);
+		mesh[index++] = new Vector2D(-1, 0);
+		mesh[index++] = new Vector2D(1, 0);
+		for (int i=0; i<mesh.length; i++){
+			if(!chunkMap.containsKey(mesh[i].hashCode())){
+				chunkMap.put(mesh[i].hashCode(), new Chunk());
+				chunkMap.get(mesh[i].hashCode()).generate(Biomes.BASE);
 			}
 		}
 	}
@@ -70,7 +92,7 @@ public static final short RANGELOADING = 1;
 	}
 	
 	public void update (Vector2D pos, world.World world) {
-		updateChunk(pos, world);
+		
 	}
 	
 	public void updateTileEntity () {
@@ -105,11 +127,42 @@ public static final short RANGELOADING = 1;
 		}
 		//================================================
 		Chunk chunk = getChunk(new Vector2D(ch_x, ch_y));
-		System.out.print("chunk = "+ch_x+" : "+ch_y+"\n");
-		System.out.print("obj = "+obj_x+" : "+obj_y+"\n");
+		//System.out.print("chunk = "+ch_x+" : "+ch_y+"\n");
+		//System.out.print("obj = "+obj_x+" : "+obj_y+"\n");
 		return chunk.getObject(obj_x, obj_y);
 	}
 		
+	
+	public Object getObjectCol(int x, int y){
+		//TRaitement de la souris (negatif, world, chunk)
+		//================================================
+		if(y < 0)
+			y -= 32;
+		if(x < 0)
+			x -= 32;
+		x /= 32;
+		y /= 32;
+		int ch_x = (int) ((x) / Chunk.SIZE);
+		int ch_y = (int) ((y) / Chunk.SIZE);
+		
+		short obj_x = (short) ((x) % Chunk.SIZE);
+		short obj_y = (short) ((y) % Chunk.SIZE);
+		
+	
+		if(y < 0) {
+			obj_y += 32;
+			ch_y--;
+		}
+		if(x < 0) {
+			obj_x += 32;
+			ch_x--;
+		}
+		//================================================
+		Chunk chunk = getChunk(new Vector2D(ch_x, ch_y));
+		//System.out.print("chunk = "+ch_x+" : "+ch_y+"\n");
+		//System.out.print("obj = "+obj_x+" : "+obj_y+"\n");
+		return chunk.getObject(obj_x, obj_y);
+	}
 
 	
 	public void placeObject(int x, int y, Object obj){
@@ -143,34 +196,9 @@ public static final short RANGELOADING = 1;
 	
 	
 	
-	private void updateChunk (Vector2D pos, world.World world) {
-		Thread t = new Thread(){
-			public void run(){
-		Vector2D posChunk = getChunkPos(pos);
-		wait = true;
-		int index = 0;
-		for (int i=1; i<RANGELOADING+1; i++) {
-			mesh[index++] = new Vector2D(posChunk.x -i, posChunk.y -i);
-			mesh[index++] = new Vector2D(posChunk.x, posChunk.y -i);
-			mesh[index++] = new Vector2D(posChunk.x +i, posChunk.y -i);
-			mesh[index++] = new Vector2D(posChunk.x -i, posChunk.y);
-			mesh[index++] = new Vector2D(posChunk.x   , posChunk.y);
-			mesh[index++] = new Vector2D(posChunk.x +i, posChunk.y);
-			mesh[index++] = new Vector2D(posChunk.x -i, posChunk.y +i);
-			mesh[index++] = new Vector2D(posChunk.x , posChunk.y +i);
-			mesh[index++] = new Vector2D(posChunk.x +i, posChunk.y +i);	
-		}
-		for (int i=0; i<mesh.length; i++){
-			if(!chunkMap.containsKey(mesh[i].hashCode())){
-				chunkMap.put(mesh[i].hashCode(), new Chunk(world));
-				Biomes.FORET.decorate(chunkMap.get(mesh[i].hashCode()));
-			}
-		}
-		wait = false;
-		}
-		};
-		t.start();
-	}
+	
+	
+	
 	
 	public boolean waiting(){
 		return wait;
@@ -193,7 +221,7 @@ public static final short RANGELOADING = 1;
 	
 	
 	public int[][] getRenderArray() {
-		int[][] renderArray = new int[Chunk.SIZE * (RANGELOADING*2+1)][Chunk.SIZE * (RANGELOADING*2+1)];
+		int[][] renderArray = new int[Chunk.SIZE * (salle_number*2+1)][Chunk.SIZE * (salle_number*2+1)];
 		return renderArray;
 	}
 	
@@ -225,12 +253,12 @@ public static final short RANGELOADING = 1;
 		getChunk(new Vector2D(ch_x, ch_y)).placeAt(obj_x, obj_y, null);
 	}
 
-	public void save() {
+public void save() {
 		
 		
 		FileOutputStream fout = null;
 		try {
-			fout = new FileOutputStream(name +"world.ser");
+			fout = new FileOutputStream("world/base/"+name +".ser");
 		} catch (FileNotFoundException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -248,6 +276,29 @@ public static final short RANGELOADING = 1;
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
+		FileOutputStream fout2 = null;
+		try {
+			fout2 = new FileOutputStream("world/base/"+name +"_entity.ser");
+		} catch (FileNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		ObjectOutputStream oos2 = null;
+		try {
+			oos2 = new ObjectOutputStream(fout2);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			oos2.writeObject(this.tileEntity);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		System.exit(0);
 		
 	}

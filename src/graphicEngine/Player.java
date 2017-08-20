@@ -101,7 +101,7 @@ public class Player {
 		moving = false;
 		if( ! layout_state) {
 		if (Keyboard.isKeyDown(Keyboard.KEY_D)) {
-			Object col = world.getObject((int) pos.x + (int) getSpeed() + 10, (int) pos.y);
+			Object col = world.getObjectCol((int) pos.x + (int) getSpeed() + 10, (int) pos.y);
 			if (col != null) {
 				if (!col.isColisable())
 					pos.x += getSpeed();
@@ -111,7 +111,7 @@ public class Player {
 			moving = true;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_Q)) {
-			Object col = world.getObject((int) pos.x - (int) getSpeed() - 10, (int) pos.y);
+			Object col = world.getObjectCol((int) pos.x - (int) getSpeed() - 10, (int) pos.y);
 			if (col != null) {
 				if (!col.isColisable())
 					pos.x -= getSpeed();
@@ -121,7 +121,7 @@ public class Player {
 			moving = true;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
-			Object col = world.getObject((int) pos.x, (int) pos.y + (int) getSpeed());
+			Object col = world.getObjectCol((int) pos.x, (int) pos.y + (int) getSpeed());
 			if (col != null) {
 				if (!col.isColisable())
 					pos.y += getSpeed();
@@ -131,7 +131,7 @@ public class Player {
 			moving = true;
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_Z)) {
-			Object col = world.getObject((int) pos.x, (int) pos.y - (int) getSpeed() - 10);
+			Object col = world.getObjectCol((int) pos.x, (int) pos.y - (int) getSpeed() - 10);
 			if (col != null) {
 				if (!col.isColisable())
 					pos.y -= getSpeed();

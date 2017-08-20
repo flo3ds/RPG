@@ -42,6 +42,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
@@ -52,6 +53,8 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import biome.Biome;
+import biome.Sol;
+import biome.Sol_extends;
 import core.Inventable;
 import core.Time;
 import graphicEngine.BitmapFont;
@@ -71,6 +74,7 @@ import graphicEngine.world.World;
 import graphicEngine.world.Worldable;
 import init.Items;
 import init.Objects;
+import init.Sols;
 import items.Item;
 import layout.Layout;
 
@@ -78,13 +82,64 @@ public class GameLWJGL extends SimpleGame {
 
 	final static short SCREEN_W = 800;
 	final static short SCREEN_H = 600;
+		
+	public GameLWJGL() {
+		player = new Player();
+		time = new Time();
+		perso = new Personnage(time, player);
+		
+		
+		Object.registerBlocks();
+		Item.registerItems();
+		Tool.registerTools();
+		Sol_extends.registerSols();
+		Biome.registerBiomes(); // after Sol registered
 
+
+		
+		wworld = new world.World();
+		perso.addWorld(0, new BaseGUI("base", new Vector2D(0, 0)));
+		perso.addWorld(1, new World(player.getPos(), wworld));
+		
+		world = perso.getCurrentWorld();
+		
+		player.postInit();
+
+
+	
+	glClearColor(0.5f, .5f, .5f, 1f);
+	// create our sprite batch
+	try {
+		batch = new SpriteBatch();
+	} catch (LWJGLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	}
+	
+	public void newGame() {
+		purgeDirectory(new File("world/world"));
+		purgeDirectory(new File("world/base"));
+
+	}
+	
+	private void purgeDirectory(File dir) {
+	    for (File file: dir.listFiles()) {
+	    	System.out.print(file.toString());
+	        if (file.isDirectory()) purgeDirectory(file);
+	        if(file.delete())
+	        	System.out.println("delete");
+	    }
+	}
+
+	/*
 	public static void main(String[] args) throws LWJGLException {
 		Game game = new GameLWJGL();
 		game.setDisplayMode(SCREEN_W, SCREEN_H, false);
 		game.start();
 	}
-
+*/
+	
 	Texture tex, tex2;
 	TextureRegion tile;
 	SpriteBatch batch;
@@ -107,45 +162,7 @@ public class GameLWJGL extends SimpleGame {
 	boolean holdGMouse = false;
 	boolean holdDMouse = false;
 
-	protected void create() throws LWJGLException {
-		super.create();
 
-		// Load some textures
-		try {
-
-			tex = new Texture(Util.getResource("res/sol.png"));
-			tile = new TextureRegion(tex, 0, 0, 32, 32);
-			
-			player = new Player();
-			time = new Time();
-			perso = new Personnage(time, player);
-			
-			
-			Object.registerBlocks();
-			Biome.registerBiomes();
-			Item.registerItems();
-			Tool.registerTools();
-
-
-			
-			wworld = new world.World();
-			perso.addWorld(0, new World(player.getPos(), wworld));
-			
-			world = perso.getCurrentWorld();
-			
-			player.postInit();
-
-
-		} catch (IOException e) {
-			// ... do something here ...
-			Sys.alert("Error", "init");
-			e.printStackTrace();
-			System.exit(0);
-		}
-		glClearColor(0.5f, .5f, .5f, 1f);
-		// create our sprite batch
-		batch = new SpriteBatch();
-	}
 
 	void drawGame() {
 		// get the instance of the view matrix for our batch
@@ -182,9 +199,11 @@ public class GameLWJGL extends SimpleGame {
 		// start the sprite batch
 		batch.begin();
 
+		/*
 		for (int i = 0; i < world.getChunkLoader().length; i++) {
 			renderSol(world.getChunkLoader()[i]);
 		}
+		*/
 		if (!world.waiting())
 			for (int i = 0; i < world.getChunkLoader().length; i++) {
 				renderChunk(world.getChunk(world.getChunkLoader()[i]), world.getChunkLoader()[i]);
@@ -203,6 +222,13 @@ public class GameLWJGL extends SimpleGame {
 		int x = (int) (32 * Chunk.SIZE * pos.x);
 		int y = (int) (32 * Chunk.SIZE * pos.y);
 		// System.out.println("ch "+x+" | cy"+pos.y);
+		
+		for (int j = 0; j < Chunk.SIZE; j++) {
+			for (int i = 0; i < Chunk.SIZE; i++) {
+				batch.draw(TextureManager.getInstance().getTexture(chunk.getSolText()), 32 * i + x, 32 * j + y);
+			}
+		}
+		
 		int py = (int) (player.getPos().y / 32 % (Chunk.SIZE));
 		if (player.getPos().y > 0) {
 
@@ -225,16 +251,7 @@ public class GameLWJGL extends SimpleGame {
 
 	}
 
-	private void renderSol(Vector2D pos) {
-		int x = (int) (32 * Chunk.SIZE * pos.x);
-		int y = (int) (32 * Chunk.SIZE * pos.y);
-		for (int j = 0; j < Chunk.SIZE; j++) {
-			for (int i = 0; i < Chunk.SIZE; i++) {
-				batch.draw(tile, 32 * i + x, 32 * j + y);
-			}
-		}
 
-	}
 
 	private void drawObject(Object obj, int x, int y) {
 		// System.out.println(" text = "+obj.getTex()+"\n");

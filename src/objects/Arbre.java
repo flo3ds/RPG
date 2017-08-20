@@ -11,6 +11,7 @@ import graphicEngine.TextureRegion;
 import graphicEngine.Util;
 import graphicEngine.Vector2D;
 import graphicEngine.world.World;
+import graphicEngine.world.Worldable;
 import init.Items;
 import init.Tools;
 import perso.Personnage;
@@ -27,7 +28,7 @@ public class Arbre extends Object {
 		
 	}
 	
-	public void click(Personnage perso, World world, Vector2D pos_click) {
+	public void click(Personnage perso, Worldable world, Vector2D pos_click) {
 		System.out.print("click = "+pos_click.x+" : "+pos_click.y+"\n");
 		if(perso.getGUI().getCurrentItem().getItem().getId().equals(Tools.AXE.getId())) {
 			perso.inv.putItem(new Stack(Items.BOIS, 2));

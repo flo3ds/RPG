@@ -145,7 +145,7 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
         return null;
     }
     
-    public void destroy(World world, Vector2D click) {
+    public void destroy(Worldable world, Vector2D click) {
     	world.destroyAt(click);
     }
 

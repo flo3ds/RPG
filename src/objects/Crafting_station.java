@@ -3,6 +3,7 @@ package objects;
 
 import graphicEngine.Vector2D;
 import graphicEngine.world.World;
+import graphicEngine.world.Worldable;
 import layout.Layout_chest;
 import layout.Layout_crafting;
 import perso.Personnage;
@@ -18,7 +19,7 @@ public class Crafting_station extends Object implements ITileEntityProvider {
 		
 	}
 	
-	public void click(Personnage perso, World world, Vector2D pos_click) {
+	public void click(Personnage perso, Worldable world, Vector2D pos_click) {
 			perso.getGUI().openLayout(new Layout_crafting((TileEntityCrafting_station)world.getTileEntity(pos_click), perso.inv));
 	}
 
