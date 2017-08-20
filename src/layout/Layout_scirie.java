@@ -58,7 +58,7 @@ public class Layout_scirie extends Layout {
 			if( con_inv[i].clicked(x, y)) {
 				Inventable item = perso.inv.getItem(i);
 				if (item != null) {
-					if(tileEntity.addStack_in(item))
+					if(tileEntity.addStack_in((Stack)item))
 					perso.inv.removeItem(i);
 			}}
 		}

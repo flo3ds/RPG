@@ -9,7 +9,8 @@ import init.Items;
 
 public enum RecipeScirie {
 
-	planche("planche", new Stack(Items.PLANCHE, 2), new Stack(Items.BOIS, 1) );
+	planche("planche", new Stack(Items.PLANCHE, 2), new Stack(Items.BOIS, 1) ),
+	planche2("planche2", new Stack(Items.PLANCHE, 1), new Stack(Items.BRANCHE, 4) );
 
 	public RecipeMachine recipe;
 

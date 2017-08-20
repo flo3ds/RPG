@@ -11,7 +11,7 @@ public class ObjectContainer extends Object   {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity() {
+	public TileEntity createNewTileEntity(int x, int y) {
 		// TODO Auto-generated method stub
 		return null;
 	}

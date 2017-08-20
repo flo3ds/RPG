@@ -22,6 +22,10 @@ public class Objects {
     public static final Object HERBE;
     public static final Object FLOWER;
     public static final Object BRANCHE;
+    public static final Object CABLE;
+    public static final Object MINE;
+    public static final Object CABLEE;
+
     
 
   
@@ -51,6 +55,9 @@ public class Objects {
         HERBE = getRegisteredBlock(8);
         FLOWER = getRegisteredBlock(9);
         BRANCHE = getRegisteredBlock(10);
+        CABLE = getRegisteredBlock(11);
+        MINE = getRegisteredBlock(12);
+        CABLEE = getRegisteredBlock(13);
         CACHE.clear();
     }
 	

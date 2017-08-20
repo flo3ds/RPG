@@ -44,13 +44,9 @@ public class Tool implements Inventable {
 		return name;
 	}
 
-
-
-	
-	
-
 	public static void registerTools() {
 		registerTool(1, new Axe());
+		registerTool(2, new Pick());
 
 	}
 

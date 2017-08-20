@@ -5,14 +5,10 @@ import core.Inventable;
 import core.Stack;
 import items.Item;
 
-public class TileEntityChest extends TileEntity {
+public class TileEntityChest extends TileEntity implements ITileEntityContainer{
 
 	public Container container = new Container();
-	
-	 public void update()
-	 {
-		 
-	 }
+
 	 
 	 public void removeItem(int i) {
 		 container.removeItem(i);
@@ -28,5 +24,23 @@ public class TileEntityChest extends TileEntity {
 	 
 	 public int getSize() {
 		 return container.getSize();
-	 }
+	}
+
+	@Override
+	public Stack getStack() {
+		
+		return container.getItem(0);
+	}
+
+	@Override
+	public void putStack(Stack stack) {
+		container.putItem(stack);
+		
+	}
+
+	@Override
+	public Boolean checkPut(Stack stack) {
+		
+		return true;
+	}
 }

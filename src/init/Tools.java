@@ -10,6 +10,7 @@ public class Tools {
 
 	private static final Set<Tool> CACHE;
     public static final Tool AXE;
+    public static final Tool PICK;
 
   
     private static Tool getRegisteredTool(int id)
@@ -29,6 +30,7 @@ public class Tools {
     {  
     	CACHE = Sets.<Tool>newHashSet();
     	AXE = getRegisteredTool(1);
+    	PICK = getRegisteredTool(2);
         CACHE.clear();
     }
 	
