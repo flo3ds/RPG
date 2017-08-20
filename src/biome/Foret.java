@@ -7,8 +7,9 @@ import init.Sols;
 public class Foret extends Biome {
 
 	public Foret() {
-		super(Sols.HERBE);
 		
+		super(Sols.HERBE);
+
 		
 	}
 	

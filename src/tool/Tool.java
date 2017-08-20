@@ -2,7 +2,6 @@ package tool;
 
 import java.io.IOException;
 
-import org.lwjgl.Sys;
 
 import core.Inventable;
 import gameData.GameData;
@@ -30,7 +29,6 @@ public class Tool implements Inventable {
 				TextureManager.getInstance().register(name, tex);
 			}
 		} catch (IOException e) {
-			Sys.alert("Error", "Texture object not load : " + name);
 			e.printStackTrace();
 			System.exit(0);
 		}
