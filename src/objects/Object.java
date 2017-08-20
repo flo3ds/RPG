@@ -93,6 +93,9 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 		registerBlock(8, new Herbe());
 		registerBlock(9, new Flower());
 		registerBlock(10, new Branche());
+		registerBlock(11, new Cable());
+		registerBlock(12, new Mine());
+		registerBlock(13, new CableE());
 	}
 
 	private static void registerBlock(int id, Object object_) {
@@ -140,7 +143,7 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
     }
 
 	
-    public TileEntity createNewTileEntity()
+    public TileEntity createNewTileEntity(int x, int y)
     {
         return null;
     }
