@@ -17,6 +17,7 @@ import layout.Layout;
 import layout.Layout_sac;
 import objects.Object;
 import perso.Personnage;
+import world.WorldProvider;
 
 public class Player {
 
@@ -71,9 +72,14 @@ public class Player {
 		item[0] = new Stack(Objects.CHEST, 1);
 		item[1] = new Stack(Objects.SCIRIE, 1);
 		item[2] = new Stack(Objects.CRAFTING_STATION, 1);
-		item[3] = new Stack(Objects.MUR_BOIS, 1);
-		item[4] = new Stack(Objects.DOOR, 1);
+		item[3] = new Stack(Objects.DHD, 1);
+		item[4] = new Stack(Objects.PORTAL, 1);
 		item[5] = new Stack(Tools.AXE, 1);
+		item[6] = new Stack(Objects.FURNACE, 1);
+		item[7] = new Stack(Objects.CABLEE, 1);
+		item[8] = new Stack(Objects.GENERATOR, 1);
+		
+
 	}
 
 	public void render(SpriteBatch batch, Personnage perso) {
@@ -96,7 +102,7 @@ public class Player {
 		return pos;
 	}
 
-	public void update(Worldable world, float panX, float panY) {
+	public void update(Worldable world, float panX, float panY, Personnage perso) {
 		wheel = Mouse.getDWheel();
 		moving = false;
 		if( ! layout_state) {
@@ -165,7 +171,14 @@ public class Player {
 			selector ++;
 			if (selector > 8)
 				selector = 0;
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
 		}
 		if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 			world.save();
@@ -180,7 +193,7 @@ public class Player {
 			key_down = false;
 			if (!layout_state){
 				try {
-					openLayout(new Layout_sac());
+					openLayout(new Layout_sac(perso));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -226,5 +239,15 @@ public class Player {
 		if(layout_state)
 			layout.update();
 	}
+	
+	public Stack[] getItemBar() {
+		return item;
+	}
+
+	public void removeItem(int i) {
+		item[i] = null;
+	}
+	
+	
 
 }

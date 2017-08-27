@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import items.Item;
 import objects.Object;
+import tool.Tool;
 
 public class Stack implements Inventable {
 	
@@ -22,6 +23,11 @@ public class Stack implements Inventable {
 	}
 	
 
+	public Stack(Stack stack) {
+		this.item = stack.getItem();
+		this.nb = stack.getNombre();
+	}
+
 	public void reset() {
 		item = null;
 		nb = 0;
@@ -39,6 +45,10 @@ public class Stack implements Inventable {
 	
 	public String getTex() {
 		return item.getTex();
+	}
+	
+	public short getTexId() {
+		return item.getTexId();
 	}
 	
 	public void addNombre(int nb) {
@@ -64,5 +74,34 @@ public class Stack implements Inventable {
 			return item.getId();
 		else
 			return "";
+	}
+
+	public void setStack(Stack stack) {
+		this.item = stack.getItem();
+		this.nb = stack.getNombre();
+	}
+
+	public void setNombre(int i) {
+		this.nb = i;
+	}
+	
+	public Boolean empty() {
+		if(item == null || nb <=0)
+			return true;
+		return false;
+	}
+
+	public boolean compareID(Stack stack) {
+		if(stack.getId().equals(getId()))
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean compareID(Inventable stack) {
+		if(stack.getId().equals(getId()))
+			return true;
+		else
+			return false;
 	}
 }

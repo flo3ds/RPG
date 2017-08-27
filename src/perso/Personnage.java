@@ -5,11 +5,16 @@ import java.util.Map;
 
 import action.Position;
 import core.Armor;
+import core.Stack;
 import core.Time;
 import core.Weapon;
 import graphicEngine.Player;
+import graphicEngine.Vector2D;
 import graphicEngine.world.Worldable;
+import init.Items;
 import tool.Tool;
+import world.Code;
+import world.WorldProvider;
 
 
 public class Personnage {
@@ -24,10 +29,7 @@ public class Personnage {
 
 	private Player player;
 	
-	int world_id = 0;
-	
-	private Map<Integer, Worldable> world = new HashMap<Integer, Worldable>();
-
+	private Worldable world;
 
 	public Inventaire inv = new Inventaire();
 	public Position position = Position.base;
@@ -38,6 +40,10 @@ public class Personnage {
 	public Personnage(Time time, Player player) {
 		this.time = time;
 		this.player = player;
+	}
+	
+	public void post_init() {
+		inv.putItem(new Stack(Items.PLANCHE, 64));
 	}
 	
 	public Position getPosition() {
@@ -139,16 +145,20 @@ public class Personnage {
 		return player;
 	}
 
-	public Worldable getWorld(int id) {
-		return world.get(id);
+	public Worldable getWorld() {
+		return world;
 	}
-
-	public void addWorld(int id, Worldable world) {
-		this.world.put(id, world);
+	
+	public void setWorld(Worldable world) {
+		this.world = world;
 	}
-
-	public Worldable getCurrentWorld() {
-		return world.get(world_id);
+	
+	public void teleport(int id) {
+		Worldable w = WorldProvider.getInstance().openWorld(id);
+		if(id != 0)
+		w.postInit(new Vector2D(0, 0), new world.World());
+		player.setPos(new Vector2D(0, 0));
+		world = w;	
 	}
 
 }

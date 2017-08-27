@@ -25,9 +25,8 @@ public class Flower extends Object {
 	}
 	
 	public void click(Personnage perso, Worldable world, Vector2D pos_click) {
-		
 			perso.inv.putItem(new Stack(Items.FLOWER, 2));
-		
+			destroy(world, pos_click);
 	}
 	
 }

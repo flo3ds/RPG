@@ -4,6 +4,7 @@ import graphicEngine.Vector2D;
 import objects.Object;
 import tileEntity.TileEntity;
 import tileEntity.TileEntityChest;
+import world.World;
 
 public interface Worldable {
 
@@ -20,6 +21,8 @@ public interface Worldable {
 	public Vector2D[] getChunkLoader();
 	public TileEntity getTileEntity(Vector2D pos_click);
 	public void destroyAt(Vector2D click);
+	public void removeTileEntity(Vector2D pos_click);
+	public void postInit(Vector2D vector2d, World world);
 	
 	
 }

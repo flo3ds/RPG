@@ -13,6 +13,7 @@ import graphicEngine.Vector2D;
 import graphicEngine.world.World;
 import graphicEngine.world.Worldable;
 import init.Items;
+import init.Tools;
 import perso.Personnage;
 
 public class Door extends Object {
@@ -23,6 +24,9 @@ public class Door extends Object {
 	}
 	
 	public void click(Personnage perso, Worldable world, Vector2D pos_click) {
+		if(perso.getGUI().getCurrentItem().compareID(Tools.PICK))
+			breakObj(perso, world, pos_click);
+		else
 		if(this.getActivStateId() == 0){
 			setState("open");
 			setColisable(false);

@@ -18,6 +18,7 @@ public class Tool implements Inventable {
 	public static final GameData REGISTRY = GameData.getMain();
 
 	public String name;
+	private short texId;
 	
 	public Tool(String name) {
 
@@ -26,12 +27,13 @@ public class Tool implements Inventable {
 			if (!TextureManager.getInstance().exist(name)) {
 				Texture tex;
 				tex = new Texture(Util.getResource("res/tool/" + name + ".png"));
-				TextureManager.getInstance().register(name, tex);
+				texId = TextureManager.getInstance().register(name, tex);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
+		texId = TextureManager.getInstance().getIdByName(name);
 	}
 
 	
@@ -52,6 +54,10 @@ public class Tool implements Inventable {
 
 	private static void registerTool(int id, Tool item_) {
 		REGISTRY.registerTool(id, item_);
+	}
+
+	public short getTexId() {
+		return texId;
 	}
 
 	

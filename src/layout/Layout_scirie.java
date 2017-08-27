@@ -15,21 +15,27 @@ public class Layout_scirie extends Layout {
 	private Container con_in;
 	private Container con_out;
 	private Container[] con_inv;
-	private TileEntityScirie tileEntity;
+	private Container[] con_bar;
+	private TileEntityScirie scirie;
 	private int inv_size;
 
 
-	public Layout_scirie(TileEntityScirie tileEntity, Inventaire inv) {
+	public Layout_scirie(TileEntityScirie tileEntity, Personnage perso) {
 		super("scirie");
-		this.tileEntity = tileEntity;
+		scirie = tileEntity;
 		
-		inv_size = inv.getSize();
-		con_in = new Container();
-		con_out = new Container();
+		inv_size = perso.inv.getSize();
+		con_in = addContainer(scirie.getStack_in());
+		con_out = addContainer(scirie.getStack_out());
 		con_inv = new Container[inv_size];
+		con_bar = new Container[9];
 		
 		for(int i=0; i<inv_size; i++)
-			con_inv[i] = new Container();
+			con_inv[i] = new Container();for(int i=0; i<inv_size; i++)
+				con_inv[i] = addContainer( perso.inv.getItem(i));
+			
+			for(int i=0; i<9; i++)
+				con_bar[i] = addContainer(perso.getGUI().getItemBar()[i]);
 	}
 	
 
@@ -40,36 +46,22 @@ public class Layout_scirie extends Layout {
 		y -= 240;
 		draw_extends(batch, x, y);
 		
+		int xx=0;
 		for(int i=0; i<inv_size; i++) {
-			con_inv[i].draw(batch, (x+100)+(i*42), (y+280), inv.getItem(i));
+			con_inv[i].draw(batch, (x+130)+(xx*42), (y+215) + ((i/9)*45));
+			xx++;
+			if(xx==9)
+				xx=0;
 		}
 		
-		con_in.draw(batch, x+100, y+150, tileEntity.getStack_in());
-		con_out.draw(batch, x+500, y+150, tileEntity.getStack_out());
+		for(int i=0; i<9; i++) 
+			con_bar[i].draw(batch, (x+130) + (i*42), (y+360));
 		
-	}
-	
-	public void update () {
 		
-	}
-	
-	public void click (int x, int y, Personnage perso) {
-		for(int i=0; i<inv_size; i++) {
-			if( con_inv[i].clicked(x, y)) {
-				Inventable item = perso.inv.getItem(i);
-				if (item != null) {
-					if(tileEntity.addStack_in((Stack)item))
-					perso.inv.removeItem(i);
-			}}
-		}
-		if( con_out.clicked(x, y)) {
-			perso.inv.putItem(tileEntity.getStack_out());
-			tileEntity.removeStackOut();
-		}
-		else if( con_in.clicked(x, y)) {
-			perso.inv.putItem(tileEntity.getStack_in());
-			tileEntity.removeStackIn();
-		}
+		con_in.draw(batch, x+140, y+150);
+		con_out.draw(batch, x+500, y+150);
+		
+		draw_post_extends(batch);
 		
 	}
 

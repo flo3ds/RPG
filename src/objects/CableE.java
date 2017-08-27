@@ -3,6 +3,8 @@ package objects;
 
 import graphicEngine.Vector2D;
 import graphicEngine.world.World;
+import graphicEngine.world.Worldable;
+import init.Tools;
 import layout.Layout_chest;
 import perso.Personnage;
 import tileEntity.ITileEntityProvider;
@@ -10,6 +12,7 @@ import tileEntity.TileEntity;
 import tileEntity.TileEntityCable;
 import tileEntity.TileEntityCableE;
 import tileEntity.TileEntityChest;
+import tileEntity.TileEntityGenerator;
 
 public class CableE extends Object implements ITileEntityProvider {
 	
@@ -32,8 +35,11 @@ public class CableE extends Object implements ITileEntityProvider {
 		addState("BLR");
 	}
 	
-	public void click(Personnage perso, World world, Vector2D pos_click) {
-		
+	public void click(Personnage perso, Worldable world, Vector2D pos_click) {
+		if(perso.getGUI().getCurrentItem().compareID(Tools.PICK))
+			breakObj(perso, world, pos_click);
+		else
+		System.out.println("buffer cable :" + ((TileEntityCableE)world.getTileEntity(pos_click)).getBuffer());
 	}
 
     public TileEntity createNewTileEntity(int x, int y)

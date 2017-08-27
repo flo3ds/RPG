@@ -1,72 +1,82 @@
 package layout;
 
+import java.io.IOException;
 
-import core.Inventable;
+import org.lwjgl.input.Mouse;
+
 import core.Stack;
+import graphicEngine.BitmapFont;
 import graphicEngine.SpriteBatch;
+import graphicEngine.Texture;
+import graphicEngine.TextureManager;
+import graphicEngine.Util;
 import items.Item;
 import perso.Inventaire;
 import perso.Personnage;
-import tileEntity.TileEntity;
 import tileEntity.TileEntityChest;
 
 public class Layout_chest extends Layout {
 	
-	private Container[] con_chest;
 	private Container[] con_inv;
-	private TileEntityChest tileEntity;
-	private int chest_size;
+	private Container[] con_bar;
+	private Container[] con_chest;
 	private int inv_size;
+	private int chest_size;
+	private TileEntityChest chest;
 
-	public Layout_chest(TileEntityChest tileEntity, Inventaire inv) {
+
+	public Layout_chest(TileEntityChest tileEntityChest, Personnage perso) {
 		super("chest");
-		this.tileEntity = tileEntity;
-		chest_size = this.tileEntity.getSize();
-		inv_size = inv.getSize();
-		con_chest = new Container[chest_size];
-		con_inv = new Container[inv_size];
+		chest = tileEntityChest;
+		inv_size = perso.inv.getSize();
+		chest_size = chest.getSize();
 		
-		for(int i=0; i<inv_size; i++)
-			con_inv[i] = new Container();
+		con_inv = new Container[inv_size];
+		con_chest = new Container[chest_size];
+		con_bar = new Container[9];
 		
 		for(int i=0; i<chest_size; i++)
-			con_chest[i] = new Container();
+			con_chest[i] = addContainer( chest.getItem(i));
+		
+		for(int i=0; i<inv_size; i++)
+			con_inv[i] = addContainer( perso.inv.getItem(i));
+		
+		for(int i=0; i<9; i++)
+			con_bar[i] = addContainer(perso.getGUI().getItemBar()[i]);
+		
 	}
 
 	public void draw(SpriteBatch batch, int x, int y, Inventaire inv) {
 		x -= 320;
-		y -= 240;
+		y -= 250;
 		draw_extends(batch, x, y);
-		
-		for(int i=0; i<inv_size; i++) {
-			con_inv[i].draw(batch, (x+100)+(i*42), (y+150), inv.getItem(i));
-		}
+
+		int xx = 0;
+
 		for(int i=0; i<chest_size; i++) {
-			con_chest[i].draw(batch, (x+100)+(i*42), (y+280), tileEntity.getItem(i));
+			con_chest[i].draw(batch, (x+130)+(xx*42), (y+100) + ((i/9)*45));
+			xx++;
+			if(xx==9)
+				xx=0;
 		}
+		
+		xx=0;
+		for(int i=0; i<inv_size; i++) {
+			con_inv[i].draw(batch, (x+130)+(xx*42), (y+205) + ((i/9)*45));
+			xx++;
+			if(xx==9)
+				xx=0;
+		}
+		
+		for(int i=0; i<9; i++) 
+			con_bar[i].draw(batch, (x+130) + (i*42), (y+360));
+		
+		draw_post_extends(batch);
 	}
 	
-	public void update () {
-		
-	}
 	
-	public void click (int x, int y, Personnage perso) {
-		for(int i=0; i<inv_size; i++) {
-			if( con_inv[i].clicked(x, y)) {
-				Stack item = perso.inv.getItem(i);
-				if (item != null) {
-					tileEntity.putItem(item);
-					perso.inv.removeItem(i);
-			}}
-		}
-		for(int i=0; i<chest_size; i++) {
-			if( con_chest[i].clicked(x, y)) {
-				Stack item = tileEntity.getItem(i);
-				if (item != null) {
-					perso.inv.putItem(item);
-					tileEntity.removeItem(i);
-			}}
-		}
-	}
+
+	
+	
 
 }

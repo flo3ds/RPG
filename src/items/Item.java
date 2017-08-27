@@ -20,6 +20,7 @@ public class Item implements Inventable {
 	public static final GameData REGISTRY = GameData.getMain();
 
 	public String name;
+	private short texId;
 	
 	public Item(String name) {
 
@@ -29,13 +30,14 @@ public class Item implements Inventable {
 			if (!TextureManager.getInstance().exist(name)) {
 				Texture tex;
 				tex = new Texture(Util.getResource("res/item/" + name + ".png"));
-				TextureManager.getInstance().register(name, tex);
+				texId = TextureManager.getInstance().register(name, tex);
 			}
 		} catch (IOException e) {
 			Sys.alert("Error", "Texture object not load : " + name);
 			e.printStackTrace();
 			System.exit(0);
 		}
+		texId =  TextureManager.getInstance().getIdByName(name);
 	}
 
 	
@@ -48,11 +50,10 @@ public class Item implements Inventable {
 		return name;
 	}
 
-
-
+	public short getTexId() {
+		return texId;
+	}
 	
-	
-
 	public static void registerItems() {
 		registerItem(1, new Bois());
 		registerItem(2, new Fil());

@@ -1,34 +1,54 @@
 package graphicEngine;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TextureManager {
 
 	private static TextureManager instance = new TextureManager();
 
-	private Map<String, ITexture> map = new HashMap<String, ITexture>();
+	//private Map<Short, ITexture> mapId = new HashMap<Short, ITexture>();
+	private Map<String, Short> mapName = new HashMap<String, Short>();
+	
+	private List<ITexture> tex = new ArrayList<ITexture>();
+	
+	private short id = 0;
 
 	private TextureManager() {
-
+		
 	}
 
 	public static TextureManager getInstance() {
 		return instance;
 	}
 
-	public void register(String str, ITexture tex) {
-		if (map.containsKey(str))
-			return;
-		getInstance().map.put(str, tex);
+	public short register(String str, ITexture tex) {
+		if (getInstance().mapName.containsKey(str)) {
+			return getInstance().mapName.get(str);
+		}else{
+			//System.out.println("name : "+str+" | "+id);
+			getInstance().tex.add(id, tex);
+			getInstance().mapName.put(str, id);
+			id++;
+			return id;
+		}
+
 	}
 
-	public ITexture getTexture(String str) {
-		return getInstance().map.get(str);
+	public ITexture getTexture(short id) {
+		return getInstance().tex.get(id);
+	}
+	
+	
+	public short getIdByName(String str) {
+		return getInstance().mapName.get(str);
 	}
 
 	public boolean exist(String str) {
-		if (map.containsKey(str))
+		if (getInstance().mapName.containsKey(str))
 			return true;
 		return false;
 	}

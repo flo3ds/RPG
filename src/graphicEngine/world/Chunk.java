@@ -24,10 +24,11 @@ public class Chunk implements Serializable {
 
 	private Object[][] grid;
 	
-	private Sol_extends sol;
+	private Sol_extends[][] sol;
 
 	public Chunk(World world, Vector2D pos) {
 		grid = new Object[SIZE][SIZE];
+		sol = new Sol_extends[SIZE][SIZE];
 	}
 
 	public Chunk(World world) {
@@ -76,12 +77,20 @@ public class Chunk implements Serializable {
 
 
 	
-	public String getSolText() {
-		return sol.getTex();
+	public String getSolText(int x, int y) {
+		return sol[x][y].getTex();
 	}
 
-	public void setSol(Sol_extends sol) {
+	public void setSol(Sol_extends[][] sol) {
 		this.sol = sol;
+	}
+
+	public void placeSol(short x, short y, Sol_extends pierre) {
+		sol[x][y] = pierre;
+	}
+
+	public short getSolTextId(int x, int y) {
+		return sol[x][y].getTextId();
 	}
 
 }

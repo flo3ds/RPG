@@ -25,6 +25,10 @@ public class Objects {
     public static final Object CABLE;
     public static final Object MINE;
     public static final Object CABLEE;
+    public static final Object FURNACE;
+    public static final Object GENERATOR;
+    public static final Object DHD;
+    public static final Object PORTAL;
 
     
 
@@ -58,6 +62,10 @@ public class Objects {
         CABLE = getRegisteredBlock(11);
         MINE = getRegisteredBlock(12);
         CABLEE = getRegisteredBlock(13);
+        FURNACE = getRegisteredBlock(14);
+        GENERATOR = getRegisteredBlock(15);
+        DHD = getRegisteredBlock(16);
+        PORTAL = getRegisteredBlock(17);
         CACHE.clear();
     }
 	

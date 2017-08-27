@@ -34,6 +34,8 @@ import objects.Object;
 import objects.Placable;
 import perso.Personnage;
 import tool.Tool;
+import world.Code;
+import world.WorldProvider;
 
 import static org.lwjgl.opengl.GL11.glClearColor;
 
@@ -41,6 +43,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Timer;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.lwjgl.LWJGLException;
@@ -60,7 +67,9 @@ import core.Time;
 import graphicEngine.BitmapFont;
 import graphicEngine.Color;
 import graphicEngine.Game;
+import graphicEngine.ITexture;
 import graphicEngine.Player;
+import graphicEngine.Render;
 import graphicEngine.SimpleGame;
 import graphicEngine.SpriteBatch;
 import graphicEngine.Texture;
@@ -84,10 +93,25 @@ public class GameLWJGL extends SimpleGame {
 	final static short SCREEN_H = 600;
 		
 	public GameLWJGL() {
+		
+		try {
+			
+			font = new BitmapFont(Util.getResource("res/ptsans.fnt"), Util.getResource("res/ptsans_00.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		player = new Player();
 		time = new Time();
 		perso = new Personnage(time, player);
 		
+		try {
+			TextureManager.getInstance().register("bug", new Texture(Util.getResource("res/bug.png")));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		Object.registerBlocks();
 		Item.registerItems();
@@ -98,12 +122,13 @@ public class GameLWJGL extends SimpleGame {
 
 		
 		wworld = new world.World();
-		perso.addWorld(0, new BaseGUI("base", new Vector2D(0, 0)));
-		perso.addWorld(1, new World(player.getPos(), wworld));
+		WorldProvider.getInstance().addWorld(0, new World("test"));
+		perso.setWorld(WorldProvider.getInstance().getWorld(0));
 		
-		world = perso.getCurrentWorld();
+		world = perso.getWorld();
 		
 		player.postInit();
+		perso.post_init();
 
 
 	
@@ -161,10 +186,14 @@ public class GameLWJGL extends SimpleGame {
 
 	boolean holdGMouse = false;
 	boolean holdDMouse = false;
+	
+	private String lastTex = "";
 
 
 
 	void drawGame() {
+		
+		
 		// get the instance of the view matrix for our batch
 		Matrix4f view = batch.getViewMatrix();
 
@@ -204,10 +233,7 @@ public class GameLWJGL extends SimpleGame {
 			renderSol(world.getChunkLoader()[i]);
 		}
 		*/
-		if (!world.waiting())
-			for (int i = 0; i < world.getChunkLoader().length; i++) {
-				renderChunk(world.getChunk(world.getChunkLoader()[i]), world.getChunkLoader()[i]);
-			}
+		Render.render(batch, player, world, perso);
 		
 		player.renderLayout(batch, perso);
 
@@ -218,72 +244,45 @@ public class GameLWJGL extends SimpleGame {
 		batch.end();
 	}
 
-	private void renderChunk(Chunk chunk, Vector2D pos) {
-		int x = (int) (32 * Chunk.SIZE * pos.x);
-		int y = (int) (32 * Chunk.SIZE * pos.y);
-		// System.out.println("ch "+x+" | cy"+pos.y);
-		
-		for (int j = 0; j < Chunk.SIZE; j++) {
-			for (int i = 0; i < Chunk.SIZE; i++) {
-				batch.draw(TextureManager.getInstance().getTexture(chunk.getSolText()), 32 * i + x, 32 * j + y);
-			}
-		}
-		
-		int py = (int) (player.getPos().y / 32 % (Chunk.SIZE));
-		if (player.getPos().y > 0) {
-
-		} else {
-			py *= -1;
-			py = 31 - py;
-		}
-		// System.out.println("pos : " + world.getChunkPos(new
-		// Vector2D(player.getPos().x, player.getPos().y)).y);
-		// System.out.println("posp : " + py);
-		Object[][] data = chunk.getGrid();
-		for (int j = 0; j < Chunk.SIZE; j++) {
-			if (j == py && world.getChunkPos(new Vector2D(player.getPos().x, player.getPos().y)).compare(pos))
-				player.render(batch, perso);
-			for (int i = Chunk.SIZE - 1; i >= 0; i--) {
-				if (data[i][j] != null)
-					drawObject(data[i][j], 32 * i + x, 32 * j + y);
-			}
-		}
-
-	}
+	
 
 
 
-	private void drawObject(Object obj, int x, int y) {
-		// System.out.println(" text = "+obj.getTex()+"\n");
-		batch.draw(TextureManager.getInstance().getTexture(obj.getTex()), x + obj.getDx(), y + obj.getDy());
-	}
 
-	void drawHUD() {
+	void drawHUD(int x, int y) {
 		// draw the text with identity matrix, i.e. no camera transformation
 		batch.getViewMatrix().setIdentity();
 		batch.updateUniforms();
 
 		batch.begin();
 
-		font.drawText(batch, "Control qzds", 10, 10);
+		font.drawText(batch, "FPS : "+getFPS(), x+10, y+10);
 		batch.end();
 	}
 
 	protected void render() throws LWJGLException {
 		super.render();
+		
+		world = perso.getWorld();
+
 
 		panX = -1 * (player.getPos().x - SCREEN_W / 2);
 		panY = -1 * (player.getPos().y - SCREEN_H / 2);
 
+		if(player.getLayoutState()) {
+			int x_m = (int) (Mouse.getX() - panX);
+			int y_m = (int) (Mouse.getY() - (SCREEN_H - panY));
+			y_m *= -1;
+			player.getLayout().click(x_m, y_m, perso);
+		}else{
+		
 		if (Mouse.isButtonDown(0) && holdGMouse == false) {
 			int x_m = (int) (Mouse.getX() - panX);
 			int y_m = (int) (Mouse.getY() - (SCREEN_H - panY));
 			y_m *= -1;
 			
 			
-			if(player.getLayoutState()) {
-				player.getLayout().click(x_m, y_m, perso);
-			}else{
+			
 				if(y_m < 0)
 					y_m -= 32;
 				if(x_m < 0)
@@ -294,7 +293,7 @@ public class GameLWJGL extends SimpleGame {
 				if (obj != null){
 					obj.click(perso, world, new Vector2D(x_m, y_m));
 				}
-			}
+			
 			holdGMouse = true;
 		}
 		if (Mouse.isButtonDown(0) == false && holdGMouse == true)
@@ -305,9 +304,7 @@ public class GameLWJGL extends SimpleGame {
 			int y_m = (int) (Mouse.getY() - (SCREEN_H - panY));
 			y_m *= -1;
 			
-			if(player.getLayoutState()) {
-				player.getLayout().click(x_m, y_m, perso);
-			}else{
+			
 				if(y_m < 0)
 					y_m -= 32;
 				if(x_m < 0)
@@ -323,28 +320,28 @@ public class GameLWJGL extends SimpleGame {
 						e.printStackTrace();
 					}
 					//}
-			}
+			
 			holdDMouse = true;
 		}
 		if (Mouse.isButtonDown(1) == false && holdDMouse == true)
 			holdDMouse = false;
-
+		}
 		world.update(player.getPos(), wworld);
-		player.update(world, panX, panY);
+		player.update(world, panX, panY, perso);
 		
 		world.updateTileEntity();
 		player.layoutUpdate();
 
-		// System.out.println("x: " + player.getPos().x);
-
 		drawGame();
 
-		// drawHUD();
+		//drawHUD((int)panX, (int)panY);
 	}
 
 	protected void resize() throws LWJGLException {
 		super.resize();
 		batch.resize(Display.getWidth(), Display.getHeight());
 	}
+	
+	
 
 }

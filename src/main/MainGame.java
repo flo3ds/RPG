@@ -42,12 +42,7 @@ public class MainGame extends SimpleGame {
 			game.render();
 		}else {
 			menu.render();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
 		}
 	}
 

@@ -18,6 +18,7 @@ public class Sols {
 	private static final Set<Sol_extends> CACHE;
     public static final Sol_extends HERBE;
     public static final Sol_extends BASE;
+    public static final Sol_extends PIERRE;
   
     private static Sol_extends getRegisteredSol(int id)
     {
@@ -37,6 +38,7 @@ public class Sols {
     	CACHE = Sets.<Sol_extends>newHashSet();
     	HERBE = getRegisteredSol(0);
     	BASE = getRegisteredSol(1);
+    	PIERRE = getRegisteredSol(2);
         CACHE.clear();
     }
 	

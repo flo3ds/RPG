@@ -24,9 +24,8 @@ public class Pierre extends Object {
 	}
 	
 	public void click(Personnage perso, Worldable world, Vector2D pos_click) {
-		
 			perso.inv.putItem(new Stack(Items.CAILLOU, 2));
-		
+			destroy(world, pos_click);
 	}
 	
 }

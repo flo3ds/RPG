@@ -13,13 +13,13 @@ public class ObjectState implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 2977976442469803904L;
-	private int activeState;
-	private int nbState = 0;
+	private short activeState;
+	private short nbState = 0;
 	// private Map<String, Integer> state = new HashMap<String, Integer>();
 
-	BiMap<String, Integer> bimap = HashBiMap.create();
+	BiMap<String, Short> bimap = HashBiMap.create();
 
-	public int getActivStateId() {
+	public short getActivStateId() {
 		return activeState;
 	}
 
@@ -35,7 +35,7 @@ public class ObjectState implements Serializable {
 		setState(getState(key));
 	}
 
-	public int getState(String str) {
+	public short getState(String str) {
 		return bimap.get(str);
 	}
 

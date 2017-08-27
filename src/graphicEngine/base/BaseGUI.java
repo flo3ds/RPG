@@ -20,7 +20,7 @@ import tileEntity.ITileEntityProvider;
 import tileEntity.TileEntity;
 import world.World;
 
-public class BaseGUI  implements Worldable {
+public class BaseGUI extends World_extends implements Worldable {
 
 public  short salle_number = 5;
 	
@@ -31,9 +31,10 @@ public  short salle_number = 5;
 	private Map<Integer, Chunk> chunkMap = new HashMap<Integer, Chunk>();
 	private Map<Integer, TileEntity> tileEntity = new HashMap<Integer, TileEntity>();
 	
-	public BaseGUI(String name, Vector2D pos) {
+	public BaseGUI() {
+		super("base");
 		mesh = new Vector2D[salle_number];
-		this.name = name;
+		this.name = "base";
 		File f = new File("world/base/"+name + ".ser");
 		if(f.exists() && !f.isDirectory()) {
 			FileInputStream fin = null;

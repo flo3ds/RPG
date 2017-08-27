@@ -1,36 +1,38 @@
 package tileEntity;
 
-import core.Inventable;
-
 import core.Stack;
 import graphicEngine.world.World_extends;
 import recipe.RecipeScirie;
-import init.Items;
-import items.Item;
 
-public class TileEntityScirie extends TileEntity implements ITileEntityContainer{
-	
+public class TileEntityScirie extends TileEntity implements ITileEntityContainer {
+
 	private int delay = 100;
 	private int delta_delay = delay;
-	private Stack stack_in ;
+	private Stack stack_in;
 	private Stack stack_out;
-
 	
+	public TileEntityScirie() {
+		stack_in = new Stack();
+		stack_out = new Stack();
+	}
+
 	public void update(World_extends world) {
-		
-		if(stack_in != null ){
-			for (int i=0; i< RecipeScirie.values().length; i++) {
-				if(stack_in.getId().equals(RecipeScirie.values()[i].recipe.getObjectForRecipe().getId()) && stack_in.getNombre() >= RecipeScirie.values()[i].recipe.getObjectForRecipe().getNombre()){
-					if(delta_delay < 0) {
-						if(stack_out == null)
-							stack_out = RecipeScirie.values()[i].recipe.getResult();
+
+		if (!stack_in.empty()) {
+			for (int i = 0; i < RecipeScirie.values().length; i++) {
+				if (stack_in.getId().equals(RecipeScirie.values()[i].recipe.getObjectForRecipe().getId())
+						&& stack_in.getNombre() >= RecipeScirie.values()[i].recipe.getObjectForRecipe().getNombre()) {
+					if (delta_delay < 0) {
+						if (stack_out.empty())
+							stack_out.setStack(RecipeScirie.values()[i].recipe.getResult());
 						else
-							stack_out.addItem(RecipeScirie.values()[i].recipe.getResult().getItem(), RecipeScirie.values()[i].recipe.getResult().getNombre());
+							stack_out.addItem(RecipeScirie.values()[i].recipe.getResult().getItem(),
+									RecipeScirie.values()[i].recipe.getResult().getNombre());
 						stack_in.subNombre(RecipeScirie.values()[i].recipe.getObjectForRecipe().getNombre());
 						delta_delay = delay;
-					}else{
+					} else {
 						delta_delay--;
-						
+
 					}
 				}
 			}
@@ -44,10 +46,10 @@ public class TileEntityScirie extends TileEntity implements ITileEntityContainer
 	public void setStack_in(Stack stack_in) {
 		this.stack_in = stack_in;
 	}
-	
+
 	public Boolean addStack_in(Stack stack) {
-		if(stack instanceof Stack){
-			if(stack_in == null){
+		if (stack instanceof Stack) {
+			if (stack_in.empty()) {
 				stack_in = new Stack(((Stack) stack).getItem(), ((Stack) stack).getNombre());
 				return true;
 			}
@@ -56,7 +58,7 @@ public class TileEntityScirie extends TileEntity implements ITileEntityContainer
 		}
 		return false;
 	}
-	
+
 	public Stack getStack_out() {
 		return stack_out;
 	}
@@ -66,11 +68,11 @@ public class TileEntityScirie extends TileEntity implements ITileEntityContainer
 	}
 
 	public void removeStackOut() {
-		stack_out = null;	
+		stack_out = new Stack();
 	}
-	
+
 	public void removeStackIn() {
-		stack_in = null;
+		stack_in = new Stack();
 		delta_delay = delay;
 	}
 
@@ -86,19 +88,16 @@ public class TileEntityScirie extends TileEntity implements ITileEntityContainer
 
 	@Override
 	public Boolean checkPut(Stack stack) {
-		for (int i=0; i< RecipeScirie.values().length; i++) {
-			System.out.println("test recette "+i +" if "+stack.getId()+" == "+ RecipeScirie.values()[i].recipe.getObjectForRecipe().getId());
-			if(stack.getId().equals(RecipeScirie.values()[i].recipe.getObjectForRecipe().getId())){
-				System.out.println("test");
-				if(stack_in == null)
+		for (int i = 0; i < RecipeScirie.values().length; i++) {
+			if (stack.getId().equals(RecipeScirie.values()[i].recipe.getObjectForRecipe().getId())) {
+				if (stack_in.empty())
 					return true;
-				else if(stack_in.getId().equals(""))
-					return true;
-				else if(stack_in.getNombre() + stack.getNombre() <= Stack.MAXSIZE)
-					if(stack.getId().equals(stack_in.getId()))
-						return true; 
+				else if (stack_in.getNombre() + stack.getNombre() <= Stack.MAXSIZE
+						&& stack_in.getId().equals(stack.getId()))
+					if (stack.getId().equals(stack_in.getId()))
+						return true;
 			}
-			
+
 		}
 		return false;
 	}

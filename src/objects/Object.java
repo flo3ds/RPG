@@ -8,6 +8,7 @@ import java.util.Map;
 import org.lwjgl.Sys;
 
 import core.Inventable;
+import core.Stack;
 import gameData.GameData;
 import graphicEngine.ITexture;
 import graphicEngine.Texture;
@@ -16,9 +17,11 @@ import graphicEngine.Util;
 import graphicEngine.Vector2D;
 import graphicEngine.world.World;
 import graphicEngine.world.Worldable;
+import init.Items;
 import perso.Personnage;
 import tileEntity.ITileEntityProvider;
 import tileEntity.TileEntity;
+import tool.Tool;
 
 
 public class Object extends ObjectState implements Serializable, Inventable, Placable {
@@ -31,26 +34,28 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 	public static final GameData REGISTRY = GameData.getMain();
 
 	private boolean colisable = true;
-
+	private short texId;
 	private String name;
 	private int dx = 0;
 	private int dy = 0;
 	
 	public Object(String name) {
 		this.name = name;
-		setState(0);
+		setState((short) 0);
 
 		try {
 			if (!TextureManager.getInstance().exist(name)) {
 				Texture tex;
 				tex = new Texture(Util.getResource("res/object/" + name + ".png"));
-				TextureManager.getInstance().register(name, tex);
+				texId = TextureManager.getInstance().register(name, tex);
 			}
 		} catch (IOException e) {
 			Sys.alert("Error", "Texture object not load : " + name);
 			e.printStackTrace();
 			System.exit(0);
 		}
+		texId = TextureManager.getInstance().getIdByName(name);
+		//System.out.println("name = "+name+" | "+texId);
 
 	}
 
@@ -67,6 +72,7 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 			e.printStackTrace();
 			System.exit(0);
 		}
+		
 	}
 
 	public String getName() {
@@ -75,6 +81,10 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 
 	public String getTex() {
 		return name + ((getActivStateId() == 0) ? "" : "_" + getActivStateName());
+	}
+	
+	public short getTexId() {
+		return (short) (texId + getActivStateId());
 	}
 
 	public void click(Personnage perso, Worldable world, Vector2D pos_click) {
@@ -96,6 +106,10 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 		registerBlock(11, new Cable());
 		registerBlock(12, new Mine());
 		registerBlock(13, new CableE());
+		registerBlock(14, new Furnace());
+		registerBlock(15, new Generator());
+		registerBlock(16, new Dhd());
+		registerBlock(17, new Portal());
 	}
 
 	private static void registerBlock(int id, Object object_) {
@@ -156,6 +170,12 @@ public class Object extends ObjectState implements Serializable, Inventable, Pla
 	public String getId() {
 		// TODO Auto-generated method stub
 		return name;
+	}
+	
+	public void breakObj(Personnage perso, Worldable world, Vector2D pos_click) {
+			perso.inv.putItem(new Stack(this, 1));
+			world.removeTileEntity(pos_click);
+			destroy(world, pos_click);
 	}
 	
 	

@@ -11,95 +11,113 @@ import tool.Tool;
 public class Container {
 
 	protected short cases = 10;
-	protected List<Stack> inventaire = new ArrayList<Stack>();
-	private short libre = 0;
+	protected Stack inventaire[] = new Stack[cases];
 
 	public Container() {
-
+		init();
+	}
+	
+	public Container(int size) {
+		this.cases = (short) size;
+		inventaire = new Stack[size];
+		init();
 	}
 
+	public void init() {
+		for(int i=0; i < cases; i++)
+			inventaire[i] = new Stack();
+	}
+	
 	// BUG SI IL Y A DES DEJA OBJ
 	public void setCases(int i) {
 		this.cases = (short) i;
+		inventaire = new Stack[i];
+		init();
+	}
+	
+	public int getFreeCase() {
+		for (int i=0; i <cases; i++)
+			if(inventaire[i] == null)
+				return i;
+			else if(inventaire[i].getId() == "")
+				return i;
+		return -1;
 	}
 
 	public boolean putItem(Stack object) {
-		if (this.libre == this.cases - 1)
+		int free = getFreeCase();
+		if(free == -1)
 			return false;
-
+		
 		if (object.getItem() instanceof Tool) {
-			this.inventaire.add(object);
+			inventaire[free].setStack(object);
 			return true;
 		}
 
 		for (int i = 0; i < this.cases; i++) {
-
-			if (!this.inventaire.isEmpty())
-				if (i < this.inventaire.size())
-					if (object.getId().equals( this.inventaire.get(i).getId())) {
-						((Stack)this.inventaire.get(i)).addNombre(object.getNombre());
+			if(inventaire[i] != null)
+					if (object.getId().equals(inventaire[i].getId())) {
+						inventaire[i].addNombre(object.getNombre());
 						return true;
 					}
 		}
 
-			this.inventaire.add(new Stack(object.getItem(), object.getNombre()));
-		
-		
+		inventaire[free].setStack(new Stack(object.getItem(), object.getNombre()));
 		return true;
 	}
 
-	public List<Stack> getInventaire() {
-		return this.inventaire;
+
+	public void putItem(Stack stack, int i) {
+		inventaire[i] = stack;
 	}
 
-
+	public Stack[] getItemTab() {
+		return inventaire;
+	}
 
 	public Stack getItem(int i) {
-		if(i < this.inventaire.size())
-			return this.inventaire.get(i);
-		else
-			return null;
+		return inventaire[i];
 	}
-
+	
 	public void removeItem(int index) {
-		ListIterator<Stack> it = inventaire.listIterator();
-		int i = 0;
-		while (it.hasNext()) {
-			it.next();
-			if (i++ == index)
-				it.remove();
-		}
-		this.libre--;
+		inventaire[index] = null;
 	}
 
 	public int getSize() {
-		return this.cases;
+		return cases;
 	}
 
 	public void subItem(int i, int j) {
-		this.inventaire.get(i).subNombre(j);
-		if (this.inventaire.get(i).getNombre() <= 0)
+		inventaire[i].subNombre(j);
+		if (inventaire[i].getNombre() <= 0)
 			this.removeItem(i);
 	}
 
-	public Boolean haveItem(Inventable obj) {
-		ListIterator<Stack> it = inventaire.listIterator();
-		while (it.hasNext()) {
-			if (it.next().getId().equals(obj.getId()))
-				return true;
-		}
-		return false;
-	}
-
-	public Boolean haveItem(Stack obj, short nb) {
-		ListIterator<Stack> it = inventaire.listIterator();
-		while (it.hasNext()) {
-			Stack objTest = it.next();
-			if (objTest.getId().equals(obj.getId()))
-				if (objTest.getNombre() >= (obj.getNombre()))
+	public Boolean haveItem(Stack obj) {
+		for (int i=0; i <cases; i++)
+			if(inventaire[i].getId().equals(obj.getId()))
+				if(inventaire[i].getNombre() >= obj.getNombre())
 					return true;
-		}
 		return false;
 	}
+	
+	public int findItem(Stack obj) {
+		for (int i=0; i <cases; i++)
+			if(inventaire[i].getId().equals(obj.getId()))
+				if(inventaire[i].getNombre() >= obj.getNombre())
+					return i;
+		return -1;
+	}
 
+/*
+	public Stack getFirstStack() {
+		if(inventaire[i])
+			return null;
+		if(this.inventaire.get(0) != null && this.inventaire.get(0).getNombre() > 0)
+			return this.inventaire.get(0);
+		else
+			this.removeItem(0);
+		return getFirstStack();	
+	}
+*/
 }

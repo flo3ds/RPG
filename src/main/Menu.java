@@ -99,6 +99,7 @@ public class Menu{
 	public Menu(MainGame main) throws LWJGLException {
 		this.main = main;
 		try {
+			tex = new Texture(Util.getResource("res/titre.png"));
 			font = new BitmapFont(Util.getResource("res/ptsans.fnt"), Util.getResource("res/ptsans_00.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -145,11 +146,11 @@ public class Menu{
 		// start the sprite batch
 		batch.begin();
 
-		//batch.draw(tex, 0, 0);
+		batch.draw(tex, 0, 0);
 		
-		font.drawText(batch, "new game", 100, 10);
+		//font.drawText(batch, "new game", 100, 10);
 		
-		font.drawText(batch, "load", 100, 200);
+		//font.drawText(batch, "load", 100, 200);
 
 		// reset color
 		// batch.setColor(Color.WHITE);
@@ -167,17 +168,23 @@ public class Menu{
 			int y_m = (int) (Mouse.getY() - (main.SCREEN_H - panY));
 			y_m *= -1;
 			
-			if(y_m < 200) {
+			if(y_m < 380) {
 				System.out.println("New game start");
 				exit = true;
 				main.game.newGame();
+				
 			}else {
 				System.out.println("Load game start");
 				exit = true;
 			}
 
 
-			
+			try {
+				Thread.sleep(400);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			holdGMouse = true;
 		}

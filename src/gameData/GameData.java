@@ -73,7 +73,7 @@ public class GameData {
 	}
 	
 	public void registerSol(int id, Sol_extends layout){
-		System.out.println("add Sol : " + id);
+		//System.out.println("add Sol : " + id);
 		 getMain().sol.put(id, layout);
 	}
 	

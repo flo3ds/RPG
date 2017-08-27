@@ -1,71 +1,98 @@
 package tileEntity;
 
-import core.Container;
-import core.Inventable;
 import core.Stack;
 import graphicEngine.Vector2D;
-import graphicEngine.world.World;
 import graphicEngine.world.World_extends;
-import items.Item;
-import objects.Cable;
 import objects.CableE;
-import objects.ObjectContainer;
 
-public class TileEntityCableE extends TileEntity implements ITileEntityContainer {
-	
+public class TileEntityCableE extends TileEntity implements ITileEntityElectriqueOut, ITileEntityElectriqueIn {
+
 	Vector2D pos;
 	CableE cable;
 	public Stack stack = new Stack();
 	private int delay = 35;
 	private int delta_delay = delay;
-	
+	private int buffer = 0;
+
 	public TileEntityCableE(int x, int y, CableE cable) {
-		this.pos = new Vector2D(x,y);
+		this.pos = new Vector2D(x, y);
 		this.cable = cable;
 	}
 
-	
-	 public void update(World_extends world)
-	 {
+	public void update(World_extends world) {
 		String state = "";
-		if(world.getTileEntity((int)pos.x, (int)pos.y-1) instanceof ITileEntityContainer) {
+		if (world.getTileEntity(pos.top()) instanceof ITileEntityElectriqueOut
+				|| world.getTileEntity(pos.top()) instanceof ITileEntityElectriqueIn) {
 			state += "T";
+			if (world.getTileEntity(pos.top()) instanceof ITileEntityElectriqueOut) {
+				if (buffer < getBufferMax()) {
+					buffer += ((ITileEntityElectriqueOut) world.getTileEntity(pos.top())).suckBuffer(getDebit());
+				}
+			}
 		}
-		if(world.getTileEntity((int)pos.x, (int)pos.y+1) instanceof ITileEntityContainer) {
-				state += "B";
+		if (world.getTileEntity(pos.bottom()) instanceof ITileEntityElectriqueOut
+				|| world.getTileEntity(pos.bottom()) instanceof ITileEntityElectriqueIn) {
+			state += "B";
+			if (world.getTileEntity(pos.bottom()) instanceof ITileEntityElectriqueOut) {
+				if (buffer < getBufferMax()) {
+					buffer += ((ITileEntityElectriqueOut) world.getTileEntity(pos.bottom())).suckBuffer(getDebit());
+				}
+			}
 		}
-		if(world.getTileEntity((int)pos.x-1, (int)pos.y) instanceof ITileEntityContainer) {
-				state += "L";
+		if (world.getTileEntity(pos.left()) instanceof ITileEntityElectriqueOut
+				|| world.getTileEntity(pos.left()) instanceof ITileEntityElectriqueIn) {
+			state += "L";
+			if (world.getTileEntity(pos.left()) instanceof ITileEntityElectriqueOut) {
+				if (buffer < getBufferMax()) {
+					buffer += ((ITileEntityElectriqueOut) world.getTileEntity(pos.left())).suckBuffer(getDebit());
+				}
+			}
 		}
-		if(world.getTileEntity((int)pos.x+1, (int)pos.y) instanceof ITileEntityContainer) {
-				state += "R";
+		if (world.getTileEntity(pos.right()) instanceof ITileEntityElectriqueOut
+				|| world.getTileEntity(pos.right()) instanceof ITileEntityElectriqueIn) {
+			state += "R";
+			if (world.getTileEntity(pos.right()) instanceof ITileEntityElectriqueOut) {
+				if (buffer < getBufferMax()) {
+					buffer += ((ITileEntityElectriqueOut) world.getTileEntity(pos.right())).suckBuffer(getDebit());
+				}
+			}
 		}
-		 
-		if(state != "")
-		 cable.setState(state); 
-	 }
+
+		if (state != "")
+			cable.setState(state);
+	}
 
 	@Override
-	public Stack getStack() {
+	public int getBufferMax() {
 		// TODO Auto-generated method stub
-		return stack;
+		return 5000;
 	}
 
 	@Override
-	public void putStack(Stack stack) {
-		stack.addNombre(stack.getNombre());
-		
+	public int getPower() {
+		return getDebit();
 	}
 
 	@Override
-	public Boolean checkPut(Stack stack) {
+	public int suckBuffer(int power) {
+		if (buffer - power >= 0) {
+			buffer = -power;
+			return power;
+		} else {
+			int saveBuffer = buffer;
+			buffer = 0;
+			return saveBuffer;
+		}
+	}
 
-		if(this.stack.getId() == null)
-			return true;
-		else if (stack.getId() == this.stack.getId() && stack.getNombre()+this.stack.getNombre() < Stack.MAXSIZE){
-			return true;
-		}else
-			return false;
-		
+	@Override
+	public int getDebit() {
+		// TODO Auto-generated method stub
+		return 512;
+	}
+
+	public int getBuffer() {
+		// TODO Auto-generated method stub
+		return buffer;
 	}
 }

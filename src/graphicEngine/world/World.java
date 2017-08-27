@@ -24,9 +24,10 @@ import init.Biomes;
 
 public class World extends World_extends implements Worldable {
 	
-	
-	public World(Vector2D pos, world.World world) {
-		super("monde1", pos, world);
+
+
+	public World(String name) {
+		super(name);
 	}
 
 	
