@@ -23,7 +23,7 @@ public class Player {
 
 	private TextureRegion t_player;
 	private Vector2D pos;
-	private float speed = 3f;
+	private float speed = 4f;
 	private int orientation = 0;
 
 	private Animation[] anim = new Animation[8];
@@ -50,10 +50,10 @@ public class Player {
 			anim[2] = new Animation(tex, 64, 1, 2, 0);
 			anim[3] = new Animation(tex, 64, 1, 3, 0);
 
-			anim[4] = new Animation(tex, 64, 9, 0, 4);
-			anim[5] = new Animation(tex, 64, 9, 1, 4);
-			anim[6] = new Animation(tex, 64, 9, 2, 4);
-			anim[7] = new Animation(tex, 64, 9, 3, 4);
+			anim[4] = new Animation(tex, 64, 9, 0, 6);
+			anim[5] = new Animation(tex, 64, 9, 1, 6);
+			anim[6] = new Animation(tex, 64, 9, 2, 6);
+			anim[7] = new Animation(tex, 64, 9, 3, 6);
 		} catch (IOException e) {
 			Sys.alert("Error", "Player Texture not Load");
 			e.printStackTrace();
@@ -154,7 +154,7 @@ public class Player {
 				y_m -= 32;
 			if(x_m < 0)
 				x_m -= 32;
-			System.out.print("pos = "+x_m/32+" : "+y_m/32+"\n");
+			//System.out.print("pos = "+x_m/32+" : "+y_m/32+"\n");
 
 		}
 		if (0 < wheel) {

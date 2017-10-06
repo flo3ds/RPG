@@ -187,7 +187,7 @@ public abstract class Game {
 			fps = fpsTick;
 			fpsTick = 0;
 			lastFPS += 1000;
-			System.out.println("fps" + fps + " - " + (getTime() - lastFPS));
+			//System.out.println("fps" + fps + " - " + (getTime() - lastFPS));
 		}
 		fpsTick++;
 	}

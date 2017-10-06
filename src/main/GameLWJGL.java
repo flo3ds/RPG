@@ -59,6 +59,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import base.Base;
 import biome.Biome;
 import biome.Sol;
 import biome.Sol_extends;
@@ -122,7 +123,7 @@ public class GameLWJGL extends SimpleGame {
 
 		
 		wworld = new world.World();
-		WorldProvider.getInstance().addWorld(0, new World("test"));
+		WorldProvider.getInstance().addWorld(0, new BaseGUI());
 		perso.setWorld(WorldProvider.getInstance().getWorld(0));
 		
 		world = perso.getWorld();
@@ -233,6 +234,8 @@ public class GameLWJGL extends SimpleGame {
 			renderSol(world.getChunkLoader()[i]);
 		}
 		*/
+		
+		if( ! world.waiting())
 		Render.render(batch, player, world, perso);
 		
 		player.renderLayout(batch, perso);
@@ -326,6 +329,8 @@ public class GameLWJGL extends SimpleGame {
 		if (Mouse.isButtonDown(1) == false && holdDMouse == true)
 			holdDMouse = false;
 		}
+		System.out.println("p "+player.getPos().x+":"+player.getPos().y);
+		
 		world.update(player.getPos(), wworld);
 		player.update(world, panX, panY, perso);
 		

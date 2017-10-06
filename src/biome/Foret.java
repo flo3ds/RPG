@@ -18,8 +18,5 @@ public class Foret extends Biome {
 		Generator.populate(chunk, Objects.HERBE, 20);
 		Generator.populate(chunk, Objects.FLOWER, 6);
 		Generator.populate(chunk, Objects.BRANCHE, 6);
-		Generator.populate(chunk, Objects.MINE, 6);
-		Generator.populate(chunk, Objects.DOOR, 6);
-		Generator.populate(chunk, Objects.MUR_BOIS, 6);
 	}
 }

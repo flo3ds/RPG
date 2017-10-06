@@ -27,6 +27,8 @@ public static final short RANGELOADING = 1;
 	private Vector2D[] mesh;
 	public boolean wait = true;
 	public String name;
+	private boolean gen = true;
+
 
 	private Map<Integer, Chunk> chunkMap = new HashMap<Integer, Chunk>();
 	private Map<Integer, TileEntity> tileEntity = new HashMap<Integer, TileEntity>();
@@ -225,9 +227,10 @@ public static final short RANGELOADING = 1;
 	
 	
 	private void updateChunk (Vector2D pos, world.World world) {
-		
 		Thread t = new Thread(){
+
 			public void run(){
+				
 				wait = true;
 		Vector2D posChunk = getChunkPos(pos);
 		
@@ -243,13 +246,17 @@ public static final short RANGELOADING = 1;
 			mesh[index++] = new Vector2D(posChunk.x , posChunk.y +i);
 			mesh[index++] = new Vector2D(posChunk.x +i, posChunk.y +i);	
 		}
+		//if (gen){
 		for (int i=0; i<mesh.length; i++){
 			if(!chunkMap.containsKey(mesh[i].hashCode())){
+				System.out.println("gen " + mesh[i].x+":"+mesh[i].y);
 				chunkMap.put(mesh[i].hashCode(), new Chunk(world));
 				chunkMap.get(mesh[i].hashCode()).generate(Biomes.FORET);
 			}
 		}
+		//}
 		wait = false;
+		gen = false;
 		}
 		};
 		t.start();
