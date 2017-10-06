@@ -59,7 +59,6 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import base.Base;
 import biome.Biome;
 import biome.Sol;
 import biome.Sol_extends;
@@ -328,9 +327,7 @@ public class GameLWJGL extends SimpleGame {
 		}
 		if (Mouse.isButtonDown(1) == false && holdDMouse == true)
 			holdDMouse = false;
-		}
-		System.out.println("p "+player.getPos().x+":"+player.getPos().y);
-		
+		}		
 		world.update(player.getPos(), wworld);
 		player.update(world, panX, panY, perso);
 		
