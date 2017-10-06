@@ -144,8 +144,8 @@ public class GameLWJGL extends SimpleGame {
 	}
 	
 	public void newGame() {
-		purgeDirectory(new File("world/world"));
-		purgeDirectory(new File("world/base"));
+		//purgeDirectory(new File("world/world"));
+		//purgeDirectory(new File("world/base"));
 
 	}
 	
